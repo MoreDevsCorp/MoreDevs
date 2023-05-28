@@ -1,0 +1,357 @@
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/migrate-shadow
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model User {
+  id            String                 @id @default(cuid())
+  password      String?
+  name          String?
+  email         String?                @unique
+  emailVerified String                 @default("false")
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  avatar        String?
+  bio           String?
+  location      String?
+  skills        UserSkill[]
+  experiences   Experience[]
+  educations    Education[]
+  posts         Post[]
+  comments      Comment[]
+  postsLikes    PostLike[]
+  replyLikes    ReplyLikes[]
+  replies       Reply[]
+  commentsLikes CommentLike[]
+  applications  UserApplicationOffer[]
+  chats         UserChat[]
+  messages      Message[]
+  followers     Follows[]              @relation("follower")
+  following     Follows[]              @relation("following")
+
+  recievedNotifications  Notification[] @relation("recipient_notification")
+  triggeredNotifications Notification[] @relation("sender_notification")
+  profileVisits          Int            @default(0)
+  createdAt              DateTime       @default(now())
+  isUserSetup            Boolean        @default(false)
+  interests              InterestUser[]
+  Follows                Follows[]
+}
+
+model Follows {
+  id          String @id @default(cuid())
+  follower    User   @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId  String
+  following   User   @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  followingId String
+
+  createdAt DateTime @default(now())
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+
+  @@unique([followerId, followingId])
+}
+
+model Education {
+  id        String   @id @default(cuid())
+  startedAt DateTime
+  endedAt   DateTime
+  location  String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+}
+
+model PostLike {
+  id        String   @id @default(cuid())
+  Post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+}
+
+model Post {
+  id         String         @id @default(cuid())
+  author     User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId   String
+  content    String
+  likes      PostLike[]
+  likesCount Int            @default(0)
+  comments   Comment[]
+  hashTags   PostHashTag[]
+  interests  PostInterest[]
+  createdAt  DateTime       @default(now())
+}
+
+model CommentLike {
+  id        String   @id @default(cuid())
+  Comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId String
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+}
+
+model Comment {
+  id        String        @id @default(cuid())
+  author    User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  post      Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  content   String
+  likes     CommentLike[]
+  replies   Reply[]
+  createdAt DateTime      @default(now())
+}
+
+model ReplyLikes {
+  id      String @id @default(cuid())
+  reply   Reply  @relation(fields: [replyId], references: [id], onDelete: Cascade)
+  replyId String
+  likedBy User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+}
+
+model Reply {
+  id        String       @id @default(cuid())
+  content   String
+  Comment   Comment      @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId String
+  author    User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  likes     ReplyLikes[]
+}
+
+model PostHashTag {
+  id        String  @id @default(cuid())
+  Post      Post    @relation(fields: [postId], references: [id])
+  postId    String
+  Hashtag   HashTag @relation(fields: [hashTagId], references: [id])
+  hashTagId String
+}
+
+model PostInterest {
+  id         String   @id @default(cuid())
+  interest   Interest @relation(fields: [interestId], references: [id])
+  interestId String
+  post       Post     @relation(fields: [postId], references: [id])
+  postId     String
+}
+
+model InterestUser {
+  id         String   @id @default(cuid())
+  interest   Interest @relation(fields: [interestId], references: [id])
+  interestId String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+}
+
+model Interest {
+  id       String            @id @default(cuid())
+  name     String
+  hashtags InterestHashTag[]
+  posts    PostInterest[]
+  users    InterestUser[]
+}
+
+model InterestHashTag {
+  id         String   @id @default(cuid())
+  interest   Interest @relation(fields: [interestId], references: [id], onDelete: Cascade)
+  interestId String
+  hashTag    HashTag  @relation(fields: [hashTagId], references: [id], onDelete: Cascade)
+  hashTagId  String
+}
+
+model HashTag {
+  id        String            @id @default(cuid())
+  name      String
+  posts     PostHashTag[]
+  interests InterestHashTag[]
+}
+
+model UserApplicationOffer {
+  id          String @id @default(cuid())
+  applicant   User   @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  applicantId String
+  offer       Offer  @relation(fields: [offerId], references: [id])
+  offerId     String
+
+  createdAt DateTime @default(now())
+}
+
+model UserSkill {
+  id      String  @id @default(cuid())
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String?
+  skill   Skill?  @relation(fields: [skillId], references: [id])
+  skillId String?
+}
+
+model OfferSkill {
+  id      String @id @default(cuid())
+  offer   Offer  @relation(fields: [offerId], references: [id])
+  offerId String
+  skill   Skill  @relation(fields: [skillId], references: [id])
+  skillId String
+}
+
+model Skill {
+  id         String       @id @default(cuid())
+  name       String
+  UserSkill  UserSkill[]
+  OfferSkill OfferSkill[]
+}
+
+model Experience {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  location    String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  company     Company   @relation(fields: [companyId], references: [id])
+  companyId   String
+  startDate   DateTime
+  endDate     DateTime?
+}
+
+model Company {
+  id          String       @id @default(cuid())
+  name        String
+  description String
+  location    String
+  avatar      String
+  website     String
+  offers      Offer[]
+  internships Internship[]
+  experiences Experience[]
+  foundedAt   DateTime
+}
+
+model Offer {
+  id           String                 @id @default(cuid())
+  title        String
+  description  String
+  company      Company                @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId    String
+  location     String
+  skills       OfferSkill[]
+  type         OfferType              @default(fullTime)
+  applications UserApplicationOffer[]
+
+  createdAt DateTime @default(now())
+}
+
+enum OfferType {
+  fullTime
+  partTime
+  internship
+}
+
+model Internship {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  location    String
+  company     Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId   String
+  type        String?
+  startDate   DateTime
+  endDate     DateTime?
+}
+
+// ######### CHAT MODELS ############
+
+model UserChat {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  chat      Chat     @relation(fields: [chatId], references: [id])
+  chatId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Chat {
+  id           String     @id @default(cuid())
+  participants UserChat[]
+  messages     Message[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Message {
+  id       String @id @default(cuid())
+  content  String
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+  chat     Chat   @relation(fields: [chatId], references: [id])
+  chatId   String
+
+  createdAt DateTime @default(now())
+}
+
+// ############## Notifications ##############
+
+model Notification {
+  recipient   User   @relation(name: "recipient_notification", fields: [recipientId], references: [id])
+  recipientId String
+  sender      User   @relation(name: "sender_notification", fields: [senderId], references: [id])
+  senderId    String
+
+  type NotificationType
+  read Boolean          @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@id([recipientId, senderId])
+}
+
+enum NotificationType {
+  LIKE
+  COMMENT
+  FOLLOW_REQUEST
+  FOLLOW_ACCEPTED
+}
