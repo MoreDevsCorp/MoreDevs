@@ -1,10 +1,10 @@
 import HeroSection from "../components/layout/public/Hero";
-import NavBar from "../components/layout/public/Navbar";
+import Navbar from "../components/layout/public/Navbar";
 
-const Welcome = () => {
+const Welcome: React.FC = () => {
   return (
-    <div className="px-xxl w-full h-screen ">
-      <NavBar />
+    <div className="px-20 w-full h-screen ">
+      <Navbar />
       <HeroSection />
     </div>
   );

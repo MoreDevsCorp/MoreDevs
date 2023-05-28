@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
       }  ${
         outline
           ? `bg-white text-zinc-400  hover:text-black  `
-          : `bg-black-900 text-white ${
+          : `bg-black text-white ${
               hover && "hover:bg-transparent hover:text-black"
             }`
       } hover:border-black shadow-md hover:shadow-lg `}

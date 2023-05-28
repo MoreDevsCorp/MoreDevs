@@ -1,12 +1,13 @@
 import Welcome from "./pages/Welcome";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <button>Hello</button>
-
-      <Welcome />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Welcome />} path="/" />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
