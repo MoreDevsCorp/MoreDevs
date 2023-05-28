@@ -1,5 +1,13 @@
+import Welcome from "./pages/Welcome";
+
 function App() {
-  return <>Hello</>;
+  return (
+    <>
+      <button>Hello</button>
+
+      <Welcome />
+    </>
+  );
 }
 
 export default App;
