@@ -1,11 +1,8 @@
-import { FaGithub, FaLinkedin, FaGoogle } from "react-icons/fa";
-
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { useEffect } from "react";
 import Button from "./Button";
 
 const SignupSchema = Yup.object().shape({
@@ -18,14 +15,6 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ handleLogin }) => {
-  // const router = useNavigate();
-
-  // useEffect(() => {
-  //   if (session.data) {
-  //     router("/");
-  //   }
-  // }, [session]);
-
   return (
     <div className="lg:w-[40%] p-4">
       <div>
@@ -110,20 +99,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLogin }) => {
         </p>
       </div>
       <div className="h-10" />
-      {/* <div className="flex flex-col items-center">
-        <p className="opacity-70">Or Continue with</p>
-        <div className="flex items-center mt-2">
-          <button onClick={() => signIn("google")}>
-            <FaGoogle size={23} />
-          </button>
-          <button className="mx-2" onClick={() => signIn("github")}>
-            <FaGithub size={25} />
-          </button>
-          <button onClick={() => signIn("linkedin")}>
-            <FaLinkedin size={25} />
-          </button>
-        </div>
-      </div> */}
     </div>
   );
 };
