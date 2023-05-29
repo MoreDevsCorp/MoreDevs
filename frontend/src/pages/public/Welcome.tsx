@@ -1,5 +1,5 @@
-import HeroSection from "../components/layout/public/Hero";
-import Navbar from "../components/layout/public/Navbar";
+import HeroSection from "../../components/layout/public/Hero";
+import Navbar from "../../components/layout/public/Navbar";
 
 const Welcome: React.FC = () => {
   return (
