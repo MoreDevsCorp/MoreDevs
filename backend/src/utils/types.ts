@@ -1,4 +1,3 @@
-import { ISODateString } from "next-auth";
 import { PrismaClient } from "@prisma/client";
 import { Context as GQLContext } from "graphql-ws/lib/server";
 import { PubSub } from "graphql-subscriptions";
@@ -11,16 +10,22 @@ export interface Context {
 }
 
 export interface Session {
-  user?: User;
-  expires: ISODateString;
+  token: string;
 }
+
+export type DecodedToken = {
+  id: string;
+  email: string;
+};
+
 /********************************* */
 
 export interface User {
-  id: string;
-  name: string;
-  image: string;
-  email: string;
+  id: string | "";
+  name: string | "";
+  image: string | "";
+  email: string | "";
+  token: string | "";
 }
 
 export interface SubscriptionContext extends GQLContext {

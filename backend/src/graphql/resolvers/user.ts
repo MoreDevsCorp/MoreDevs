@@ -1,13 +1,53 @@
 import bcrypt from "bcryptjs";
 import { GraphQLError } from "graphql";
 import { Context } from "../../utils/types";
+import jwt from "jsonwebtoken";
+import { User } from "@prisma/client";
 
 const resolvers = {
   Query: {
     searchUsers: () => {},
+    loginUser: async (
+      _: any,
+      args: { email: string; password: string },
+      context: Context
+    ): Promise<User> => {
+      const { prisma } = context;
+      const { email, password } = args;
+
+      try {
+        const user = await prisma.user.findUnique({ where: { email } });
+
+        if (!user) {
+          throw new GraphQLError("User not found !", {
+            extensions: { code: 404 },
+          });
+        }
+
+        const comparedPassword = await bcrypt.compare(
+          password,
+          user.password as string
+        );
+
+        if (!comparedPassword) {
+          throw new GraphQLError("Wrong credentials !", {
+            extensions: { code: 401 },
+          });
+        }
+
+        return {
+          ...user,
+        };
+      } catch (error: any) {
+        console.log("Error Logging in user : ", error.message);
+        throw new GraphQLError("Error logging in user", {
+          extensions: { code: 500 },
+        });
+      }
+    },
   },
   Mutation: {
-    createUser: async (
+    registerUser: async (
       _: any,
       args: {
         firstName: string;
@@ -16,7 +56,7 @@ const resolvers = {
         password: string;
       },
       context: Context
-    ) => {
+    ): Promise<User> => {
       const { firstName, lastName, email, password } = args;
       const { prisma } = context;
 
@@ -33,7 +73,7 @@ const resolvers = {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        await prisma.user.create({
+        const newUser = await prisma.user.create({
           data: {
             name: `${firstName} ${lastName}`,
             email,
@@ -41,8 +81,24 @@ const resolvers = {
           },
         });
 
+        const token = jwt.sign(
+          {
+            id: newUser.id,
+            email: newUser.email,
+          },
+          process.env.JWT_SECRET as string,
+          { expiresIn: "72h" }
+        );
+
+        const updatedUser = await prisma.user.update({
+          where: { id: newUser.id },
+          data: {
+            token,
+          },
+        });
+
         return {
-          success: true,
+          ...updatedUser,
         };
       } catch (error: any) {
         console.log("Error creating User : ", error.message);
@@ -65,15 +121,20 @@ const resolvers = {
       const { session, prisma } = context;
       const { bio, skillIds, interestsIds } = args;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
+        const decodedToken = jwt.verify(
+          session.token,
+          process.env.JWT_SECRET as string
+        );
+        const sessionId = (<any>decodedToken).id;
         await prisma.user.update({
-          where: { id: session.user.id },
+          where: { id: sessionId },
           data: {
             bio,
             skills: {
@@ -101,6 +162,8 @@ const resolvers = {
         });
       }
     },
+
+    // End of Mutation Object
   },
   //   Subscription: {},
 };

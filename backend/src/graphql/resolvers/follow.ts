@@ -1,22 +1,28 @@
 import { GraphQLError } from "graphql";
-import { Context } from "../../utils/types";
+import { Context, DecodedToken } from "../../utils/types";
+import jwt from "jsonwebtoken";
 
 export default {
   Query: {
     getFollowers: async (_p: any, _a: any, context: Context) => {
       const { session, prisma } = context;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
+        const decodedToken = jwt.verify(
+          session.token,
+          process.env.JWT_SECRET as string
+        );
+        const sessionId = (<any>decodedToken).id;
         // Getting the followers of a specific user
         const followers = await prisma.user.findUnique({
           where: {
-            id: session.user.id,
+            id: sessionId,
           },
           include: {
             followers: {
@@ -47,17 +53,22 @@ export default {
     getFollowing: async (_p: any, _a: any, context: Context) => {
       const { session, prisma } = context;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
+        const decodedToken = jwt.verify(
+          session.token,
+          process.env.JWT_SECRET as string
+        );
+        const sessionId = (<any>decodedToken).id;
         // Getting the following of a specific user
         const following = await prisma.user.findUnique({
           where: {
-            id: session.user.id,
+            id: sessionId,
           },
           include: {
             following: {
@@ -91,28 +102,33 @@ export default {
       const { session, prisma, pubsub } = context;
       const { userId } = args;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
+        const decodedToken = jwt.verify(
+          session.token,
+          process.env.JWT_SECRET as string
+        );
+        const sessionId = (<any>decodedToken).id;
         // await prisma.follows.create({
         //   data: {
-        //     followerId: session.user.id,
+        //     followerId: sessionId,
         //     followingId: userId,
         //   },
         // });
 
         await prisma.user.update({
           where: {
-            id: session.user.id,
+            id: sessionId,
           },
           data: {
             following: {
               create: {
-                followingId: userId,
+                followerId: sessionId,
               },
             },
           },
@@ -125,7 +141,7 @@ export default {
           data: {
             followers: {
               create: {
-                followerId: session.user.id,
+                followingId: sessionId,
               },
             },
           },
@@ -150,17 +166,22 @@ export default {
       const { session, prisma } = context;
       const { userId } = args;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
+        const decodedToken = jwt.verify(
+          session.token,
+          process.env.JWT_SECRET as string
+        );
+        const sessionId = (<any>decodedToken).id;
         // await prisma.follows.delete({
         //   where: {
         //     followerId_followingId: {
-        //       followerId: session.user.id,
+        //       followerId: sessionId,
         //       followingId: userId,
         //     },
         //   },
@@ -168,13 +189,13 @@ export default {
 
         await prisma.user.update({
           where: {
-            id: session.user.id,
+            id: sessionId,
           },
           data: {
             following: {
               delete: {
                 followerId_followingId: {
-                  followerId: session.user.id,
+                  followerId: sessionId,
                   followingId: userId,
                 },
               },
@@ -190,7 +211,7 @@ export default {
             followers: {
               delete: {
                 followerId_followingId: {
-                  followerId: session.user.id,
+                  followerId: sessionId,
                   followingId: userId,
                 },
               },

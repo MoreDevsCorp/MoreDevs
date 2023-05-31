@@ -3,12 +3,13 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import express from "express";
-import { getSession } from "next-auth/react";
 import http from "http";
 import cors from "cors";
 import { json } from "body-parser";
 import dotenv from "dotenv";
 dotenv.config();
+
+import authRoutes from "./routes/authRoutes";
 
 import { PubSub } from "graphql-subscriptions";
 import { WebSocketServer } from "ws";
@@ -19,19 +20,20 @@ import resolvers from "./graphql/resolvers";
 
 import { Context, SubscriptionContext } from "./utils/types";
 import { Session } from "./utils/types";
-import { PrismaClient } from "@prisma/client";
+import { GraphQLError } from "graphql";
+
+import prisma from "./lib/prisma";
 
 async function main() {
-  const app = express();
-
-  const httpServer = http.createServer(app);
-
   const schema = makeExecutableSchema({
     typeDefs,
     resolvers,
   });
 
-  const prisma = new PrismaClient();
+  const app = express();
+
+  const httpServer = http.createServer(app);
+
   const pubsub = new PubSub();
 
   // websockets Server
@@ -86,11 +88,40 @@ async function main() {
   await server.start();
 
   const context = async ({ req }: any): Promise<Context> => {
-    const session = (await getSession({ req })) as Session;
+    let token = req.headers.authentication;
+
+    if (!token || !token.startsWith("Bearer")) {
+      throw new GraphQLError("you must be logged in to query this schema", {
+        extensions: {
+          code: 401,
+        },
+      });
+    }
+
+    token = token.split(" ")[1];
+
+    const user = await prisma.user.findFirst({
+      where: {
+        token,
+      },
+    });
+
+    if (!user)
+      throw new GraphQLError("you must be logged in to query this schema", {
+        extensions: {
+          code: "UNAUTHENTICATED",
+        },
+      });
+
+    const session: Session = {
+      token,
+    };
 
     return { session, prisma, pubsub };
   };
+  app.use(express.json());
 
+  app.use("/auth", authRoutes);
   app.use(
     "/graphql",
     cors<cors.CorsRequest>({

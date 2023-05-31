@@ -1,8 +1,21 @@
+import axios from "axios";
 import LoginForm from "../../components/ui/LoginForm";
 
 const LoginPage = () => {
   const handleLogin = async (values: { email: string; password: string }) => {
-    console.log(status);
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/auth/login`,
+      {
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+        }),
+      }
+    );
+
+    console.log("====================================");
+    console.log(data);
+    console.log("====================================");
   };
 
   return (
