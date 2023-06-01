@@ -1,21 +1,27 @@
 import { GraphQLError } from "graphql";
 import { Context } from "../../utils/types";
+import jwt from "jsonwebtoken";
 
 export default {
   Query: {
     getPosts: async (_: any, args: {}, context: Context) => {
       const { session, prisma } = context;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
+        const decodedToken = jwt.verify(
+          session.token,
+          process.env.JWT_SECRET as string
+        );
+        const sessionId = (<any>decodedToken).id;
         const posts = await prisma.post.findMany({
           where: {
-            authorId: session.user.id,
+            authorId: sessionId,
           },
         });
 
@@ -35,17 +41,22 @@ export default {
       const { session, prisma } = context;
       const { content } = args;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
+        const decodedToken = jwt.verify(
+          session.token,
+          process.env.JWT_SECRET as string
+        );
+        const sessionId = (<any>decodedToken).id;
         await prisma.post.create({
           data: {
             content,
-            authorId: session.user.id,
+            authorId: sessionId,
           },
         });
 
@@ -68,7 +79,7 @@ export default {
       const { session, prisma } = context;
       const { postId, content } = args;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
@@ -99,7 +110,7 @@ export default {
       const { session, prisma } = context;
       const { postId } = args;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });

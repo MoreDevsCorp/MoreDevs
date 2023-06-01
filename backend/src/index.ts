@@ -2,7 +2,7 @@ import { ApolloServer } from "@apollo/server";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import http from "http";
 import cors from "cors";
 import { json } from "body-parser";
@@ -121,7 +121,13 @@ async function main() {
   };
   app.use(express.json());
 
-  app.use("/auth", authRoutes);
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    next();
+  });
+
   app.use(
     "/graphql",
     cors<cors.CorsRequest>({
@@ -131,6 +137,7 @@ async function main() {
     json(),
     expressMiddleware(server, { context })
   );
+  app.use("/auth", authRoutes);
 
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: 4000 }, resolve)
