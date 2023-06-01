@@ -15,6 +15,7 @@ const navItems = [
   { text: "Network", icon: faNetworkWired },
   { text: "Jobs", icon: faBriefcase },
   { text: "Marketplace", icon: faStore },
+  { text: "Company", icon: faStore },
 ];
 
 interface SideBar {

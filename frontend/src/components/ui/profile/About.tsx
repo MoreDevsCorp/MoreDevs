@@ -30,10 +30,7 @@ export default function About() {
         className="relative z-50 "
       >
         {/* The backdrop, rendered as a fixed sibling to the panel container */}
-        <div
-          className="fixed inset-0 bg-black-900 opacity-30"
-          aria-hidden="true"
-        />
+        <div className="fixed inset-0 bg-black opacity-30" aria-hidden="true" />
 
         {/* Full-screen container to center the panel */}
         <div className="fixed inset-0 flex items-center justify-center p-10">
@@ -50,7 +47,13 @@ export default function About() {
               aria-label="maximum height"
               placeholder="Edit you bio"
             />
-            <Button onClick={() => setIsOpen(false)}>Submit</Button>
+            <Button
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
+              Submit
+            </Button>
           </Dialog.Panel>
         </div>
       </Dialog>

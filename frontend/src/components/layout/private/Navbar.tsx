@@ -10,7 +10,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useEffect, useState } from "react";
 import { Menu } from "@headlessui/react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Input from "../../ui/inputs/Input";
 
 interface NavBar {
@@ -80,13 +80,16 @@ export function DropDown() {
 }
 const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
   const [pageName, setPageName] = useState<string | null>(null);
+  const router = useLocation();
+
+  const { pathname } = router;
 
   useEffect(() => {
-    const pathname =
-      window.location.pathname.split("/")[1].charAt(0).toUpperCase() +
-      window.location.pathname.split("/")[1].slice(1);
-    setPageName(pathname);
-  }, [window.location.pathname]);
+    const routerName =
+      pathname.split("/")[1].charAt(0).toUpperCase() +
+      pathname.split("/")[1].slice(1);
+    setPageName(routerName);
+  }, [pathname]);
 
   return (
     <nav className="z-50 px-10 py-4 flex-grow w-[100%] border  border-gray-100 bg-white flex items-center justify-between">

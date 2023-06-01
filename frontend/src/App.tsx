@@ -5,6 +5,7 @@ import RegisterPage from "./pages/auth/Register";
 import PrivateLayout from "./components/layout/private/Layout";
 import Home from "./pages/private/Home";
 import Profile from "./pages/private/Profile";
+import CompanyProfile from "./pages/private/CompanyProfile";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route element={<PrivateLayout />}>
           <Route element={<Home />} path="/home" />
           <Route element={<Profile />} path="/profile" />
+          <Route element={<CompanyProfile />} path="/company" />
           {/* <Route element={<Home />} path="/private" /> */}
         </Route>
       </Routes>

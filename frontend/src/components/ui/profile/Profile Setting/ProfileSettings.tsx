@@ -36,26 +36,6 @@ export default function ProfileSettings() {
       </div>
 
       <div className="gridCol2 items-center  content-center  gap-6 ">
-        <h6 className="font-medium">Username</h6>
-        <Input prefix="moreDevs.ma/" placeholder="Username" />
-
-        <h6 className="font-medium">First Name</h6>
-        <Input placeholder="First Name" />
-
-        <h6 className="font-medium">Last Name</h6>
-        <Input placeholder="Last Name" />
-
-        <h6 className="font-medium">Bio</h6>
-        <TextareaAutosize
-          maxRows={5}
-          minRows={2}
-          className="w-[100%]  border-2  outline-none resize-none min-h-1 max-h-20 bg-gray-50 h-auto rounded placeholder-black-600 py-2 px-2 text-sm font-medium"
-          placeholder="Write a short introduction"
-        />
-
-        <h6 className="font-medium">Job Title</h6>
-        <Input placeholder="Job Title" />
-
         <h6 className="font-medium">Your Photo</h6>
         <div className="flex justify-between w-full">
           <div className="px-4">
@@ -76,6 +56,26 @@ export default function ProfileSettings() {
             <Button size="text-xs">Update</Button>
           </div>
         </div>
+
+        <h6 className="font-medium">Username</h6>
+        <Input prefix="moreDevs.ma/" placeholder="Username" />
+
+        <h6 className="font-medium">First Name</h6>
+        <Input placeholder="First Name" />
+
+        <h6 className="font-medium">Last Name</h6>
+        <Input placeholder="Last Name" />
+
+        <h6 className="font-medium">Bio</h6>
+        <TextareaAutosize
+          maxRows={5}
+          minRows={2}
+          className="w-[100%]  border-2  outline-none resize-none min-h-1 max-h-20 bg-gray-50 h-auto rounded placeholder-black-600 py-2 px-2 text-sm font-medium"
+          placeholder="Write a short introduction"
+        />
+
+        <h6 className="font-medium">Job Title</h6>
+        <Input placeholder="Job Title" />
 
         <h6 className="font-medium">City</h6>
         <Input placeholder="City" />
