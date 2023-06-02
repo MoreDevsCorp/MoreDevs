@@ -3,22 +3,28 @@ import { Context, NotificationPopulated } from "../../utils/types";
 import { NotificationType } from "@prisma/client";
 import { withFilter } from "graphql-subscriptions";
 import { Prisma } from "@prisma/client";
+import jwt from "jsonwebtoken";
 
 export default {
   Query: {
     getAllNotifications: async (_: any, __: any, context: Context) => {
       const { session, prisma } = context;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
+        const decodedToken = jwt.verify(
+          session.token,
+          process.env.JWT_SECRET as string
+        );
+        const sessionId = (<any>decodedToken).id;
         const notifications = await prisma.notification.findMany({
           where: {
-            recipientId: session.user.id,
+            recipientId: sessionId,
           },
           select: notificationPopulated,
         });
@@ -46,16 +52,21 @@ export default {
       const { session, prisma, pubsub } = context;
       const { recipientId, type } = args;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
+        const decodedToken = jwt.verify(
+          session.token,
+          process.env.JWT_SECRET as string
+        );
+        const sessionId = (<any>decodedToken).id;
         const notification = await prisma.notification.create({
           data: {
-            senderId: session.user.id,
+            senderId: sessionId,
             recipientId,
             type,
           },
@@ -94,16 +105,28 @@ export default {
           context: Context
         ) => {
           const { session } = context;
-          const {
-            notificationCreated: { recipient },
-          } = payload;
 
-          if (!session?.user) {
+          if (!session?.token) {
             throw new GraphQLError("You're not authenticated !", {
               extensions: { code: 401 },
             });
           }
-          const isUserRecipient = recipient.id === session.user.id;
+
+          const decodedToken = jwt.verify(
+            session.token,
+            process.env.JWT_SECRET as string
+          );
+          const sessionId = (<any>decodedToken).id;
+          const {
+            notificationCreated: { recipient },
+          } = payload;
+
+          if (!session?.token) {
+            throw new GraphQLError("You're not authenticated !", {
+              extensions: { code: 401 },
+            });
+          }
+          const isUserRecipient = recipient.id === sessionId;
 
           return isUserRecipient;
         }
