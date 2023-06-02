@@ -20,7 +20,7 @@ const SignupSchema = Yup.object().shape({
   confirmPassword: Yup.string().required("Required").min(12, "Too short !"),
 });
 
-interface LoginFormProps {
+interface RegisterFormProps {
   handleRegister: (values: {
     firstName: string;
     lastName: string;
@@ -30,7 +30,7 @@ interface LoginFormProps {
   }) => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ handleRegister }) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({ handleRegister }) => {
   return (
     <div className="p-4">
       <div>
@@ -183,4 +183,4 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleRegister }) => {
     </div>
   );
 };
-export default LoginForm;
+export default RegisterForm;
