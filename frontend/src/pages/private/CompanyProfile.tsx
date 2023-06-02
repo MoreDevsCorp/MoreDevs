@@ -34,9 +34,7 @@ const CompanyProfile = () => {
             </div>
 
             <div className="flex flex-col space-y-1">
-              <h1 className="font-semibold text-2xl text-black-900">
-                Jon Snow
-              </h1>
+              <h1 className="font-semibold text-2xl text-black-900">Google</h1>
               <p className="text-black-600">🚩 Agadir, Morocco</p>
               <div className="block space-x-1 items-center sm:flex">
                 <h4>@Google</h4>
