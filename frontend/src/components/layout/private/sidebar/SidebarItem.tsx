@@ -15,7 +15,7 @@ const SidebarItem = ({ Icon, title, setActive, active }: SideBarItemProps) => {
   return (
     <Link to={`/${url}`} onClick={() => setActive(url)}>
       <li
-        className={`w-full px-8   cursor-pointer   py-3  flex items-center space-x-7
+        className={`w-full    cursor-pointer   py-3  flex items-center space-x-7
         ${active == url ? "font-bold" : "font-medium"}
           hover:opacity-75 transition-all ease-out `}
       >

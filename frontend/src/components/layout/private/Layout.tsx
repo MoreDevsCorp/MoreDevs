@@ -11,7 +11,7 @@ const PrivateLayout = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
 
   return (
-    <main className="block ">
+    <main className="max-w-[1200px] mx-auto">
       <SideBar
         isSideBarOpen={isSideBarOpen}
         setIsSideBarOpen={setIsSideBarOpen}

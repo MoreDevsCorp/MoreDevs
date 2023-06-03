@@ -45,7 +45,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen }: SideBar) => {
 
   return (
     <div
-      className={` lg:block  h-full max-w-[250px] ${isSideBarOpen || "block"} `}
+      className={`lg:block h-full max-w-[250px] ${isSideBarOpen || "block"} `}
     >
       <div
         className={` fixed w-[100%] max-w-[250px] h-full ${
@@ -53,15 +53,15 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen }: SideBar) => {
         }`}
       >
         <div
-          className={`py-5 w-[100%] h-full space-y-5 opacity-100 lg:block transition-all  bg-white border border-gray-100  flex flex-col  ${
+          className={`py-5 w-[100%] h-full space-y-10 opacity-100 lg:block transition-all  bg-white border border-l-0 border-gray-100  flex flex-col  ${
             isSideBarOpen && "hidden"
           }`}
         >
-          <h1 className="font-semibold tracking-tight text-3xl text-black-900 text-center">
+          <h1 className="font-semibold tracking-tight text-3xl text-black-900 text-left">
             MoreDevs.
           </h1>
 
-          <ul className="w-full ">
+          <ul className="w-full">
             {navItems.map((link) => {
               return (
                 <SidebarItem
