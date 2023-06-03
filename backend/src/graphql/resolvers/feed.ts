@@ -6,7 +6,7 @@ export default {
     getFeed: async (_p: any, _a: any, context: Context) => {
       const { session, prisma } = context;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });

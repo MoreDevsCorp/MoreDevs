@@ -5,13 +5,7 @@ const LoginPage = () => {
   const handleLogin = async (values: { email: string; password: string }) => {
     const { data } = await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/auth/login`,
-      {
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password,
-        }),
-      }
-    );
+      values);
 
     console.log("====================================");
     console.log(data);

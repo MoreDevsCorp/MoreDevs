@@ -7,7 +7,7 @@ export default {
     getOffers: async (_p: any, _a: any, context: Context) => {
       const { session, prisma } = context;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
@@ -48,7 +48,7 @@ export default {
       const { session, prisma } = context;
       const { title, companyId, description, location, skillsIds, type } = args;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
@@ -105,7 +105,7 @@ export default {
         type,
       } = args;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
@@ -160,7 +160,7 @@ export default {
       const { session, prisma } = context;
       const { offerId } = args;
 
-      if (!session?.user) {
+      if (!session?.token) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });

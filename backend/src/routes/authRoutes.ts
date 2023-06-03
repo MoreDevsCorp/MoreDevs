@@ -10,8 +10,10 @@ router.post("/register", async (req: Request, res: Response) => {
   const { firstName, lastName, email, password } = req.body;
 
   try {
+    console.log(email);
+    
     const exisitingUser = await prisma.user.findUnique({
-      where: { email },
+      where: { email:email },
     });
 
     if (exisitingUser) {

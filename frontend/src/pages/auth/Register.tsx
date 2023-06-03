@@ -16,14 +16,7 @@ const RegisterPage = () => {
 
     const { data } = await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/auth/register`,
-      {
-        body: JSON.stringify({
-          firstName: values.firstName,
-          lastName: values.lastName,
-          email: values.email,
-          password: values.password,
-        }),
-      }
+      values
     );
 
     console.log("====================================");
