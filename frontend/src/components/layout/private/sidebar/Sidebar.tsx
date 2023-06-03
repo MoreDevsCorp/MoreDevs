@@ -7,15 +7,25 @@ import {
   faStore,
 } from "@fortawesome/free-solid-svg-icons";
 
+import {
+  OutlineChat,
+  OutlineCompany,
+  OutlineHome,
+  OutlineMarketPlace,
+  OutlineNetwork,
+  OutlineWorkBag,
+} from "./Icons";
+
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const navItems = [
-  { text: "Home", icon: faHouse },
-  { text: "Network", icon: faNetworkWired },
-  { text: "Jobs", icon: faBriefcase },
-  { text: "Marketplace", icon: faStore },
-  { text: "Company", icon: faStore },
+  { text: "Home", icon: OutlineHome },
+  { text: "Messages", icon: OutlineChat },
+  { text: "Network", icon: OutlineNetwork },
+  { text: "Jobs", icon: OutlineWorkBag },
+  { text: "Marketplace", icon: OutlineMarketPlace },
+  { text: "Company", icon: OutlineCompany },
 ];
 
 interface SideBar {
@@ -47,11 +57,11 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen }: SideBar) => {
             isSideBarOpen && "hidden"
           }`}
         >
-          <h1 className="font-semibold text-3xl text-black-900 text-center">
+          <h1 className="font-semibold tracking-tight text-3xl text-black-900 text-center">
             MoreDevs.
           </h1>
 
-          <ul className="w-full">
+          <ul className="w-full ">
             {navItems.map((link) => {
               return (
                 <SidebarItem
