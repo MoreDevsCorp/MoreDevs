@@ -42,7 +42,7 @@ export function DropDown() {
                   onClick={() => navigate("/profile")}
                   className={`${
                     active ? "bg-black-900 text-white" : "text-black-600"
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                  } group flex w-full items-center rounded-md px-2 py-2 text-sm hover:text-gray-500`}
                 >
                   Profile
                 </button>
@@ -54,7 +54,7 @@ export function DropDown() {
                 <button
                   className={`${
                     active ? "bg-black-900 text-white" : "text-black-600"
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                  } group flex w-full items-center rounded-md px-2 py-2 text-sm hover:text-gray-500`}
                 >
                   Profile Settings
                 </button>
@@ -66,7 +66,7 @@ export function DropDown() {
                 <button
                   className={`${
                     active ? "bg-black-900 text-white" : "text-black-600"
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                  } group flex w-full items-center rounded-md px-2 py-2 text-sm hover:text-gray-500`}
                 >
                   Sign Out
                 </button>
@@ -102,7 +102,7 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
         </span>
 
         <FontAwesomeIcon icon={faHouse} className="text-xl" />
-        <h2 className="text-2xl font-semibold">{pageName}</h2>
+        <h2 className="text-2xl hidden lg:block font-semibold">{pageName}</h2>
       </div>
       <Input Icon={BiSearch} placeHolder="Explore MoreDevs..." />
       <div className="flex items-center space-x-3">
@@ -117,7 +117,7 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
         />
 
         <div className="flex items-center space-x-2">
-          <h4 className="font-medium">Jon Snow</h4>
+          <h4 className="font-medium hidden  lg:block">Jon Snow</h4>
           <DropDown />
         </div>
       </div>

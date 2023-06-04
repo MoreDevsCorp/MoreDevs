@@ -33,7 +33,7 @@ interface SideBar {
   setIsSideBarOpen: (value: boolean) => void;
 }
 
-const SideBar = ({ isSideBarOpen, setIsSideBarOpen }: SideBar) => {
+const SideBar = ({ isSideBarOpen }: SideBar) => {
   const router = useLocation();
 
   const { pathname } = router;
@@ -44,18 +44,12 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen }: SideBar) => {
   }, [pathname]);
 
   return (
-    <div
-      className={`lg:block h-full max-w-[250px] ${isSideBarOpen || "block"} `}
-    >
-      <div
-        className={` fixed w-[100%] max-w-[250px] h-full ${
-          isSideBarOpen || "block"
-        }`}
-      >
+    <aside className={`lg:block h-full z-50 max-w-[250px] `}>
+      <div className={` fixed w-[100%] z-50  max-w-[250px] h-full`}>
         <div
-          className={`py-5 w-[100%] h-full space-y-10 opacity-100 lg:block transition-all  bg-white border border-l-0 border-gray-100  flex flex-col  ${
-            isSideBarOpen && "hidden"
-          }`}
+          className={`p-5 w-[100%] h-full space-y-10  z-50 opacity-100 lg:block transition-all -translate-x-[100%] lg:-translate-x-0 ${
+            !isSideBarOpen && "-translate-x-0"
+          }   border border-l-0 bg-white border-gray-100 flex flex-col `}
         >
           <h1 className="font-semibold tracking-tight text-3xl text-black-900 text-left">
             MoreDevs.
@@ -75,7 +69,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen }: SideBar) => {
           </ul>
         </div>
       </div>
-    </div>
+    </aside>
   );
 };
 
