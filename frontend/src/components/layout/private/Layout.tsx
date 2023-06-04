@@ -11,14 +11,12 @@ const PrivateLayout = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
 
   return (
-    <main className="max-w-[1200px] mx-auto">
+    <main className="max-w-[1200px] mx-auto flex">
       <SideBar
         isSideBarOpen={isSideBarOpen}
         setIsSideBarOpen={setIsSideBarOpen}
       />
-      <div
-        className={`lg:pl-[250px] flex flex-col justify-between items-center w-full`}
-      >
+      <div className={`flex flex-col justify-between items-center w-full`}>
         <NavBar
           isSideBarOpen={isSideBarOpen}
           setIsSideBarOpen={setIsSideBarOpen}
