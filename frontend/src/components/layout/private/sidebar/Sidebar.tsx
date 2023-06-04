@@ -44,11 +44,19 @@ const SideBar = ({ isSideBarOpen }: SideBar) => {
   }, [pathname]);
 
   return (
-    <aside className={`lg:block h-full z-50 max-w-[250px] `}>
-      <div className={` fixed w-[100%] z-50  max-w-[250px] h-full`}>
+    <aside
+      className={`lg:block h-full z-50 max-w-[250px]  ${
+        isSideBarOpen || "block"
+      } `}
+    >
+      <div
+        className={` fixed w-[100%] z-50  max-w-[250px] h-full ${
+          isSideBarOpen || "block"
+        }`}
+      >
         <div
           className={`p-5 w-[100%] h-full space-y-10  z-50 opacity-100 lg:block transition-all -translate-x-[100%] lg:-translate-x-0 ${
-            !isSideBarOpen && "-translate-x-0"
+            !isSideBarOpen && "translate-x-0"
           }   border border-l-0 bg-white border-gray-100 flex flex-col `}
         >
           <h1 className="font-semibold tracking-tight text-3xl text-black-900 text-left">
