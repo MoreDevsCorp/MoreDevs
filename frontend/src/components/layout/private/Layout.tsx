@@ -6,6 +6,7 @@ import { Outlet } from "react-router-dom";
 
 import NavBar from "./Navbar";
 import SideBar from "./sidebar/Sidebar";
+import Chat from "../../ui/chat";
 
 const PrivateLayout = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
@@ -24,7 +25,7 @@ const PrivateLayout = () => {
 
         <div className="flex p-4 md:gap-3  justify-between items-start w-full">
           <Outlet />
-          {/* <Chat /> */}
+          <Chat />
         </div>
       </div>
     </main>
