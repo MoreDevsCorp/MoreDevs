@@ -15,12 +15,14 @@ const SidebarItem = ({ Icon, title, setActive, active }: SideBarItemProps) => {
   return (
     <Link to={`/${url}`} onClick={() => setActive(url)}>
       <li
-        className={`w-full px-8  cursor-pointer   py-2.5  flex items-center space-x-2
-        ${active == url ? "text-black-900 bg-black-100" : "text-black-500"}
-          hover:text-black-600 transition-all ease-out `}
+        className={`w-full    cursor-pointer   py-3  flex items-center space-x-7
+        ${active == url ? "font-bold" : "font-medium"}
+          hover:opacity-75 transition-all ease-out `}
       >
-        <FontAwesomeIcon icon={Icon} />
-        <p className="font-mediumtext-[13px]">{title}</p>
+        {/* <FontAwesomeIcon icon={Icon} /> */}
+
+        <Icon active={active == url} />
+        <p className=" text-lg">{title}</p>
       </li>
     </Link>
   );

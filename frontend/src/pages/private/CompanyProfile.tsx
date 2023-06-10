@@ -6,11 +6,15 @@ import About from "../../components/ui/profile/About";
 import Post from "../../components/ui/post";
 import ProfileSettings from "../../components/ui/profile/Profile Setting/ProfileSettings";
 import RecentJobs from "../../components/ui/company/RecentJobs";
+import CompanyCheck from "../../components/ui/company/CompanyCheck";
 
 const bgImage = null;
+const companyCreated = false;
 
 const CompanyProfile = () => {
-  return (
+  return !companyCreated ? (
+    <CompanyCheck />
+  ) : (
     <div className="w-full space-y-6 max-w-[1100px] mb-20">
       <div className="rounded  w-full  border border-gray-100">
         <div className="w-full h-[200px]">

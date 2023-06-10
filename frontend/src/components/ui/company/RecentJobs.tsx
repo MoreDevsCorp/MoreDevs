@@ -29,7 +29,9 @@ export const Job = ({ jobTitle, jobManner, url }: JobProps) => {
       </CardContent>
       <CardFooter>
         <Link to={url}>
-          <Button size="text-sm">Check Job</Button>
+          <Button outline size="text-sm">
+            Check Job
+          </Button>
         </Link>
       </CardFooter>
     </Card>
@@ -42,7 +44,7 @@ const RecentJobs = () => {
         <h1 className="font-semibold text-2xl text-black-900">Recent Jobs</h1>
         <Button outline>See All Jobs</Button>
       </div>
-      <div className="flex justify-around flex-wrap gap-4">
+      <div className="flex justify-around flex-wrap gap-4 py-6 ">
         <Job
           jobTitle="UX/UI designer"
           jobManner="Remote Only"
