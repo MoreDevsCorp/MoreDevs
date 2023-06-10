@@ -54,7 +54,7 @@ export default function Post() {
         <div className="flex items-center space-x-4">
           <div className="flex items-center">
             <Checkbox
-              className="-ml-2"
+              className="-ml-2 z-[5]"
               icon={<FavoriteBorder />}
               checkedIcon={<Favorite sx={{ color: "red" }} />}
             />
