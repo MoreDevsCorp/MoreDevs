@@ -100,11 +100,9 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
         >
           {isSideBarOpen ? <RxHamburgerMenu /> : <AiOutlineClose />}
         </span>
-
-        <FontAwesomeIcon icon={faHouse} className="text-xl" />
         <h2 className="text-2xl hidden lg:block font-semibold">{pageName}</h2>
       </div>
-      <Input Icon={BiSearch} placeHolder="Explore MoreDevs..." />
+      {/* <Input Icon={BiSearch} placeHolder="Explore MoreDevs..." /> */}
       <div className="flex items-center space-x-3">
         <FontAwesomeIcon
           icon={faCommentDots}

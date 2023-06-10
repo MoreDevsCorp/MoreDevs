@@ -1,9 +1,5 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-// import NavBar from "./NavBar";
-
-// import Chat from "@/features/chat";
-
 import NavBar from "./Navbar";
 import SideBar from "./sidebar/Sidebar";
 import Chat from "../../ui/chat";
@@ -12,7 +8,7 @@ const PrivateLayout = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
 
   return (
-    <main className="max-w-[1200px] mx-auto flex">
+    <main className="max-w-[1400px] mx-auto flex">
       <SideBar
         isSideBarOpen={isSideBarOpen}
         setIsSideBarOpen={setIsSideBarOpen}
