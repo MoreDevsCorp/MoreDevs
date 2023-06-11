@@ -6,6 +6,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import profile from "../../../assets/profile.jpg";
 import { BiSearch } from "react-icons/bi";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+
 import { AiOutlineClose } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useEffect, useState } from "react";
@@ -102,7 +104,17 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
         </span>
         <h2 className="text-2xl hidden lg:block font-semibold">{pageName}</h2>
       </div>
-      {/* <Input Icon={BiSearch} placeHolder="Explore MoreDevs..." /> */}
+
+      <div className="mx-4 md:ml-0 relative flex items-center  transition-all group">
+        <MagnifyingGlassIcon className="group-hover:rotate-[360deg] absolute ml-2 h-5 w-5 text-gray-500 transition-all duration-500" />
+
+        <input
+          type="text"
+          placeholder="Search in MoreDevs."
+          className={`pl-10 pr-3  py-2 w-[0%] md:w-[100%] text-sm bg-gray-50 placeholder-gray-500 rounded border outline-none group-hover:w-[100%] transition-all duration-500`}
+        />
+      </div>
+
       <div className="flex items-center space-x-3">
         <FontAwesomeIcon
           icon={faCommentDots}

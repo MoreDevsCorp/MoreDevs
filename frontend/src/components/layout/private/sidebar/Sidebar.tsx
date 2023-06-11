@@ -7,6 +7,7 @@ import {
   faStore,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { BiSearch } from "react-icons/bi";
 import {
   OutlineChat,
   OutlineCompany,
@@ -18,6 +19,7 @@ import {
 
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import Input from "../../../ui/inputs/Input";
 
 const navItems = [
   { text: "Home", icon: OutlineHome },
