@@ -1,14 +1,6 @@
 import SidebarItem from "./SidebarItem";
 
 import {
-  faHouse,
-  faNetworkWired,
-  faBriefcase,
-  faStore,
-} from "@fortawesome/free-solid-svg-icons";
-
-import { BiSearch } from "react-icons/bi";
-import {
   OutlineChat,
   OutlineCompany,
   OutlineHome,

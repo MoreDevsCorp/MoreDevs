@@ -1,6 +1,7 @@
 import { FC } from "react";
 import Button from "../Button";
 import Google from "../../../assets/companyLogo.png";
+import { Link } from "react-router-dom";
 
 const JobCard: FC = () => {
   return (
@@ -32,7 +33,9 @@ const JobCard: FC = () => {
             </p>
           </div>
           <div>
-            <Button>More</Button>
+            <Button>
+              <Link to={"/jobs/12312"}>More</Link>
+            </Button>
             <h3>Internship</h3>
           </div>
         </div>

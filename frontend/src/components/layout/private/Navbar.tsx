@@ -1,11 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHouse,
-  faCommentDots,
-  faBell,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCommentDots, faBell } from "@fortawesome/free-solid-svg-icons";
 import profile from "../../../assets/profile.jpg";
-import { BiSearch } from "react-icons/bi";
+
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import { AiOutlineClose } from "react-icons/ai";
@@ -13,7 +9,6 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { useEffect, useState } from "react";
 import { Menu } from "@headlessui/react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Input from "../../ui/inputs/Input";
 
 interface NavBar {
   isSideBarOpen: boolean;
