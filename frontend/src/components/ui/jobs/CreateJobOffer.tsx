@@ -1,17 +1,7 @@
 import { Formik, Form, Field } from "formik";
-import { Link } from "react-router-dom";
 import Button from "../Button";
-import Creatable, { useCreatable } from "react-select/creatable";
 import CreatableSelect from "react-select/creatable";
-
-import { useEffect, useState } from "react";
-
-const dogOptions = [
-  { id: 1, label: "Chihuahua" },
-  { id: 2, label: "Bulldog" },
-  { id: 3, label: "Dachshund" },
-  { id: 4, label: "Akita" },
-];
+import { useState } from "react";
 
 const CreateJobOffer = () => {
   const [skillsInput, setSkillsInput] = useState(null);

@@ -8,6 +8,7 @@ import ProfileSettings from "../../components/ui/profile/Profile Setting/Profile
 import RecentJobs from "../../components/ui/company/RecentJobs";
 import CompanyCheck from "../../components/ui/company/CompanyCheck";
 import { Link } from "react-router-dom";
+import JobList from "../../components/ui/jobs/JobList";
 
 const bgImage = null;
 const companyCreated = true;
@@ -74,6 +75,7 @@ const CompanyProfile = () => {
       </div>
 
       <MyTabs
+        tabsArr={["Profile", "Jobs List", "Settings"]}
         c1={
           <div className={"space-y-6"}>
             <About />
@@ -81,10 +83,8 @@ const CompanyProfile = () => {
           </div>
         }
         c2={
-          <div className="max-w-[600px]">
-            <Post />
-            <Post />
-            <Post />
+          <div>
+            <JobList />
           </div>
         }
         c3={<ProfileSettings />}

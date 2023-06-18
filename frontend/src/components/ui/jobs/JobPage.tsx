@@ -6,11 +6,17 @@ import {
   BriefcaseIcon,
   ListBulletIcon,
   ClockIcon,
+  CheckIcon,
 } from "@heroicons/react/24/outline";
 
 const JobPage: FC = () => {
   return (
     <div className="space-y-2 px-2 py-4">
+      <div className="flex space-x-2 py-2">
+        <CheckIcon className="h-5 w-5" />
+        <span className="text-md font-medium">Job Status: Taken</span>
+      </div>
+
       <h1 className="text-2xl font-semibold tracking-tight">UX/UI Designer</h1>
 
       <div>
