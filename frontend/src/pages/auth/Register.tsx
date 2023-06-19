@@ -1,8 +1,16 @@
 import { toast } from "react-hot-toast";
 import RegisterForm from "../../components/ui/RegisterForm";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { Navigate } from "react-router-dom";
+import { loginAction } from "../../state/actions/userActions";
+import { useDispatch } from "react-redux";
 
 const RegisterPage = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+
   const handleRegister = async (values: {
     firstName: string;
     lastName: string;
@@ -18,14 +26,19 @@ const RegisterPage = () => {
       `${import.meta.env.VITE_BACKEND_URL}/auth/register`,
       values
     );
-
     if (data) {
-      localStorage.setItem("MOREDEVS_USER", JSON.stringify(data));
-    } else {
-      localStorage.setItem("MOREDEVS_USER", JSON.stringify({}));
+      dispatch(loginAction(data));
     }
+
+    // if (data) {
+    //   localStorage.setItem("MOREDEVS_USER", JSON.stringify(data));
+    // } else {
+    //   localStorage.setItem("MOREDEVS_USER", JSON.stringify({}));
+    // }
   };
-  return (
+  return user ? (
+    <Navigate to="/home" replace />
+  ) : (
     <div className="flex flex-col justify-center items-center h-[100vh]">
       <RegisterForm handleRegister={handleRegister} />
     </div>
