@@ -74,6 +74,7 @@ const Profile = () => {
       </div>
 
       <MyTabs
+        tabsArr={["Profile", "Posts", "Settings"]}
         c1={
           <div className={"space-y-6"}>
             <About />
