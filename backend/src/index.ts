@@ -125,8 +125,6 @@ async function main() {
         },
       });
 
-    console.log(user);
-
     const session: Session = {
       user: user as User,
     };

@@ -243,6 +243,7 @@ model Offer {
   skills       OfferSkill[]
   type         OfferType              @default(fullTime)
   applications UserApplicationOffer[]
+  taken        Boolean
 
   createdAt DateTime @default(now())
 }
