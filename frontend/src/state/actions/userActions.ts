@@ -1,26 +1,15 @@
-import { Dispatch } from "redux";
 import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
+  USER_LOGOUT,
 } from "../constantes/userConstants";
+import { User } from "../../types";
 
-export const login =
-  (email: string, password: string) => async (dispatch: Dispatch) => {
-    try {
-      dispatch({ type: USER_LOGIN_REQUEST });
+export const loginAction = (data: User) => {
+  return { type: USER_LOGIN_REQUEST, payload: data };
+};
 
-      const { data } = { data: email + password };
-
-      dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
-      localStorage.setItem("userInfo", JSON.stringify(data));
-    } catch (error) {
-      dispatch({
-        type: USER_LOGIN_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
-    }
-  };
+export const singOutAction = (data: User) => {
+  return { type: USER_LOGOUT, payload: data };
+};

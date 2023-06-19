@@ -12,17 +12,17 @@ import JobPage from "./components/ui/jobs/JobPage";
 import CreateJobOffer from "./components/ui/jobs/CreateJobOffer";
 import { useEffect, useState } from "react";
 
+import Protected from "./lib/isLoggedIn";
+
 import { User } from "./types";
+import { useSelector } from "react-redux";
+import { RootState } from "./store";
 
 function App() {
-  const [user, setUser] = useState<User | {}>();
+  // const [user, setUser] = useState<User | null>();
 
-  useEffect(() => {
-    const user = localStorage.getItem("MOREDEVS_USER");
-    if (user) {
-      setUser(JSON.parse(user));
-    }
-  }, []);
+  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  console.log(user);
 
   return (
     <BrowserRouter>
@@ -31,7 +31,13 @@ function App() {
         <Route element={<LoginPage />} path="/auth/login" />
         <Route element={<RegisterPage />} path="/auth/register" />
 
-        <Route element={<PrivateLayout />}>
+        <Route
+          element={
+            <Protected user={user}>
+              <PrivateLayout />
+            </Protected>
+          }
+        >
           <Route element={<Home />} path="/home" />
           <Route element={<Jobs />} path="/jobs" />
           <Route element={<JobPage />} path="/jobs/:id" />

@@ -9,6 +9,8 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { useEffect, useState } from "react";
 import { Menu } from "@headlessui/react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { singOutAction } from "../../../state/actions/userActions";
 
 interface NavBar {
   isSideBarOpen: boolean;
@@ -16,6 +18,7 @@ interface NavBar {
 }
 
 export function DropDown() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
     <div>
@@ -61,6 +64,7 @@ export function DropDown() {
             <Menu.Item>
               {({ active }) => (
                 <button
+                  onClick={() => dispatch(singOutAction())}
                   className={`${
                     active ? "bg-black-900 text-white" : "text-black-600"
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm hover:text-gray-500`}
