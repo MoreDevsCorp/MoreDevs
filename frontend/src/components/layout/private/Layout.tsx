@@ -21,7 +21,7 @@ const PrivateLayout = () => {
 
         <div className="flex p-4 md:gap-3  justify-between items-start w-full">
           <Outlet />
-          <Chat />
+          {/* <Chat /> */}
         </div>
       </div>
     </main>
