@@ -19,9 +19,11 @@ const RegisterPage = () => {
       values
     );
 
-    console.log("====================================");
-    console.log(data);
-    console.log("====================================");
+    if (data) {
+      localStorage.setItem("MOREDEVS_USER", JSON.stringify(data));
+    } else {
+      localStorage.setItem("MOREDEVS_USER", JSON.stringify({}));
+    }
   };
   return (
     <div className="flex flex-col justify-center items-center h-[100vh]">

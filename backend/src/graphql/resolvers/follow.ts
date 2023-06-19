@@ -7,22 +7,17 @@ export default {
     getFollowers: async (_p: any, _a: any, context: Context) => {
       const { session, prisma } = context;
 
-      if (!session?.token) {
+      if (!session?.user) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
-        const decodedToken = jwt.verify(
-          session.token,
-          process.env.JWT_SECRET as string
-        );
-        const sessionId = (<any>decodedToken).id;
         // Getting the followers of a specific user
         const followers = await prisma.user.findUnique({
           where: {
-            id: sessionId,
+            id: session.user.id,
           },
           include: {
             followers: {
@@ -53,22 +48,17 @@ export default {
     getFollowing: async (_p: any, _a: any, context: Context) => {
       const { session, prisma } = context;
 
-      if (!session?.token) {
+      if (!session?.user) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
-        const decodedToken = jwt.verify(
-          session.token,
-          process.env.JWT_SECRET as string
-        );
-        const sessionId = (<any>decodedToken).id;
         // Getting the following of a specific user
         const following = await prisma.user.findUnique({
           where: {
-            id: sessionId,
+            id: session.user.id,
           },
           include: {
             following: {
@@ -102,18 +92,13 @@ export default {
       const { session, prisma, pubsub } = context;
       const { userId } = args;
 
-      if (!session?.token) {
+      if (!session?.user) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
-        const decodedToken = jwt.verify(
-          session.token,
-          process.env.JWT_SECRET as string
-        );
-        const sessionId = (<any>decodedToken).id;
         // await prisma.follows.create({
         //   data: {
         //     followerId: sessionId,
@@ -123,12 +108,12 @@ export default {
 
         await prisma.user.update({
           where: {
-            id: sessionId,
+            id: session.user.id,
           },
           data: {
             following: {
               create: {
-                followerId: sessionId,
+                followerId: session.user.id,
               },
             },
           },
@@ -141,7 +126,7 @@ export default {
           data: {
             followers: {
               create: {
-                followingId: sessionId,
+                followingId: session.user.id,
               },
             },
           },
@@ -166,18 +151,13 @@ export default {
       const { session, prisma } = context;
       const { userId } = args;
 
-      if (!session?.token) {
+      if (!session?.user) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
-        const decodedToken = jwt.verify(
-          session.token,
-          process.env.JWT_SECRET as string
-        );
-        const sessionId = (<any>decodedToken).id;
         // await prisma.follows.delete({
         //   where: {
         //     followerId_followingId: {
@@ -189,13 +169,13 @@ export default {
 
         await prisma.user.update({
           where: {
-            id: sessionId,
+            id: session.user.id,
           },
           data: {
             following: {
               delete: {
                 followerId_followingId: {
-                  followerId: sessionId,
+                  followerId: session.user.id,
                   followingId: userId,
                 },
               },
@@ -211,7 +191,7 @@ export default {
             followers: {
               delete: {
                 followerId_followingId: {
-                  followerId: sessionId,
+                  followerId: session.user.id,
                   followingId: userId,
                 },
               },

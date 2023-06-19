@@ -11,9 +11,9 @@ router.post("/register", async (req: Request, res: Response) => {
 
   try {
     console.log(email);
-    
+
     const exisitingUser = await prisma.user.findUnique({
-      where: { email:email },
+      where: { email: email },
     });
 
     if (exisitingUser) {
@@ -36,13 +36,20 @@ router.post("/register", async (req: Request, res: Response) => {
         email: newUser.email,
       },
       process.env.JWT_SECRET as string,
-      { expiresIn: "72h" }
+      { expiresIn: "30d" }
     );
 
     const updatedUser = await prisma.user.update({
       where: { id: newUser.id },
       data: {
         token,
+      },
+      select: {
+        id: true,
+        email: true,
+        image: true,
+        token: true,
+        password: false,
       },
     });
 
@@ -83,13 +90,20 @@ router.post("/login", async (req: Request, res: Response) => {
         email: user.email,
       },
       process.env.JWT_SECRET as string,
-      { expiresIn: "72h" }
+      { expiresIn: "30d" }
     );
 
     const updatedUser = await prisma.user.update({
       where: { id: user.id },
       data: {
         token,
+      },
+      select: {
+        id: true,
+        email: true,
+        image: true,
+        token: true,
+        password: false,
       },
     });
 

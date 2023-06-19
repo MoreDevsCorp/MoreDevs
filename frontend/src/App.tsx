@@ -10,14 +10,27 @@ import CreateCompany from "./components/ui/company/CreateCompany";
 import Jobs from "./pages/private/Jobs";
 import JobPage from "./components/ui/jobs/JobPage";
 import CreateJobOffer from "./components/ui/jobs/CreateJobOffer";
+import { useEffect, useState } from "react";
+
+import { User } from "./types";
 
 function App() {
+  const [user, setUser] = useState<User | {}>();
+
+  useEffect(() => {
+    const user = localStorage.getItem("MOREDEVS_USER");
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<Welcome />} path="/" />
         <Route element={<LoginPage />} path="/auth/login" />
         <Route element={<RegisterPage />} path="/auth/register" />
+
         <Route element={<PrivateLayout />}>
           <Route element={<Home />} path="/home" />
           <Route element={<Jobs />} path="/jobs" />

@@ -4,6 +4,7 @@ import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 
 import express, { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
 
 import http from "http";
 import cors from "cors";
@@ -20,7 +21,7 @@ import { useServer } from "graphql-ws/lib/use/ws";
 import typeDefs from "./graphql/typeDefs";
 import resolvers from "./graphql/resolvers";
 
-import { Context, SubscriptionContext } from "./utils/types";
+import { Context, SubscriptionContext, User } from "./utils/types";
 import { Session } from "./utils/types";
 import { GraphQLError } from "graphql";
 
@@ -90,7 +91,7 @@ async function main() {
   await server.start();
 
   const context = async ({ req }: any): Promise<Context> => {
-    let token = req.headers.authentication;
+    let token = req.headers.authorization;
 
     if (!token || !token.startsWith("Bearer")) {
       throw new GraphQLError("you must be logged in to query this schema", {
@@ -102,21 +103,32 @@ async function main() {
 
     token = token.split(" ")[1];
 
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string);
+
     const user = await prisma.user.findFirst({
       where: {
         token,
       },
+      select: {
+        id: true,
+        email: true,
+        token: true,
+        image: true,
+        password: false,
+      },
     });
 
-    if (!user)
+    if (!user || !decodedToken)
       throw new GraphQLError("you must be logged in to query this schema", {
         extensions: {
           code: "UNAUTHENTICATED",
         },
       });
 
+    console.log(user);
+
     const session: Session = {
-      token,
+      user: user as User,
     };
 
     return { session, prisma, pubsub };

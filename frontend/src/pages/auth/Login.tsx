@@ -5,11 +5,14 @@ const LoginPage = () => {
   const handleLogin = async (values: { email: string; password: string }) => {
     const { data } = await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/auth/login`,
-      values);
+      values
+    );
 
-    console.log("====================================");
-    console.log(data);
-    console.log("====================================");
+    if (data) {
+      localStorage.setItem("MOREDEVS_USER", JSON.stringify(data));
+    } else {
+      localStorage.setItem("MOREDEVS_USER", JSON.stringify({}));
+    }
   };
 
   return (
