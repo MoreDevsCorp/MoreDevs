@@ -1,13 +1,6 @@
 import SidebarItem from "./SidebarItem";
 
 import {
-  faHouse,
-  faNetworkWired,
-  faBriefcase,
-  faStore,
-} from "@fortawesome/free-solid-svg-icons";
-
-import {
   OutlineChat,
   OutlineCompany,
   OutlineHome,
@@ -18,6 +11,7 @@ import {
 
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import Input from "../../../ui/inputs/Input";
 
 const navItems = [
   { text: "Home", icon: OutlineHome },

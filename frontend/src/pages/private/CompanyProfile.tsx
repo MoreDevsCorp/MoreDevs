@@ -7,9 +7,11 @@ import Post from "../../components/ui/post";
 import ProfileSettings from "../../components/ui/profile/Profile Setting/ProfileSettings";
 import RecentJobs from "../../components/ui/company/RecentJobs";
 import CompanyCheck from "../../components/ui/company/CompanyCheck";
+import { Link } from "react-router-dom";
+import JobList from "../../components/ui/jobs/JobList";
 
 const bgImage = null;
-const companyCreated = false;
+const companyCreated = true;
 
 const CompanyProfile = () => {
   return !companyCreated ? (
@@ -53,16 +55,27 @@ const CompanyProfile = () => {
           </div>
 
           <div className="mt-6 mr-4">
-            <Button type="button">
-              <span className="flex space-x-1 items-center text-white ">
-                <span>Follow +</span>
-              </span>
-            </Button>
+            {companyCreated ? (
+              <Button type="button">
+                <span className="flex space-x-1 items-center text-white ">
+                  <Link to="/joboffer/create">
+                    <span>Create Job Offer</span>
+                  </Link>
+                </span>
+              </Button>
+            ) : (
+              <Button type="button">
+                <span className="flex space-x-1 items-center text-white ">
+                  <span>Follow +</span>
+                </span>
+              </Button>
+            )}
           </div>
         </div>
       </div>
 
       <MyTabs
+        tabsArr={["Profile", "Jobs List", "Settings"]}
         c1={
           <div className={"space-y-6"}>
             <About />
@@ -70,10 +83,8 @@ const CompanyProfile = () => {
           </div>
         }
         c2={
-          <div className="max-w-[600px]">
-            <Post />
-            <Post />
-            <Post />
+          <div>
+            <JobList />
           </div>
         }
         c3={<ProfileSettings />}

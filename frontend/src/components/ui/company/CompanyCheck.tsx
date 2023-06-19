@@ -13,4 +13,5 @@ const CompanyCheck = () => {
     </div>
   );
 };
+
 export default CompanyCheck;

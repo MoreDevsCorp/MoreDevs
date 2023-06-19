@@ -7,6 +7,9 @@ import Home from "./pages/private/Home";
 import Profile from "./pages/private/Profile";
 import CompanyProfile from "./pages/private/CompanyProfile";
 import CreateCompany from "./components/ui/company/CreateCompany";
+import Jobs from "./pages/private/Jobs";
+import JobPage from "./components/ui/jobs/JobPage";
+import CreateJobOffer from "./components/ui/jobs/CreateJobOffer";
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         <Route element={<RegisterPage />} path="/auth/register" />
         <Route element={<PrivateLayout />}>
           <Route element={<Home />} path="/home" />
+          <Route element={<Jobs />} path="/jobs" />
+          <Route element={<JobPage />} path="/jobs/:id" />
+          <Route element={<CreateJobOffer />} path="/joboffer/create" />
           <Route element={<Profile />} path="/profile" />
           <Route element={<CompanyProfile />} path="/company" />
           <Route element={<CreateCompany />} path="/create-company" />

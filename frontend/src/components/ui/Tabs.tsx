@@ -1,14 +1,13 @@
 import { Fragment, ReactNode } from "react";
 import { Tab } from "@headlessui/react";
 
-const tabsArr = ["Profile", "Posts", "Settings"];
-
 interface MyTabs {
+  tabsArr: string[];
   c1: ReactNode;
   c2: ReactNode;
   c3: ReactNode;
 }
-export default function MyTabs({ c1, c2, c3 }: MyTabs) {
+export default function MyTabs({ tabsArr, c1, c2, c3 }: MyTabs) {
   return (
     <Tab.Group>
       <Tab.List className={"inline-block  items-center  bg-black-100"}>

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { IconType } from "react-icons/lib";
 
 interface InputProps {
-  Icon?: IconType;
+  Icon?: any;
   placeHolder?: string;
   value?: string;
   onChange?: (e: any) => void;
