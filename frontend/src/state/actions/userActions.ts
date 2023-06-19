@@ -1,9 +1,4 @@
-import {
-  USER_LOGIN_FAIL,
-  USER_LOGIN_REQUEST,
-  USER_LOGIN_SUCCESS,
-  USER_LOGOUT,
-} from "../constantes/userConstants";
+import { USER_LOGIN_REQUEST, USER_LOGOUT } from "../constantes/userConstants";
 import { User } from "../../types";
 
 export const loginAction = (data: User) => {
