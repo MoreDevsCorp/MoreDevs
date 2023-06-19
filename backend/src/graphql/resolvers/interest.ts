@@ -6,7 +6,7 @@ export default {
     getInterests: async (_: any, __: any, context: Context) => {
       const { session, prisma } = context;
 
-      if (!session?.token) {
+      if (!session?.user) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
