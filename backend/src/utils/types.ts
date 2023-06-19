@@ -10,7 +10,7 @@ export interface Context {
 }
 
 export interface Session {
-  token: string;
+  user: User | null;
 }
 
 export type DecodedToken = {
@@ -21,11 +21,10 @@ export type DecodedToken = {
 /********************************* */
 
 export interface User {
-  id: string | "";
-  name: string | "";
-  image: string | "";
-  email: string | "";
-  token: string | "";
+  id: string;
+  image: string;
+  email: string;
+  token: string;
 }
 
 export interface SubscriptionContext extends GQLContext {

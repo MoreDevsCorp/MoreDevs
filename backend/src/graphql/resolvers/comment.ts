@@ -8,7 +8,7 @@ export default {
       const { session, prisma } = context;
       const { postId } = args;
 
-      if (!session?.token) {
+      if (!session?.user) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
@@ -38,23 +38,18 @@ export default {
       const { session, prisma } = context;
       const { postId, content } = args;
 
-      if (!session?.token) {
+      if (!session?.user) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
-        const decodedToken = jwt.verify(
-          session.token,
-          process.env.JWT_SECRET as string
-        );
-        const sessionId = (<any>decodedToken).id;
         await prisma.comment.create({
           data: {
             content,
             postId,
-            authorId: sessionId,
+            authorId: session.user.id,
           },
         });
         return {
@@ -75,7 +70,7 @@ export default {
       const { session, prisma } = context;
       const { commentId } = args;
 
-      if (!session?.token) {
+      if (!session?.user) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });

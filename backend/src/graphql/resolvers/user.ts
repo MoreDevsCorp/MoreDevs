@@ -121,18 +121,14 @@ const resolvers = {
       const { session, prisma } = context;
       const { bio, skillIds, interestsIds } = args;
 
-      if (!session?.token) {
+      if (!session?.user) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
         });
       }
 
       try {
-        const decodedToken = jwt.verify(
-          session.token,
-          process.env.JWT_SECRET as string
-        );
-        const sessionId = (<any>decodedToken).id;
+        const sessionId = session.user.id;
         await prisma.user.update({
           where: { id: sessionId },
           data: {

@@ -9,11 +9,13 @@ const httpLink = new HttpLink({
   credentials: "include",
 });
 
+const user = localStorage.getItem("MOREDEVS_USER") || "";
+
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authoriziation: localStorage.getItem("token") || "",
+      authoriziation: `Bearer ${JSON.parse(user).token}`,
     },
   };
 });

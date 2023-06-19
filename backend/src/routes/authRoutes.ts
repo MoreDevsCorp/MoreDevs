@@ -36,7 +36,7 @@ router.post("/register", async (req: Request, res: Response) => {
         email: newUser.email,
       },
       process.env.JWT_SECRET as string,
-      { expiresIn: "72h" }
+      { expiresIn: "30d" }
     );
 
     const updatedUser = await prisma.user.update({
@@ -90,7 +90,7 @@ router.post("/login", async (req: Request, res: Response) => {
         email: user.email,
       },
       process.env.JWT_SECRET as string,
-      { expiresIn: "72h" }
+      { expiresIn: "30d" }
     );
 
     const updatedUser = await prisma.user.update({
