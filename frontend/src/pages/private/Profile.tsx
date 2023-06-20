@@ -4,7 +4,7 @@ import { GoPrimitiveDot } from "react-icons/go";
 import Button from "../../components/ui/Button";
 import MyTabs from "../../components/ui/Tabs";
 import About from "../../components/ui/profile/About";
-import Skills from "../../components/ui/profile/Skills";
+import Skills from "../../components/ui/profile/Skills/Skills";
 import Projects from "../../components/ui/profile/Project/Projects";
 import Experience from "../../components/ui/profile/Experiences/Experience";
 import Education from "../../components/ui/profile/Education/Education";

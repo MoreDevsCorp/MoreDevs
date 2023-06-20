@@ -13,7 +13,7 @@ const PrivateLayout = () => {
         isSideBarOpen={isSideBarOpen}
         setIsSideBarOpen={setIsSideBarOpen}
       />
-      <div className={`flex flex-col justify-between items-center w-full`}>
+      <div className={`flex flex-col space-y-5 items-center w-full`}>
         <NavBar
           isSideBarOpen={isSideBarOpen}
           setIsSideBarOpen={setIsSideBarOpen}
