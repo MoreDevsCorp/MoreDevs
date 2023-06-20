@@ -14,9 +14,10 @@ import { useEffect, useState } from "react";
 
 import Protected from "./lib/isLoggedIn";
 
-import { User } from "./types";
 import { useSelector } from "react-redux";
 import { RootState } from "./store";
+import SkillsPage from "./components/ui/profile/Skills/SkillsPage";
+import EducationPage from "./components/ui/profile/Education/EducationPage";
 
 function App() {
   // const [user, setUser] = useState<User | null>();
@@ -43,10 +44,16 @@ function App() {
           <Route element={<JobPage />} path="/jobs/:id" />
           <Route element={<CreateJobOffer />} path="/joboffer/create" />
           <Route element={<Profile />} path="/profile" />
+          <Route element={<SkillsPage />} path="/profile/details/skills" />
+          <Route
+            element={<EducationPage />}
+            path="/profile/details/education"
+          />
           <Route element={<CompanyProfile />} path="/company" />
           <Route element={<CreateCompany />} path="/create-company" />
           {/* <Route element={<Home />} path="/private" /> */}
         </Route>
+        <Route element={"404 not found"} path="*" />
       </Routes>
     </BrowserRouter>
   );
