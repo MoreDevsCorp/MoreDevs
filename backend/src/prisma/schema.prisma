@@ -19,6 +19,7 @@ model User {
   avatar        String?
   bio           String?
   location      String?
+  about         String?
   skills        UserSkill[]
   experiences   Experience[]
   educations    Education[]
@@ -243,6 +244,7 @@ model Offer {
   skills       OfferSkill[]
   type         OfferType              @default(fullTime)
   applications UserApplicationOffer[]
+  taken        Boolean
 
   createdAt DateTime @default(now())
 }

@@ -11,6 +11,8 @@ import { Menu } from "@headlessui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { singOutAction } from "../../../state/actions/userActions";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 
 interface NavBar {
   isSideBarOpen: boolean;
@@ -20,6 +22,7 @@ interface NavBar {
 export function DropDown() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.userLogin.userInfo);
   return (
     <div>
       <Menu as="div" className="relative inline-block text-left ">
@@ -39,7 +42,7 @@ export function DropDown() {
             <Menu.Item>
               {({ active }) => (
                 <button
-                  onClick={() => navigate("/profile")}
+                  onClick={() => navigate(`/profile/${user.id}`)}
                   className={`${
                     active ? "bg-black-900 text-white" : "text-black-600"
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm hover:text-gray-500`}
@@ -80,18 +83,6 @@ export function DropDown() {
   );
 }
 const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
-  const [pageName, setPageName] = useState<string | null>(null);
-  const router = useLocation();
-
-  const { pathname } = router;
-
-  useEffect(() => {
-    const routerName =
-      pathname.split("/")[1].charAt(0).toUpperCase() +
-      pathname.split("/")[1].slice(1);
-    setPageName(routerName);
-  }, [pathname]);
-
   return (
     <nav className="z-50 px-10 py-4  w-[100%] border  border-gray-100 bg-white flex items-center justify-between">
       <div className="flex items-center space-x-4">
@@ -101,7 +92,6 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
         >
           {isSideBarOpen ? <RxHamburgerMenu /> : <AiOutlineClose />}
         </span>
-        <h2 className="text-2xl hidden lg:block font-semibold">{pageName}</h2>
       </div>
 
       <div className="mx-4 md:ml-0 relative flex items-center  transition-all group">
