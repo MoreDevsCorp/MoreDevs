@@ -7,6 +7,9 @@ import { setContext } from "@apollo/client/link/context";
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
   credentials: "include",
+  fetchOptions: {
+    mode: "no-cors",
+  },
 });
 
 const user = localStorage.getItem("MOREDEVS_USER") || "";
@@ -27,7 +30,7 @@ const wsLink = new GraphQLWsLink(
     connectionParams: async () => {
       return {
         session: {
-          token: localStorage.getItem("token") || "",
+          user: { ...JSON.parse(user) },
         },
       };
     },

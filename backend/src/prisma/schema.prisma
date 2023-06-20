@@ -19,6 +19,7 @@ model User {
   avatar        String?
   bio           String?
   location      String?
+  about         String?
   skills        UserSkill[]
   experiences   Experience[]
   educations    Education[]
