@@ -51,6 +51,7 @@ const SideBar = ({ isSideBarOpen }: SideBar) => {
         {navItems.map((link) => {
           return (
             <SidebarItem
+              key={link.text}
               setActive={setActive}
               active={active}
               title={link.text}

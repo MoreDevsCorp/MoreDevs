@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 export default {
   Query: {
-    getPosts: async (_: any, args: {}, context: Context) => {
+    getPosts: async (_: any, args: { userId: string }, context: Context) => {
       const { session, prisma } = context;
 
       if (!session?.user) {
@@ -16,7 +16,27 @@ export default {
       try {
         const posts = await prisma.post.findMany({
           where: {
-            authorId: session.user.id,
+            authorId: args.userId,
+          },
+          select: {
+            author: {
+              select: {
+                id: true,
+                image: true,
+                createdAt: true,
+                name: true,
+              },
+            },
+            comments: {
+              include: {
+                _count: true,
+              },
+            },
+            likes: {
+              select: {
+                id: true,
+              },
+            },
           },
         });
 
