@@ -70,10 +70,33 @@ const interestsArray = [
   },
 ];
 
+const skills = [
+  {
+    name: "Javascript",
+  },
+  {
+    name: "ReactJS",
+  },
+  {
+    name: "Laravel",
+  },
+  {
+    name: "Java",
+  },
+  {
+    name: ".NET",
+  },
+];
+
 async function main() {
   await prisma.hashTag.deleteMany();
   await prisma.interest.deleteMany();
   await prisma.interestHashTag.deleteMany();
+  await prisma.skill.deleteMany();
+
+  await prisma.skill.createMany({
+    data: skills,
+  });
 
   await prisma.hashTag.createMany({
     data: [...webHashTags, ...mobileHashTags],

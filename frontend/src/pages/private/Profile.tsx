@@ -10,10 +10,27 @@ import Experience from "../../components/ui/profile/Experiences/Experience";
 import Education from "../../components/ui/profile/Education/Education";
 import Post from "../../components/ui/post";
 import ProfileSettings from "../../components/ui/profile/Profile Setting/ProfileSettings";
+import { useParams } from "react-router-dom";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import { GetProfileData, GetProfileVariables } from "../../types";
+import profileOperations from "../../graphql/operations/profile";
 
 const bgImage = null;
 
 const Profile = () => {
+  const { userId } = useParams();
+
+  const { data } = useQuery<GetProfileData, GetProfileVariables>(
+    profileOperations.Queries.getProfile,
+    {
+      variables: {
+        userId: userId || "",
+      },
+    }
+  );
+
+  console.log(data);
+
   return (
     <div className="w-full space-y-6 max-w-[1100px] mb-20">
       <div className="rounded  w-full  border border-gray-100">

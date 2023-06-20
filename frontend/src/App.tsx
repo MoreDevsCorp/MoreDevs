@@ -23,7 +23,6 @@ function App() {
   // const [user, setUser] = useState<User | null>();
 
   const user = useSelector((state: RootState) => state.userLogin.userInfo);
-  console.log(user);
 
   return (
     <BrowserRouter>
@@ -43,7 +42,7 @@ function App() {
           <Route element={<Jobs />} path="/jobs" />
           <Route element={<JobPage />} path="/jobs/:id" />
           <Route element={<CreateJobOffer />} path="/joboffer/create" />
-          <Route element={<Profile />} path="/profile" />
+          <Route element={<Profile />} path="/profile/:userId" />
           <Route element={<SkillsPage />} path="/profile/details/skills" />
           <Route
             element={<EducationPage />}

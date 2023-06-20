@@ -67,6 +67,7 @@ export default {
               },
             },
             companyId,
+            taken: false,
           },
         });
 
