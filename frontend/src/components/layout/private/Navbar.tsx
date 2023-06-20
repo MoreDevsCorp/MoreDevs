@@ -93,7 +93,7 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
   }, [pathname]);
 
   return (
-    <nav className="z-50 px-10 py-4 flex-grow w-[100%] border  border-gray-100 bg-white flex items-center justify-between">
+    <nav className="z-50 px-10 py-4  w-[100%] border  border-gray-100 bg-white flex items-center justify-between">
       <div className="flex items-center space-x-4">
         <span
           className="lg:hidden text-xl cursor-pointer"
