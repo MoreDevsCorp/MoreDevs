@@ -67,10 +67,18 @@ async function main() {
     wsServer
   );
 
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    next();
+  });
+
   // ------------Apollo Server
 
   const server = new ApolloServer<Context>({
     schema,
+
     plugins: [
       // Proper shutdown for the HTTP Server
       ApolloServerPluginDrainHttpServer({ httpServer }),
@@ -133,23 +141,17 @@ async function main() {
   };
   app.use(express.json());
 
-  app.use((req: Request, res: Response, next: NextFunction) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    next();
-  });
+  app.use("/auth", authRoutes);
 
   app.use(
     "/graphql",
     cors<cors.CorsRequest>({
-      origin: process.env.CLIENT_ORIGIN,
+      origin: ["http://localhost:5173/"],
       credentials: true,
     }),
     json(),
     expressMiddleware(server, { context })
   );
-  app.use("/auth", authRoutes);
 
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: 4000 }, resolve)

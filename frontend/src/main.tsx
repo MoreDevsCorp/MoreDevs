@@ -6,7 +6,7 @@ import store from "./store.ts";
 
 import { ApolloProvider } from "@apollo/client";
 
-import { client } from "./graphql/apollo-client.ts";
+import client from "./graphql/apollo-client.ts";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <Provider store={store}>
