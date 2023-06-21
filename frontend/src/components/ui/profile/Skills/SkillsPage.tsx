@@ -10,9 +10,12 @@ import {
   ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store";
 
 const SkillsPage = () => {
   const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.userLogin.userInfo);
   const [isOpen, setIsOpen] = useState(false);
   const [skill, setSkill] = useState(" ");
   const [skills, setSkills] = useState([
@@ -28,7 +31,7 @@ const SkillsPage = () => {
       <div className="w-full p-6 space-y-4 border border-gray-100 rounded">
         <ArrowLeftIcon
           className="hover:opacity-50 cursor-pointer h-5 w-5"
-          onClick={() => navigate("/profile")}
+          onClick={() => navigate(`/profile/${user.id}`)}
         />
         <div className="flex justify-between items-center py-1">
           <h1 className="font-semibold text-2xl text-black-900">Skills</h1>

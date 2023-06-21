@@ -6,6 +6,7 @@ import * as Yup from "yup";
 interface EducationFormProps {
   setIsOpen: (value: boolean) => void;
 }
+
 const EducationForm = ({ setIsOpen }: EducationFormProps) => {
   return (
     <div>

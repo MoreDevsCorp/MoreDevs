@@ -10,7 +10,6 @@ import CreateCompany from "./components/ui/company/CreateCompany";
 import Jobs from "./pages/private/Jobs";
 import JobPage from "./components/ui/jobs/JobPage";
 import CreateJobOffer from "./components/ui/jobs/CreateJobOffer";
-import { useEffect, useState } from "react";
 
 import Protected from "./lib/isLoggedIn";
 
@@ -43,10 +42,13 @@ function App() {
           <Route element={<JobPage />} path="/jobs/:id" />
           <Route element={<CreateJobOffer />} path="/joboffer/create" />
           <Route element={<Profile />} path="/profile/:userId" />
-          <Route element={<SkillsPage />} path="/profile/details/skills" />
+          <Route
+            element={<SkillsPage />}
+            path="/profile/:userId/details/skills"
+          />
           <Route
             element={<EducationPage />}
-            path="/profile/details/education"
+            path="/profile/:userId/details/education"
           />
           <Route element={<CompanyProfile />} path="/company" />
           <Route element={<CreateCompany />} path="/create-company" />
