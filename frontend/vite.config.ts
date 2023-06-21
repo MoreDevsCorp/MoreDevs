@@ -5,6 +5,9 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   // optimizeDeps: {
+  //   include: ["@apollo/client/core", "@apollo/client/cache"],
+  // },
+  // optimizeDeps: {
   //   exclude: [""],
   // },
 });

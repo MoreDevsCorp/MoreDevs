@@ -4,6 +4,7 @@ import CreatableSelect from "react-select/creatable";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 
+// import skillOperations from "../../../graphql/operations/skill";
 import skillOperations from "../../../graphql/operations/skill";
 import offerOperations from "../../../graphql/operations/offer";
 import {
@@ -19,25 +20,26 @@ const CreateJobOffer = () => {
     skillOperations.Queries.getSkills
   );
 
+  // skillOperations.Queries.getSkills
   const [createOfferMutation, {}] = useMutation<
     CreateOfferData,
     CreateOfferVariables
   >(offerOperations.Mutations.createOffer);
 
-  const [skills, setSkills] = useState<
-    { id: string; name: string; selected: boolean }[]
-  >([]);
+  const [skills, setSkills] = useState<{ label: string; value: string }[]>([]);
 
   useEffect(() => {
     if (data?.getSkills) {
       console.log(data);
       const newIntersts = data.getSkills.skills.map((skill) => ({
-        ...skill,
-        selected: false,
+        label: skill.name,
+        value: skill.name,
       }));
       setSkills(newIntersts);
+      console.log(skills);
     }
-  }, [data?.getSkills]);
+    console.log(skillsInput);
+  }, [data?.getSkills, skillsInput]);
 
   return (
     <div className="w-full px-2 py-4">
