@@ -8,6 +8,7 @@ import interest from "./interest";
 import notification from "./notification";
 import follow from "./follow";
 import offer from "./offer";
+import profile from "./profile";
 
 export default merge(
   {},
@@ -18,5 +19,6 @@ export default merge(
   interest,
   notification,
   follow,
-  offer
+  offer,
+  profile
 );

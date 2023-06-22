@@ -68,4 +68,23 @@ export const profilePopulated = Prisma.validator<Prisma.UserInclude>()({
       endedAt: true,
     },
   },
+
+  skills: {
+    select: {
+      skill: {
+        include: {
+          UserSkill: {
+            include: {
+              skill: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 });
