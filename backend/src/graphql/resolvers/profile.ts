@@ -66,6 +66,7 @@ export default {
             city,
             bio,
             location: `${city}, Morocco`,
+            name: `${first_name} ${last_name}`,
           },
         });
 
