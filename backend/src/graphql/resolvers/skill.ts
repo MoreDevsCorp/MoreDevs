@@ -6,8 +6,6 @@ export default {
     getSkills: async (_: any, __: any, context: Context) => {
       const { session, prisma } = context;
 
-      console.log("Reached here");
-
       if (!session?.user) {
         throw new GraphQLError("You're not authenticated !", {
           extensions: { code: 401 },
