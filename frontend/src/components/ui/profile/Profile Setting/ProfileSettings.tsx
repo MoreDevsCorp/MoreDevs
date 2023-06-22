@@ -13,6 +13,7 @@ import {
 } from "../../../../types";
 import profileOperations from "../../../../graphql/operations/profile";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 interface Input {
   placeholder: string;
@@ -67,7 +68,7 @@ export default function ProfileSettings({ profile }: ProfileSettingsProps) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const [setUpProfile, { data }] = useMutation<
+  const [setUpProfile, { data, loading, error }] = useMutation<
     SetUpProfileData,
     SetUpProfileVariables
   >(profileOperations.Mutations.setUpProfile);
@@ -84,6 +85,15 @@ export default function ProfileSettings({ profile }: ProfileSettingsProps) {
         city: formData.city,
       },
     });
+
+    if (data) {
+      toast.success("Informastion updated successfully!");
+    }
+
+    if (error) {
+      toast.error("Failed to update informations !");
+      console.log(error.message);
+    }
   };
 
   useEffect(() => {

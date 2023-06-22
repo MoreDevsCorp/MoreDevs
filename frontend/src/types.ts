@@ -1,5 +1,6 @@
 export type User = {
   id: string;
+  name: string;
   email: string;
   token: string;
   image: string;
@@ -40,19 +41,23 @@ export interface CreatePostData {
   sucess: boolean;
 }
 
+export interface Post {
+  author: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  createdAt: string;
+  comments: number;
+  likes: {
+    id: string;
+  };
+}
+
 export interface GetPostsData {
-  posts: {
-    author: {
-      id: string;
-      name: string;
-      image: string;
-      createdAt: string;
-    };
-    comments: number;
-    likes: {
-      id: string;
-    };
-  }[];
+  getPosts: {
+    posts: Post[];
+  };
 }
 
 /**

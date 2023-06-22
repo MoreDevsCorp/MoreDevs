@@ -4,7 +4,7 @@ const typeDefs = gql`
   scalar Date
 
   type Query {
-    getPosts: GetPostsReturnType
+    getPosts(userId: String): GetPostsReturnType
   }
 
   type Mutation {
@@ -13,10 +13,23 @@ const typeDefs = gql`
     deletePost(postId: String): PostReturnType
   }
 
+  type Author {
+    id: String
+    image: String
+    name: String
+    job_title: String
+  }
+
+  type Like {
+    id: String
+  }
+
   type Post {
+    author: Author
     content: String
     createdAt: Date
-    likesCount: Int
+    likes: [Like]
+    comments: Int
   }
 
   type GetPostsReturnType {

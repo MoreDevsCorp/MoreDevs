@@ -16,6 +16,7 @@ import { GetProfileData, GetProfileVariables } from "../../types";
 import profileOperations from "../../graphql/operations/profile";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import Posts from "./Posts";
 
 const bgImage = null;
 
@@ -118,13 +119,7 @@ const Profile = () => {
             <Education educations={data?.getProfile.profile.educations} />
           </div>
         }
-        c2={
-          <div className="max-w-[600px]">
-            <Post />
-            <Post />
-            <Post />
-          </div>
-        }
+        c2={<Posts />}
         c3={<ProfileSettings profile={data?.getProfile.profile} />}
       />
     </div>
