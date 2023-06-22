@@ -29,7 +29,7 @@ export function DropDown() {
         <div>
           <Menu.Button className="inline-flex w-full justify-center ">
             <img
-              src={profile}
+              src={user.image ? user.image : "/images/img_avatar.png"}
               alt="profile image"
               width={40}
               height={40}
@@ -83,6 +83,7 @@ export function DropDown() {
   );
 }
 const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
+  const user = useSelector((state: RootState) => state.userLogin.userInfo);
   return (
     <nav className="z-50 px-10 py-4  w-[100%] border  border-gray-100 bg-white flex items-center justify-between">
       <div className="flex items-center space-x-4">
@@ -116,7 +117,7 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
         />
 
         <div className="flex items-center space-x-2">
-          <h4 className="font-medium hidden  lg:block">Jon Snow</h4>
+          <h4 className="font-medium hidden  lg:block">{user.name}</h4>
           <DropDown />
         </div>
       </div>

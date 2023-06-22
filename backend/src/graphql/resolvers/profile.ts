@@ -37,7 +37,55 @@ export default {
       }
     },
   },
-  // Mutation : {}
+  Mutation: {
+    setUpProfile: async (
+      _: any,
+      args: {
+        id: string;
+        first_name: string;
+        last_name: string;
+        bio: string;
+        job_title: string;
+        job_type: string;
+        city: string;
+      },
+      context: Context
+    ) => {
+      const { session, prisma } = context;
+      const { id, bio, city, first_name, job_title, job_type, last_name } =
+        args;
+
+      try {
+        const user = await prisma.user.update({
+          where: { id },
+          data: {
+            first_name,
+            last_name,
+            job_title,
+            job_type,
+            city,
+            bio,
+            location: `${city}, Morocco`,
+          },
+        });
+
+        if (!user) {
+          throw new GraphQLError("Not found", {
+            extensions: { code: 404 },
+          });
+        }
+
+        return {
+          success: true,
+        };
+      } catch (error: any) {
+        console.log("Error setting up profile :", error.message);
+        throw new GraphQLError("Error setting up profile", {
+          extensions: { code: 500 },
+        });
+      }
+    },
+  },
 };
 
 export const profilePopulated = Prisma.validator<Prisma.UserInclude>()({
@@ -66,6 +114,25 @@ export const profilePopulated = Prisma.validator<Prisma.UserInclude>()({
       location: true,
       startedAt: true,
       endedAt: true,
+    },
+  },
+
+  skills: {
+    select: {
+      skill: {
+        include: {
+          UserSkill: {
+            include: {
+              skill: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   },
 });

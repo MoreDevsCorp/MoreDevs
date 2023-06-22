@@ -25,6 +25,8 @@ router.post("/register", async (req: Request, res: Response) => {
     const newUser = await prisma.user.create({
       data: {
         name: `${firstName} ${lastName}`,
+        first_name: firstName,
+        last_name: lastName,
         email,
         password: hashedPassword,
       },
@@ -49,6 +51,7 @@ router.post("/register", async (req: Request, res: Response) => {
         email: true,
         image: true,
         token: true,
+        name: true,
         password: false,
       },
     });
@@ -103,6 +106,7 @@ router.post("/login", async (req: Request, res: Response) => {
         email: true,
         image: true,
         token: true,
+        name: true,
         password: false,
       },
     });
