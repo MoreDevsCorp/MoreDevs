@@ -13,13 +13,15 @@ model User {
   password      String?
   name          String?
   email         String?                @unique
-  emailVerified String                 @default("false")
+  emailVerified Boolean?               @default(false)
   image         String?
   token         String?
   avatar        String?
   bio           String?
   location      String?
   about         String?
+  job_type      String?
+  job_title     String?
   skills        UserSkill[]
   experiences   Experience[]
   educations    Education[]
