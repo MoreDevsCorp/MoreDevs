@@ -49,6 +49,7 @@ router.post("/register", async (req: Request, res: Response) => {
         email: true,
         image: true,
         token: true,
+        name: true,
         password: false,
       },
     });
@@ -103,6 +104,7 @@ router.post("/login", async (req: Request, res: Response) => {
         email: true,
         image: true,
         token: true,
+        name: true,
         password: false,
       },
     });
