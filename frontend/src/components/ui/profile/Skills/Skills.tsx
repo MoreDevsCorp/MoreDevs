@@ -7,16 +7,21 @@ import Button from "../../Button";
 import Input from "../../inputs/Input";
 import { useNavigate } from "react-router-dom";
 import { PencilIcon } from "@heroicons/react/24/outline";
+import { Skill } from "../../../../types";
 
-export default function Skills() {
+interface SkillsProps {
+  skills: Skill[];
+}
+
+export default function Skills({ skills }: SkillsProps) {
   const navigate = useNavigate();
-  const [skills, setSkills] = useState([
-    "HTML",
-    "CSS",
-    "JS",
-    "Angular",
-    "React",
-  ]);
+  // const [skills, setSkills] = useState([
+  //   "HTML",
+  //   "CSS",
+  //   "JS",
+  //   "Angular",
+  //   "React",
+  // ]);
 
   return (
     <div className="p-6 space-y-4 border border-gray-100 rounded">
@@ -29,8 +34,8 @@ export default function Skills() {
       </div>
 
       <div className="flex flex-wrap gap-2 bg-white  py-6 text-black-900">
-        {skills.map((skill) => {
-          return <Tag skill={skill} />;
+        {skills?.map((skill) => {
+          return <Tag skill={skill.name} />;
         })}
       </div>
     </div>

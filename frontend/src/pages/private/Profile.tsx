@@ -14,13 +14,16 @@ import { useParams } from "react-router-dom";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { GetProfileData, GetProfileVariables } from "../../types";
 import profileOperations from "../../graphql/operations/profile";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const bgImage = null;
 
 const Profile = () => {
   const { userId } = useParams();
+  const user = useSelector((state: RootState) => state.userLogin.userInfo);
 
-  const { data } = useQuery<GetProfileData, GetProfileVariables>(
+  const { data, loading } = useQuery<GetProfileData, GetProfileVariables>(
     profileOperations.Queries.getProfile,
     {
       variables: {
@@ -56,7 +59,7 @@ const Profile = () => {
 
             <div className="flex flex-col space-y-1">
               <h1 className="font-semibold text-2xl text-black-900">
-                Jon Snow
+                {data?.getProfile.profile.name}
               </h1>
               <p className="text-black-600">🚩 Agadir, Morocco</p>
               <div className="block space-x-1 items-center sm:flex">
@@ -80,13 +83,15 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="mt-6 mr-4">
-            <Button type="button">
-              <span className="flex space-x-1 items-center text-white ">
-                <span>Follow +</span>
-              </span>
-            </Button>
-          </div>
+          {user.id !== userId && (
+            <div className="mt-6 mr-4">
+              <Button type="button">
+                <span className="flex space-x-1 items-center text-white ">
+                  <span>Follow +</span>
+                </span>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -94,8 +99,8 @@ const Profile = () => {
         tabsArr={["Profile", "Posts", "Settings"]}
         c1={
           <div className={"space-y-6"}>
-            <About />
-            <Skills />
+            <About content={data?.getProfile.profile.bio} />
+            <Skills skills={data?.getProfile.profile.skills} />
             <Projects />
             <Experience />
             <Education />

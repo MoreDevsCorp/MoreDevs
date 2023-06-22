@@ -17,7 +17,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    getProfile: GetProfileReturnType
+    getProfile(userId: String!): GetProfileReturnType
   }
 
   type GetProfileReturnType {

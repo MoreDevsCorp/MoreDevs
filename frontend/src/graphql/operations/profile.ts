@@ -6,18 +6,30 @@ const profileOperations = {
       query GetProfile($userId: String!) {
         getProfile(userId: $userId) {
           profile {
+            bio
+            educations {
+              endDate
+              id
+              location
+              startDate
+            }
+            experiences {
+              id
+              description
+              startDate
+              endDate
+              title
+            }
+            following
+            followers
             id
-            title
-            description
+            image
             location
-            company {
+            name
+            skills {
               id
               name
-              location
-              avatar
             }
-            startDate
-            endDate
           }
         }
       }

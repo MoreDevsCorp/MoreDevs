@@ -63,33 +63,42 @@ export interface GetProfileVariables {
   userId: string;
 }
 
-export interface GetProfileData {
+export interface Skill {
   id: string;
   name: string;
-  location: string;
-  image: string;
-  bio: string;
-  skills: string[];
-  experiences: {
-    id: string;
-    title: string;
-    description: string;
-    location: string;
-    company: {
+}
+
+export interface GetProfileData {
+  getProfile: {
+    profile: {
       id: string;
       name: string;
       location: string;
-      avatar: string;
+      image: string;
+      bio: string;
+      skills: Skill[];
+      experiences: {
+        id: string;
+        title: string;
+        description: string;
+        location: string;
+        company: {
+          id: string;
+          name: string;
+          location: string;
+          avatar: string;
+        };
+        startDate: string;
+        endDate: string;
+      };
+      educations: {
+        id: string;
+        location: string;
+        startedAt: string;
+        endedAt: string;
+      };
+      followers: number;
+      following: number;
     };
-    startDate: string;
-    endDate: string;
   };
-  educations: {
-    id: string;
-    location: string;
-    startedAt: string;
-    endedAt: string;
-  };
-  followers: number;
-  following: number;
 }
