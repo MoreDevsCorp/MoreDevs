@@ -24,13 +24,11 @@ const postOperations = {
   },
   Mutations: {
     createPost: gql`
-        mutation CreatePost{
-            createPost($content : String!){
-                    createPost(content : $content){
-                        success
-                    }
-            }
+      mutation CreatePost($content: String!) {
+        createPost(content: $content) {
+          success
         }
+      }
     `,
   },
 };
