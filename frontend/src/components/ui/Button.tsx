@@ -30,7 +30,7 @@ const Button: React.FC<ButtonProps> = ({
           : `bg-black text-white ${
               hover && "hover:bg-transparent hover:text-black"
             }`
-      } hover:border-black shadow-md hover:shadow-lg `}
+      }  shadow-md hover:shadow-lg `}
     >
       {children}
     </button>

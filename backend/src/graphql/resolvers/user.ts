@@ -76,6 +76,8 @@ const resolvers = {
         const newUser = await prisma.user.create({
           data: {
             name: `${firstName} ${lastName}`,
+            first_name: firstName,
+            last_name: lastName,
             email,
             password: hashedPassword,
           },

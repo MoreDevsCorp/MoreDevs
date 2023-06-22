@@ -29,7 +29,7 @@ export function DropDown() {
         <div>
           <Menu.Button className="inline-flex w-full justify-center ">
             <img
-              src={profile}
+              src={user.image ? user.image : "/images/img_avatar.png"}
               alt="profile image"
               width={40}
               height={40}
