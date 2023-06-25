@@ -1,10 +1,51 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import prisma from "../lib/prisma";
 
 const router = express.Router();
+
+// const authMiddleware = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   let token = req.headers.authorization;
+
+//   if (!token || !token.startsWith("Bearer")) {
+//     return res.status(401).json({ message: "Unauthorized" });
+//   }
+
+//   token = token.split(" ")[1];
+
+//   try {
+//     const user = await prisma.user.findFirst({
+//       where: { token },
+//     });
+
+//     if (!user) {
+//       return res.status(404).json({ message: "Not Found !" });
+//     }
+
+//     req.user = {
+//       email: user.email,
+//       id: user.id,
+//       image: user.image,
+//       token: user.token,
+//     };
+
+//     next();
+//   } catch (error: any) {
+//     console.log("Error Getting User : ", error.message);
+
+//     res.status(500).json({ message: "Error Getting User" });
+//   }
+// };
+
+// router.get("/me", authMiddleware, async (req: Request, res: Response) => {
+//   return res.json(req.user);
+// });
 
 router.post("/register", async (req: Request, res: Response) => {
   const { firstName, lastName, email, password } = req.body;
@@ -52,6 +93,7 @@ router.post("/register", async (req: Request, res: Response) => {
         image: true,
         token: true,
         name: true,
+        companyCreated: true,
         password: false,
       },
     });
@@ -107,6 +149,7 @@ router.post("/login", async (req: Request, res: Response) => {
         image: true,
         token: true,
         name: true,
+
         password: false,
       },
     });

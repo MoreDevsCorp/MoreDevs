@@ -67,7 +67,10 @@ export function DropDown() {
             <Menu.Item>
               {({ active }) => (
                 <button
-                  onClick={() => dispatch(singOutAction())}
+                  onClick={() => {
+                    dispatch(singOutAction());
+                    window.location.reload();
+                  }}
                   className={`${
                     active ? "bg-black-900 text-white" : "text-black-600"
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm hover:text-gray-500`}

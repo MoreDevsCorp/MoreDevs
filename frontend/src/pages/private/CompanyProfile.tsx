@@ -7,25 +7,57 @@ import Post from "../../components/ui/post";
 import ProfileSettings from "../../components/ui/profile/Profile Setting/ProfileSettings";
 import RecentJobs from "../../components/ui/company/RecentJobs";
 import CompanyCheck from "../../components/ui/company/CompanyCheck";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import JobList from "../../components/ui/jobs/JobList";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import companyOperations from "../../graphql/operations/company";
+import { Company, GetCompanyData, GetCompanyVariables } from "../../types";
+import { useEffect, useState } from "react";
 
 const bgImage = null;
-const companyCreated = true;
+const companyCreated = false;
 
-const CompanyProfile = () => {
-  return !companyCreated ? (
-    <CompanyCheck />
-  ) : (
+interface CompanyProfileProps {
+  company?: Company | null;
+}
+
+const CompanyProfile = ({ company }: CompanyProfileProps) => {
+  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  // const navigate = useNavigate();
+  const params = new URLSearchParams(window.location.search);
+  const companyId = params.get("companyId");
+
+  const [getCompany, { data }] = useLazyQuery<
+    GetCompanyData,
+    GetCompanyVariables
+  >(companyOperations.Queries.getCompany);
+
+  if (!user.companyCreated && !companyId) {
+    return <CompanyCheck />;
+  }
+
+  useEffect(() => {
+    if (companyId) {
+      getCompany({
+        variables: {
+          id: companyId,
+        },
+      });
+
+      console.log(data);
+    }
+  }, [companyId]);
+
+  return (
     <div className="w-full space-y-6 max-w-[1100px] mb-20">
       <div className="rounded  w-full  border border-gray-100">
         <div className="w-full h-[200px]">
           {bgImage ? (
             <img src={bgImage} alt="bg image" />
           ) : (
-            <div className="w-full rounded-t  h-full bg-gradient-to-tr from-yellow-200 to-pink-200">
-              {" "}
-            </div>
+            <div className="w-full rounded-t  h-full bg-gradient-to-tr from-yellow-200 to-pink-200"></div>
           )}
         </div>
 
@@ -40,7 +72,11 @@ const CompanyProfile = () => {
             </div>
 
             <div className="flex flex-col space-y-1">
-              <h1 className="font-semibold text-2xl text-black-900">Google</h1>
+              <h1 className="font-semibold text-2xl text-black-900">
+                {data?.getCompany.company
+                  ? data.getCompany.company.name
+                  : company?.name}
+              </h1>
               <p className="text-black-600">🚩 Agadir, Morocco</p>
               <div className="block space-x-1 items-center sm:flex">
                 <h4>@Google</h4>
@@ -78,7 +114,7 @@ const CompanyProfile = () => {
         tabsArr={["Profile", "Jobs List", "Settings"]}
         c1={
           <div className={"space-y-6"}>
-            <About />
+            <About content={""} />
             <RecentJobs />
           </div>
         }
@@ -87,7 +123,7 @@ const CompanyProfile = () => {
             <JobList />
           </div>
         }
-        c3={<ProfileSettings />}
+        c3={<ProfileSettings profile={undefined} />}
       />
     </div>
   );
