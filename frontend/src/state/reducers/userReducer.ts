@@ -9,6 +9,7 @@ export const userLoginReducer = (state: State, action: AnyAction) => {
       return { ...state, userInfo: action.payload };
     case USER_LOGOUT:
       localStorage.removeItem("MOREDEVS_USER");
+
       return { ...state };
 
     default:

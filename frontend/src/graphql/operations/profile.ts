@@ -8,6 +8,7 @@ const profileOperations = {
           profile {
             first_name
             last_name
+            email
             city
             bio
             educations {

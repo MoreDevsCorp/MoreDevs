@@ -29,7 +29,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error getting notifications :", error.message);
-        throw new GraphQLError("Error querying notifications", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -73,7 +73,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error creating notification :", error.message);
-        throw new GraphQLError("Error creating notification ", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }

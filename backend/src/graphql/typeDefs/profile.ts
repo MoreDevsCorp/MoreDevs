@@ -7,6 +7,7 @@ const typeDefs = gql`
     id: String
     name: String
     location: String
+    email: String
     image: String
     bio: String
     skills: [Skill]

@@ -102,7 +102,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error updating post :", error.message);
-        throw new GraphQLError("Error updating post", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -125,7 +125,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error deleting post :", error.message);
-        throw new GraphQLError("Error deleting post", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }

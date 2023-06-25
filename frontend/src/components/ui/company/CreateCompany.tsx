@@ -1,8 +1,27 @@
 import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+
 import Button from "../Button";
 
-const CreateCompany = () => {
+import { useMutation } from "@apollo/client";
+
+import companyOperations from "../../../graphql/operations/company";
+import { CreateCompanyData, CreateCompanyVariables } from "../../../types";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+
+interface CreateCompanyProps {
+  refetch: () => void;
+}
+
+const CreateCompany = ({ refetch }: CreateCompanyProps) => {
+  const navigate = useNavigate();
+  const [createCompany, { data, error }] = useMutation<
+    CreateCompanyData,
+    CreateCompanyVariables
+  >(companyOperations.Mutations.createCompany);
+
   return (
     <div className="w-full px-20 mx-auto my-6">
       <Formik
@@ -14,7 +33,24 @@ const CreateCompany = () => {
           company_location: "",
         }}
         onSubmit={(values) => {
-          console.log(values);
+          createCompany({
+            variables: {
+              description: values.company_bio,
+              name: values.company_name,
+              location: values.company_location,
+              slogan: values.company_slogan,
+            },
+            onCompleted: (data) => {
+              if (data?.createCompany) {
+                toast.success("Company Created Successfully !");
+                navigate("/");
+                refetch();
+              }
+              if (error) {
+                toast.error(error.message);
+              }
+            },
+          });
         }}
       >
         {({ errors, touched }) => (
@@ -46,7 +82,7 @@ const CreateCompany = () => {
             </div>
 
             <div className="flex flex-col ">
-              <span>Company Bio</span>
+              <span>Company Description</span>
               <Field
                 name="company_bio"
                 type="text"
@@ -69,7 +105,7 @@ const CreateCompany = () => {
               />
             </div>
 
-            <div className="flex flex-col ">
+            {/* <div className="flex flex-col ">
               <span>Company Profile Image</span>
               <Field
                 name="company_profile_image"
@@ -80,7 +116,7 @@ const CreateCompany = () => {
                   "border-red-500"
                 }`}
               />
-            </div>
+            </div> */}
 
             <Button type="submit">Create</Button>
           </Form>

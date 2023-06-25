@@ -26,15 +26,10 @@ const RegisterPage = () => {
       `${import.meta.env.VITE_BACKEND_URL}/auth/register`,
       values
     );
+
     if (data) {
       dispatch(loginAction(data));
     }
-
-    // if (data) {
-    //   localStorage.setItem("MOREDEVS_USER", JSON.stringify(data));
-    // } else {
-    //   localStorage.setItem("MOREDEVS_USER", JSON.stringify({}));
-    // }
   };
   return user ? (
     <Navigate to="/home" replace />

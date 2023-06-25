@@ -20,7 +20,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error getting skills :", error.message);
-        throw new GraphQLError("Error querying skills", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }

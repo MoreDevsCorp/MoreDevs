@@ -24,7 +24,7 @@ const Profile = () => {
   const { userId } = useParams();
   const user = useSelector((state: RootState) => state.userLogin.userInfo);
 
-  const { data } = useQuery<GetProfileData, GetProfileVariables>(
+  const { data, refetch } = useQuery<GetProfileData, GetProfileVariables>(
     profileOperations.Queries.getProfile,
     {
       variables: {
@@ -120,7 +120,12 @@ const Profile = () => {
           </div>
         }
         c2={<Posts />}
-        c3={<ProfileSettings profile={data?.getProfile.profile} />}
+        c3={
+          <ProfileSettings
+            profile={data?.getProfile.profile}
+            refetch={refetch}
+          />
+        }
       />
     </div>
   );

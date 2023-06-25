@@ -9,6 +9,7 @@ import notification from "./notification";
 import follow from "./follow";
 import offer from "./offer";
 import profile from "./profile";
+import company from "./company";
 
 export default merge(
   {},
@@ -20,5 +21,6 @@ export default merge(
   notification,
   follow,
   offer,
-  profile
+  profile,
+  company
 );

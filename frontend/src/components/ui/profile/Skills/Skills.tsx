@@ -42,7 +42,7 @@ export default function Skills({ skills }: SkillsProps) {
 
       <div className="flex flex-wrap gap-2 bg-white  py-6 text-black-900">
         {skills?.map((skill) => {
-          return <Tag skill={skill.name} />;
+          return <Tag skill={skill.name} key={skill.id} />;
         })}
       </div>
     </div>

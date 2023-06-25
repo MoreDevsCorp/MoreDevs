@@ -44,7 +44,7 @@ const SkillsPage = () => {
         <div className="flex flex-wrap space-y-4  gap-2 bg-white  py-6 text-black-900">
           {skills.map((skill) => {
             return (
-              <div className="w-full">
+              <div className="w-full" key={skill}>
                 <div className="flex items-center justify-between pb-2">
                   <h3>{skill}</h3>
                   <TrashIcon

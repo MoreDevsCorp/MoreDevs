@@ -8,8 +8,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createComment(postId: String, content: String): Boolean
-    deleteComment(commentId: String): Boolean
+    createComment(postId: String, content: String): CommentReturnType
+    deleteComment(commentId: String): CommentReturnType
   }
 
   type Comment {

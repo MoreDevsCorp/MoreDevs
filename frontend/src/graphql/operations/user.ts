@@ -1,7 +1,25 @@
 import { gql } from "@apollo/client";
 
 export default {
-  Queries: {},
+  Queries: {
+    getUser: gql`
+      query GetUser {
+        getUser {
+          user {
+            id
+            name
+            email
+            token
+            image
+            companyCreated
+            company {
+              id
+            }
+          }
+        }
+      }
+    `,
+  },
   Mutations: {
     createUser: gql`
       mutation createUser(
@@ -17,7 +35,7 @@ export default {
           password: $password
         ) {
           id
-          username
+          name
           email
           token
         }
@@ -33,7 +51,7 @@ export default {
           password: $password
         ) {
           id
-          username
+          name
           email
           token
         }
@@ -54,7 +72,7 @@ export default {
           tags: $tags
         ) {
           id
-          username
+          name
           email
           token
         }

@@ -17,11 +17,65 @@ import { useSelector } from "react-redux";
 import { RootState } from "./store";
 import SkillsPage from "./components/ui/profile/Skills/SkillsPage";
 import EducationPage from "./components/ui/profile/Education/EducationPage";
+import { useLazyQuery, useQuery } from "@apollo/client";
+
+import userOperations from "./graphql/operations/user";
+import {
+  Company,
+  GetCompanyData,
+  GetCompanyVariables,
+  GetUserData,
+} from "./types";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginAction } from "./state/actions/userActions";
+
+import companyOperations from "./graphql/operations/company";
 
 function App() {
   // const [user, setUser] = useState<User | null>();
 
   const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const dispatch = useDispatch();
+
+  const [getUser, { refetch: refetchUser }] = useLazyQuery<GetUserData>(
+    userOperations.Queries.getUser
+  );
+
+  const [getCompany, { data: companyData, refetch: refetchCompany }] =
+    useLazyQuery<GetCompanyData, GetCompanyVariables>(
+      companyOperations.Queries.getCompany
+    );
+
+  const reload = () => {
+    refetchUser();
+    refetchCompany();
+    const event = new Event("visibilitychange");
+    document.dispatchEvent(event);
+  };
+
+  useEffect(() => {
+    if (user) {
+      getUser({
+        onCompleted: (data) => {
+          dispatch(loginAction(data.getUser.user));
+        },
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user && user.companyCreated) {
+      getCompany({
+        variables: {
+          id: user.company.id,
+        },
+        onCompleted: (data) => {
+          console.log(data);
+        },
+      });
+    }
+  }, [user]);
 
   return (
     <BrowserRouter>
@@ -50,8 +104,17 @@ function App() {
             element={<EducationPage />}
             path="/profile/:userId/details/education"
           />
-          <Route element={<CompanyProfile />} path="/company" />
-          <Route element={<CreateCompany />} path="/create-company" />
+          <Route
+            element={
+              <CompanyProfile company={companyData?.getCompany.company} />
+            }
+            path="/company"
+          />
+          <Route element={<CompanyProfile />} path="/company/:id" />
+          <Route
+            element={<CreateCompany refetch={reload} />}
+            path="/create-company"
+          />
           {/* <Route element={<Home />} path="/private" /> */}
         </Route>
         <Route element={"404 not found"} path="*" />

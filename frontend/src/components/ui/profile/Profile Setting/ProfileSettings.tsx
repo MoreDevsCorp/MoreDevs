@@ -48,9 +48,13 @@ const Input = ({ placeholder, prefix, value, onChange, name }: Input) => {
 
 interface ProfileSettingsProps {
   profile: Profile | undefined;
+  refetch: () => void;
 }
 
-export default function ProfileSettings({ profile }: ProfileSettingsProps) {
+export default function ProfileSettings({
+  profile,
+  refetch,
+}: ProfileSettingsProps) {
   // const { userId } = useParams();
   const user = useSelector((state: RootState) => state.userLogin.userInfo);
 
@@ -60,6 +64,7 @@ export default function ProfileSettings({ profile }: ProfileSettingsProps) {
     job_title: profile?.job_title || "",
     job_type: profile?.job_type || "",
     city: profile?.city || "",
+    email: profile?.email || "",
   });
 
   const [bio, setBio] = useState<string>(profile?.bio || "");
@@ -84,16 +89,17 @@ export default function ProfileSettings({ profile }: ProfileSettingsProps) {
         job_type: formData.job_type,
         city: formData.city,
       },
+      onCompleted: (data) => {
+        if (data.setUpProfile.success) {
+          refetch();
+          toast.success("Informastion updated successfully!");
+        }
+      },
+      onError(error) {
+        toast.error("Failed to update informations !");
+        console.log(error.message);
+      },
     });
-
-    if (data) {
-      toast.success("Informastion updated successfully!");
-    }
-
-    if (error) {
-      toast.error("Failed to update informations !");
-      console.log(error.message);
-    }
   };
 
   useEffect(() => {
@@ -139,6 +145,13 @@ export default function ProfileSettings({ profile }: ProfileSettingsProps) {
           placeholder="Last Name"
           name="last_name"
           value={formData.last_name}
+          onChange={handleChange}
+        />
+        <h6 className="font-medium">Email</h6>
+        <Input
+          placeholder="Email"
+          name="email"
+          value={formData.email}
           onChange={handleChange}
         />
 

@@ -26,7 +26,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error getting offers :", error.message);
-        throw new GraphQLError("Error querying offers", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -76,7 +76,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error creating Offer :", error.message);
-        throw new GraphQLError("Error creating Offer", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -147,7 +147,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error updating Offer :", error.message);
-        throw new GraphQLError("Error updating Offer", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -175,7 +175,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error deleting Offer :", error.message);
-        throw new GraphQLError("Error deleting Offer", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }

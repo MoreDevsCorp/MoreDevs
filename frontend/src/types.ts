@@ -4,7 +4,17 @@ export type User = {
   email: string;
   token: string;
   image: string;
+  companyCreated: boolean;
+  company: {
+    id: string;
+  };
 };
+
+export interface GetUserData {
+  getUser: {
+    user: User;
+  };
+}
 
 export interface GetSkillsData {
   getSkills: {
@@ -100,6 +110,7 @@ export interface Profile {
   name: string;
   first_name: string;
   last_name: string;
+  email: string;
   location: string;
   image: string;
   bio: string;
@@ -132,5 +143,47 @@ export interface SetUpProfileVariables {
 export interface SetUpProfileData {
   setUpProfile: {
     success: boolean;
+  };
+}
+
+/**
+ * Company Related types
+ */
+
+export interface CreateCompanyVariables {
+  name: string;
+  description: string;
+  slogan: string;
+  location: string;
+}
+
+export interface CreateCompanyData {
+  createCompany: {
+    id: string;
+  };
+}
+
+export interface GetCompanyVariables {
+  id: string;
+}
+
+export type Company = {
+  id: string;
+  name: string;
+  description: string;
+  location: string;
+  avatar: string;
+  website: string;
+  slogan: string;
+  offers: {
+    id: string;
+    title: string;
+    createdAt: string;
+  };
+};
+
+export interface GetCompanyData {
+  getCompany: {
+    company: Company;
   };
 }

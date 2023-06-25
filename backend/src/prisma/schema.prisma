@@ -48,6 +48,8 @@ model User {
   isUserSetup            Boolean        @default(false)
   interests              InterestUser[]
   Follows                Follows[]
+  company                Company?
+  companyCreated         Boolean        @default(false)
 }
 
 model Follows {
@@ -230,14 +232,17 @@ model Experience {
 model Company {
   id          String       @id @default(cuid())
   name        String
-  description String
+  description String?
   location    String
-  avatar      String
-  website     String
+  avatar      String?
+  website     String?
   offers      Offer[]
+  slogan      String?
   internships Internship[]
   experiences Experience[]
-  foundedAt   DateTime
+  foundedAt   DateTime?
+  user        User         @relation(fields: [userId], references: [id])
+  userId      String       @unique
 }
 
 model Offer {

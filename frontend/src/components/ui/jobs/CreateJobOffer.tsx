@@ -26,7 +26,9 @@ const CreateJobOffer = () => {
     CreateOfferVariables
   >(offerOperations.Mutations.createOffer);
 
-  const [skills, setSkills] = useState<{ label: string; value: string }[]>([]);
+  const [skills, setSkills] = useState<
+    { label: string; value: string; id: string }[]
+  >([]);
 
   useEffect(() => {
     if (data?.getSkills) {
@@ -34,9 +36,9 @@ const CreateJobOffer = () => {
       const newIntersts = data.getSkills.skills.map((skill) => ({
         label: skill.name,
         value: skill.name,
+        id: skill.id,
       }));
       setSkills(newIntersts);
-      console.log(skills);
     }
     console.log(skillsInput);
   }, [data?.getSkills, skillsInput]);

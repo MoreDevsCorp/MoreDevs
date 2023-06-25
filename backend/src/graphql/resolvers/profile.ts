@@ -31,7 +31,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error getting profile :", error.message);
-        throw new GraphQLError("Error querying profile", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -66,6 +66,7 @@ export default {
             city,
             bio,
             location: `${city}, Morocco`,
+            name: `${first_name} ${last_name}`,
           },
         });
 
@@ -80,7 +81,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error setting up profile :", error.message);
-        throw new GraphQLError("Error setting up profile", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
