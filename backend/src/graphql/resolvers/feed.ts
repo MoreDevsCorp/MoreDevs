@@ -15,7 +15,7 @@ export default {
       try {
       } catch (error: any) {
         console.log("Error getting Feed:", error.message);
-        throw new GraphQLError("Error querying Feed", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
