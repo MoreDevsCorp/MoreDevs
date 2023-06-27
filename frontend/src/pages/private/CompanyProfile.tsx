@@ -15,6 +15,7 @@ import { useLazyQuery, useQuery } from "@apollo/client";
 import companyOperations from "../../graphql/operations/company";
 import { Company, GetCompanyData, GetCompanyVariables } from "../../types";
 import { useEffect, useState } from "react";
+import { selectUser } from "../../state/userSlice/userSlice";
 
 const bgImage = null;
 const companyCreated = false;
@@ -24,12 +25,12 @@ interface CompanyProfileProps {
 }
 
 const CompanyProfile = ({ company }: CompanyProfileProps) => {
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
   // const navigate = useNavigate();
   const params = new URLSearchParams(window.location.search);
   const companyId = params.get("companyId");
 
-  const [getCompany, { data }] = useLazyQuery<
+  const [getCompany, { data, refetch }] = useLazyQuery<
     GetCompanyData,
     GetCompanyVariables
   >(companyOperations.Queries.getCompany);
@@ -123,7 +124,7 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
             <JobList />
           </div>
         }
-        c3={<ProfileSettings profile={undefined} />}
+        c3={<ProfileSettings profile={undefined} refetch={refetch} />}
       />
     </div>
   );

@@ -1,13 +1,12 @@
 import axios from "axios";
 import LoginForm from "../../components/ui/LoginForm";
 import { useDispatch } from "react-redux";
-import { loginAction } from "../../state/actions/userActions";
-import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { selectUser, userLogin } from "../../state/userSlice/userSlice";
 
 const LoginPage = () => {
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
 
   const dispatch = useDispatch();
   const handleLogin = async (values: { email: string; password: string }) => {
@@ -17,14 +16,8 @@ const LoginPage = () => {
     );
 
     if (data) {
-      dispatch(loginAction(data));
+      dispatch(userLogin(data));
     }
-    // if (data) {
-
-    //   localStorage.setItem("MOREDEVS_USER", JSON.stringify(data));
-    // } else {
-    //   localStorage.setItem("MOREDEVS_USER", JSON.stringify({}));
-    // }
   };
 
   return user ? (

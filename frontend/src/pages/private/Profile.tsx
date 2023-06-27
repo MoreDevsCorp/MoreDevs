@@ -8,21 +8,20 @@ import Skills from "../../components/ui/profile/Skills/Skills";
 // import Projects from "../../components/ui/profile/Project/Projects";
 import Experience from "../../components/ui/profile/Experiences/Experience";
 import Education from "../../components/ui/profile/Education/Education";
-import Post from "../../components/ui/post";
 import ProfileSettings from "../../components/ui/profile/Profile Setting/ProfileSettings";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GetProfileData, GetProfileVariables } from "../../types";
 import profileOperations from "../../graphql/operations/profile";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 import Posts from "./Posts";
+import { selectUser } from "../../state/userSlice/userSlice";
 
 const bgImage = null;
 
 const Profile = () => {
   const { userId } = useParams();
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
 
   const { data, refetch } = useQuery<GetProfileData, GetProfileVariables>(
     profileOperations.Queries.getProfile,

@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Education as EducationType } from "../../../../types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store";
+import { selectUser } from "../../../../state/userSlice/userSlice";
 
 interface EducationProps {
   educations: EducationType[] | undefined;
@@ -12,7 +13,7 @@ interface EducationProps {
 export default function Education({ educations }: EducationProps) {
   const navigate = useNavigate();
   const { userId } = useParams();
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
 
   return (
     <div className="p-6 space-y-4 border border-gray-100 rounded">

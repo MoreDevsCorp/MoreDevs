@@ -4,7 +4,3 @@ export interface User {
   image: string | null;
   token: string | null;
 }
-
-export interface State {
-  userInfo: User | null | undefined;
-}

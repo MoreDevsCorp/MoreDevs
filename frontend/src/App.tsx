@@ -14,29 +14,21 @@ import CreateJobOffer from "./components/ui/jobs/CreateJobOffer";
 import Protected from "./lib/isLoggedIn";
 
 import { useSelector } from "react-redux";
-import { RootState } from "./store";
 import SkillsPage from "./components/ui/profile/Skills/SkillsPage";
 import EducationPage from "./components/ui/profile/Education/EducationPage";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 
 import userOperations from "./graphql/operations/user";
-import {
-  Company,
-  GetCompanyData,
-  GetCompanyVariables,
-  GetUserData,
-} from "./types";
-import { useEffect, useState } from "react";
+import { GetCompanyData, GetCompanyVariables, GetUserData } from "./types";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { loginAction } from "./state/actions/userActions";
 
 import companyOperations from "./graphql/operations/company";
 import ExperiencePage from "./components/ui/profile/Experiences/ExperiencePage";
+import { selectUser, userLogin } from "./state/userSlice/userSlice";
 
 function App() {
-  // const [user, setUser] = useState<User | null>();
-
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   const [getUser, { refetch: refetchUser }] = useLazyQuery<GetUserData>(
@@ -59,7 +51,7 @@ function App() {
     if (user) {
       getUser({
         onCompleted: (data) => {
-          dispatch(loginAction(data.getUser.user));
+          dispatch(userLogin(data.getUser.user));
         },
       });
     }

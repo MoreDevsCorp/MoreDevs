@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
- 
   "scripts": {
     "dev": "vite --force",
     "build": "tsc && vite build",
@@ -66,5 +65,4 @@
     "vite": "^4.3.9"
   },
   "proxy": "http://localhost:4000"
-
 }

@@ -10,6 +10,7 @@ import { PencilIcon } from "@heroicons/react/24/outline";
 import { Skill } from "../../../../types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store";
+import { selectUser } from "../../../../state/userSlice/userSlice";
 
 interface SkillsProps {
   skills: Skill[] | undefined;
@@ -17,7 +18,7 @@ interface SkillsProps {
 
 export default function Skills({ skills }: SkillsProps) {
   const { userId } = useParams();
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
 
   const navigate = useNavigate();
   // const [skills, setSkills] = useState([

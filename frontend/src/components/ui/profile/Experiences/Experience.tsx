@@ -4,6 +4,7 @@ import ExperienceRow from "./ExperienceRow";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store";
 import { PencilIcon } from "@heroicons/react/24/outline";
+import { selectUser } from "../../../../state/userSlice/userSlice";
 
 interface ExperienceProps {
   experiences: ExperienceType[] | undefined;
@@ -12,7 +13,7 @@ interface ExperienceProps {
 export default function Experience({ experiences }: ExperienceProps) {
   const navigate = useNavigate();
   const { userId } = useParams();
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
   return (
     <div className="p-6 space-y-4 border border-gray-100 rounded">
       <div className="flex justify-between items-center">

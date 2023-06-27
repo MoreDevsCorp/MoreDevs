@@ -14,6 +14,7 @@ import {
 import profileOperations from "../../../../graphql/operations/profile";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { selectUser } from "../../../../state/userSlice/userSlice";
 
 interface Input {
   placeholder: string;
@@ -56,7 +57,7 @@ export default function ProfileSettings({
   refetch,
 }: ProfileSettingsProps) {
   // const { userId } = useParams();
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
 
   const [formData, setFormData] = useState({
     first_name: profile?.first_name || "",
