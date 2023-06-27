@@ -26,6 +26,7 @@ import { useDispatch } from "react-redux";
 import companyOperations from "./graphql/operations/company";
 import ExperiencePage from "./components/ui/profile/Experiences/ExperiencePage";
 import { selectUser, userLogin } from "./state/userSlice/userSlice";
+import NotFound from "./pages/public/NotFound";
 
 function App() {
   const user = useSelector(selectUser);
@@ -114,7 +115,7 @@ function App() {
           />
           {/* <Route element={<Home />} path="/private" /> */}
         </Route>
-        <Route element={"404 not found"} path="*" />
+        <Route element={<NotFound />} path="*" />
       </Routes>
     </BrowserRouter>
   );

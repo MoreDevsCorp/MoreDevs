@@ -3,18 +3,17 @@ import { GoPrimitiveDot } from "react-icons/go";
 import Button from "../../components/ui/Button";
 import MyTabs from "../../components/ui/Tabs";
 import About from "../../components/ui/profile/About";
-import Post from "../../components/ui/post";
 import ProfileSettings from "../../components/ui/profile/Profile Setting/ProfileSettings";
 import RecentJobs from "../../components/ui/company/RecentJobs";
 import CompanyCheck from "../../components/ui/company/CompanyCheck";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import JobList from "../../components/ui/jobs/JobList";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { useLazyQuery, useQuery } from "@apollo/client";
+
+import { useLazyQuery } from "@apollo/client";
 import companyOperations from "../../graphql/operations/company";
 import { Company, GetCompanyData, GetCompanyVariables } from "../../types";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { selectUser } from "../../state/userSlice/userSlice";
 
 const bgImage = null;
