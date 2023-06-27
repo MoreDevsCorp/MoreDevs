@@ -20,7 +20,7 @@ export default function Education({ educations }: EducationProps) {
         <h1 className="font-semibold text-2xl text-black-900">Education</h1>
         {userId === user.id && (
           <PencilIcon
-            onClick={() => navigate("details/skills")}
+            onClick={() => navigate("details/education")}
             className="hover:opacity-50 cursor-pointer h-5 w-5"
           />
         )}

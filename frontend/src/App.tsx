@@ -31,6 +31,7 @@ import { useDispatch } from "react-redux";
 import { loginAction } from "./state/actions/userActions";
 
 import companyOperations from "./graphql/operations/company";
+import ExperiencePage from "./components/ui/profile/Experiences/ExperiencePage";
 
 function App() {
   // const [user, setUser] = useState<User | null>();
@@ -103,6 +104,10 @@ function App() {
           <Route
             element={<EducationPage />}
             path="/profile/:userId/details/education"
+          />
+          <Route
+            element={<ExperiencePage />}
+            path="/profile/:userId/details/experience"
           />
           <Route
             element={
