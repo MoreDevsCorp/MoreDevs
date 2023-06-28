@@ -10,19 +10,15 @@ import CreateCompany from "./components/ui/company/CreateCompany";
 import Jobs from "./pages/private/Jobs";
 import JobPage from "./components/ui/jobs/JobPage";
 import CreateJobOffer from "./components/ui/jobs/CreateJobOffer";
-
 import Protected from "./lib/isLoggedIn";
-
 import { useSelector } from "react-redux";
 import SkillsPage from "./components/ui/profile/Skills/SkillsPage";
 import EducationPage from "./components/ui/profile/Education/EducationPage";
 import { useLazyQuery } from "@apollo/client";
-
 import userOperations from "./graphql/operations/user";
 import { GetCompanyData, GetCompanyVariables, GetUserData } from "./types";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-
 import companyOperations from "./graphql/operations/company";
 import ExperiencePage from "./components/ui/profile/Experiences/ExperiencePage";
 import { selectUser, userLogin } from "./state/userSlice/userSlice";

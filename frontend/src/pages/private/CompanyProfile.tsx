@@ -15,6 +15,7 @@ import companyOperations from "../../graphql/operations/company";
 import { Company, GetCompanyData, GetCompanyVariables } from "../../types";
 import { useEffect } from "react";
 import { selectUser } from "../../state/userSlice/userSlice";
+import CompanyProfileSettings from "../../components/ui/company/CompanyProfileSettings";
 
 const bgImage = null;
 const companyCreated = false;
@@ -77,11 +78,20 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
                   ? data.getCompany.company.name
                   : company?.name}
               </h1>
-              <p className="text-black-600">🚩 Agadir, Morocco</p>
+              <p className="text-black-600">
+                🚩{" "}
+                {data?.getCompany.company
+                  ? data.getCompany.company.location
+                  : company?.location}
+                , Morocco
+              </p>
               <div className="block space-x-1 items-center sm:flex">
-                <h4>@Google</h4>
                 <GoPrimitiveDot className="hidden sm:block text-black-600" />
-                <h4 className="font-medium">Best IT company in the world.</h4>
+                <h4 className="font-medium">
+                  {data?.getCompany.company
+                    ? data.getCompany.company.slogan
+                    : company?.slogan}
+                </h4>
               </div>
             </div>
 
@@ -114,7 +124,13 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
         tabsArr={["Profile", "Jobs List", "Settings"]}
         c1={
           <div className={"space-y-6"}>
-            <About content={""} />
+            <About
+              content={
+                data?.getCompany.company
+                  ? data.getCompany.company.description
+                  : company?.description
+              }
+            />
             <RecentJobs />
           </div>
         }
@@ -123,7 +139,7 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
             <JobList />
           </div>
         }
-        c3={<ProfileSettings profile={undefined} refetch={refetch} />}
+        c3={<CompanyProfileSettings company={undefined} refetch={refetch} />}
       />
     </div>
   );
