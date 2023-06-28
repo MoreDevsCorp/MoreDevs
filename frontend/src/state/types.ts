@@ -3,6 +3,10 @@ export interface User {
   name: string | null;
   image: string | null;
   token: string | null;
+  companyCreated: boolean | null;
+  company: {
+    id: string | null;
+  } | null;
 }
 
 export interface State {
