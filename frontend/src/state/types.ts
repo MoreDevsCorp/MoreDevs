@@ -8,7 +8,3 @@ export interface User {
     id: string | null;
   } | null;
 }
-
-export interface State {
-  userInfo: User | null | undefined;
-}

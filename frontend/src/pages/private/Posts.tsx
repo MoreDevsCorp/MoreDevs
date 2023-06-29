@@ -1,5 +1,5 @@
 import React from "react";
-import Post from "../../components/ui/post";
+
 import { useQuery } from "@apollo/client";
 
 import postOperations from "../../graphql/operations/post";
