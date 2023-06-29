@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dispatch, SetStateAction } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../store";
+import { selectUser } from "../../../../state/userSlice/userSlice";
 
 interface SideBarItemProps {
   title: string;
@@ -13,7 +13,7 @@ interface SideBarItemProps {
 }
 
 const SidebarItem = ({ Icon, title, setActive, active }: SideBarItemProps) => {
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
 
   const url = title.toLocaleLowerCase();
   return (

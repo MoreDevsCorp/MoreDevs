@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Education as EducationType } from "../../../../types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store";
+import { selectUser } from "../../../../state/userSlice/userSlice";
 
 interface EducationProps {
   educations: EducationType[] | undefined;
@@ -12,7 +13,7 @@ interface EducationProps {
 export default function Education({ educations }: EducationProps) {
   const navigate = useNavigate();
   const { userId } = useParams();
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
 
   return (
     <div className="p-6 space-y-4 border border-gray-100 rounded">
@@ -20,7 +21,7 @@ export default function Education({ educations }: EducationProps) {
         <h1 className="font-semibold text-2xl text-black-900">Education</h1>
         {userId === user.id && (
           <PencilIcon
-            onClick={() => navigate("details/skills")}
+            onClick={() => navigate("details/education")}
             className="hover:opacity-50 cursor-pointer h-5 w-5"
           />
         )}
