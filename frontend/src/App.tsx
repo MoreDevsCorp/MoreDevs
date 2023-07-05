@@ -60,9 +60,6 @@ function App() {
         variables: {
           id: user.company.id,
         },
-        onCompleted: (data) => {
-          console.log(data);
-        },
       });
     }
   }, [user]);
@@ -84,7 +81,9 @@ function App() {
           <Route element={<Home />} path="/home" />
           <Route element={<Jobs />} path="/jobs" />
           <Route element={<JobPage />} path="/jobs/:id" />
-          <Route element={<CreateJobOffer />} path="/joboffer/create" />
+          {user.companyCreated && (
+            <Route element={<CreateJobOffer />} path="/joboffer/create" />
+          )}
           <Route element={<Profile />} path="/profile/:userId" />
           <Route
             element={<SkillsPage />}

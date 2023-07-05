@@ -41,5 +41,25 @@ export default {
         }
       }
     `,
+
+    updateCompany: gql`
+      mutation UpdateCompany(
+        $companyId: String
+        $description: String
+        $slogan: String
+        $location: String
+        $website: String
+      ) {
+        updateCompany(
+          companyId: $companyId
+          description: $description
+          slogan: $slogan
+          location: $location
+          website: $website
+        ) {
+          success
+        }
+      }
+    `,
   },
 };

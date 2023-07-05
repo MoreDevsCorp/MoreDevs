@@ -7,10 +7,10 @@ import { useSelector } from "react-redux";
 import { useMutation } from "@apollo/client";
 import {
   Company,
-  SetUpProfileData,
-  SetUpProfileVariables,
+  UpdateCompanyData,
+  UpdateCompanyVariables,
 } from "../../../types";
-import profileOperations from "../../../graphql/operations/profile";
+import companyOperations from "../../../graphql/operations/company";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { selectUser } from "../../../state/userSlice/userSlice";
@@ -72,33 +72,34 @@ export default function CompanyProfileSettings({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const [setUpProfile, { data, loading, error }] = useMutation<
-    SetUpProfileData,
-    SetUpProfileVariables
-  >(profileOperations.Mutations.setUpProfile);
+  const [updateCompany, { data, loading, error }] = useMutation<
+    UpdateCompanyData,
+    UpdateCompanyVariables
+  >(companyOperations.Mutations.updateCompany);
 
   const handleSubmit = async () => {
-    // setUpProfile({
-    //   variables: {
-    //     id: user.id,
-    //     first_name: formData?.first_name,
-    //     last_name: formData?.last_name,
-    //     bio: bio,
-    //     job_title: formData.job_title,
-    //     job_type: formData.job_type,
-    //     city: formData.city,
-    //   },
-    //   onCompleted: (data) => {
-    //     if (data.setUpProfile.success) {
-    //       refetch();
-    //       toast.success("Informastion updated successfully!");
-    //     }
-    //   },
-    //   onError(error) {
-    //     toast.error("Failed to update informations !");
-    //     console.log(error.message);
-    //   },
-    // });
+    updateCompany({
+      variables: {
+        companyId: company?.id || "",
+        name: formData.company_name,
+        description: formData.description,
+        location: formData.location,
+        slogan: formData.slogan,
+        website: formData.website,
+      },
+      onCompleted: (data) => {
+        console.log(data);
+
+        if (data.updateCompany.success) {
+          refetch();
+          toast.success("Informastion updated successfully!");
+        }
+      },
+      onError(error) {
+        toast.error("Failed to update informations !");
+        console.log(error.message);
+      },
+    });
   };
 
   useEffect(() => {

@@ -1,7 +1,28 @@
 import { gql } from "@apollo/client";
 
 export default {
-  Queries: {},
+  Queries: {
+    getOffers: gql`
+      query GetOffers {
+        getOffers {
+          offers {
+            id
+            title
+            description
+            taken
+            type
+            company {
+              id
+              name
+              location
+              avatar
+            }
+            createdAt
+          }
+        }
+      }
+    `,
+  },
   Mutations: {
     createOffer: gql`
       mutation CreateOffer(
@@ -10,6 +31,7 @@ export default {
         $description: String!
         $location: String!
         $skillsIds: [String]!
+        $type: String!
       ) {
         createOffer(
           companyId: $companyId
@@ -17,6 +39,7 @@ export default {
           description: $description
           location: $location
           skillsIds: $skillsIds
+          type: $type
         ) {
           success
         }
