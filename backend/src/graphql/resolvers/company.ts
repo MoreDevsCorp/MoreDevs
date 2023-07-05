@@ -66,13 +66,13 @@ export default {
 
         if (!user) {
           throw new GraphQLError("User Not found", {
-            extensions: { code: 401 },
+            extensions: { code: 404 },
           });
         }
 
         if (user.companyCreated) {
           throw new GraphQLError("Company Already Created", {
-            extensions: { code: 401 },
+            extensions: { code: 400 },
           });
         }
 
@@ -108,5 +108,69 @@ export default {
         });
       }
     },
+
+    updateCompany: async (
+      _p: any,
+      args: {
+        companyId: string;
+        name: string;
+        slogan: string;
+        description: string;
+        location: string;
+        website: string;
+      },
+      context: Context
+    ) => {
+      const { session, prisma } = context;
+      const { description, location, name, slogan, website, companyId } = args;
+
+      if (!session?.user) {
+        throw new GraphQLError("You're not authenticated !", {
+          extensions: { code: 401 },
+        });
+      }
+
+      try {
+        const user = await prisma.user.findFirst({
+          where: {
+            id: session.user.id,
+          },
+        });
+
+        if (!user) {
+          throw new GraphQLError("User Not found", {
+            extensions: { code: 404 },
+          });
+        }
+
+        const company = await prisma.company.update({
+          where: { id: companyId },
+          data: {
+            name,
+            description,
+            location,
+            slogan,
+            website,
+          },
+        });
+
+        if (!company) {
+          throw new GraphQLError("Company Not found", {
+            extensions: { code: 404 },
+          });
+        }
+
+        return {
+          success: true,
+        };
+      } catch (error: any) {
+        console.log("Error updating company :", error.message);
+        throw new GraphQLError(error.message, {
+          extensions: { code: 500 },
+        });
+      }
+    },
+
+    // End of mutation Object
   },
 };

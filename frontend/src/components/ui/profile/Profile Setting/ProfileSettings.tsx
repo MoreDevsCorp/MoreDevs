@@ -58,6 +58,8 @@ export default function ProfileSettings({
   // const { userId } = useParams();
   const user = useSelector(selectUser);
 
+  console.log(profile);
+
   const [formData, setFormData] = useState({
     first_name: profile?.first_name || "",
     last_name: profile?.last_name || "",

@@ -29,12 +29,33 @@ export interface GetSkillsData {
  *  Offer related types
  */
 
+export type Offer = {
+  id: string;
+  title: string;
+  description: string;
+  company: {
+    id: string;
+    name: string;
+    location: string;
+    avatar: string;
+  };
+  type: string;
+  createdAt: string;
+};
+
+export interface GetOffersData {
+  getOffers: {
+    offers: Offer[];
+  };
+}
+
 export interface CreateOfferVariables {
   companyId: string;
   title: string;
   description: string;
   location: string;
   skillsIds: string[];
+  type: string;
 }
 export interface CreateOfferData {
   success: boolean;
@@ -155,6 +176,20 @@ export interface CreateCompanyVariables {
   description: string;
   slogan: string;
   location: string;
+}
+
+export interface UpdateCompanyVariables {
+  companyId: string;
+  name: string;
+  description: string;
+  slogan: string;
+  location: string;
+  website: string;
+}
+export interface UpdateCompanyData {
+  updateCompany: {
+    success: boolean;
+  };
 }
 
 export interface CreateCompanyData {

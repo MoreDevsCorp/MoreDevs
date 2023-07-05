@@ -29,6 +29,19 @@ const typeDefs = gql`
       description: String!
       location: String!
     ): CreateCompanyReturnType
+
+    updateCompany(
+      companyId: String
+      name: String
+      slogan: String
+      location: String
+      description: String
+      website: String
+    ): UpdateCompanyReturnType
+  }
+
+  type UpdateCompanyReturnType {
+    success: Boolean
   }
 
   type CreateCompanyReturnType {

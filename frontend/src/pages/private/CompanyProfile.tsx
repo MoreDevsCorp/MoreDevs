@@ -46,8 +46,12 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
           id: companyId,
         },
       });
-
-      console.log(data);
+    } else {
+      getCompany({
+        variables: {
+          id: user.company.id,
+        },
+      });
     }
   }, [companyId]);
 
@@ -93,6 +97,17 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
                     : company?.slogan}
                 </h4>
               </div>
+              <div className="block space-x-1 items-center sm:flex">
+                <a
+                  className="font-medium text-blue-900"
+                  href={`http://${company?.website}`}
+                  target="_blank"
+                >
+                  {data?.getCompany.company
+                    ? data.getCompany.company.website
+                    : company?.website}
+                </a>
+              </div>
             </div>
 
             <div className="flex space-x-2 items-center mt-4">
@@ -101,7 +116,7 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
           </div>
 
           <div className="mt-6 mr-4">
-            {companyCreated ? (
+            {user.companyCreated ? (
               <Button type="button">
                 <span className="flex space-x-1 items-center text-white ">
                   <Link to="/joboffer/create">
@@ -139,7 +154,12 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
             <JobList />
           </div>
         }
-        c3={<CompanyProfileSettings company={undefined} refetch={refetch} />}
+        c3={
+          <CompanyProfileSettings
+            company={data?.getCompany.company}
+            refetch={refetch}
+          />
+        }
       />
     </div>
   );
