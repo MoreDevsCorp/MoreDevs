@@ -6,7 +6,7 @@ import About from "../../components/ui/profile/About";
 import ProfileSettings from "../../components/ui/profile/Profile Setting/ProfileSettings";
 import RecentJobs from "../../components/ui/company/RecentJobs";
 import CompanyCheck from "../../components/ui/company/CompanyCheck";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import JobList from "../../components/ui/jobs/JobList";
 import { useSelector } from "react-redux";
 
@@ -29,6 +29,7 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
   // const navigate = useNavigate();
   const params = new URLSearchParams(window.location.search);
   const companyId = params.get("companyId");
+  const navigate = useNavigate();
 
   const [getCompany, { data, refetch }] = useLazyQuery<
     GetCompanyData,
@@ -41,6 +42,9 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
 
   useEffect(() => {
     if (companyId) {
+      if (companyId === user.company.id) {
+        navigate("/company");
+      }
       getCompany({
         variables: {
           id: companyId,
@@ -110,13 +114,15 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
               </div>
             </div>
 
-            <div className="flex space-x-2 items-center mt-4">
-              <Button type="button">Message</Button>
-            </div>
+            {companyId && (
+              <div className="flex space-x-2 items-center mt-4">
+                <Button type="button">Message</Button>
+              </div>
+            )}
           </div>
 
           <div className="mt-6 mr-4">
-            {user.companyCreated ? (
+            {user.companyCreated && !companyId ? (
               <Button type="button">
                 <span className="flex space-x-1 items-center text-white ">
                   <Link to="/joboffer/create">

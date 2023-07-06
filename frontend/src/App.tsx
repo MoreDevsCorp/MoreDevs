@@ -81,7 +81,7 @@ function App() {
           <Route element={<Home />} path="/home" />
           <Route element={<Jobs />} path="/jobs" />
           <Route element={<JobPage />} path="/jobs/:id" />
-          {user.companyCreated && (
+          {user && user.companyCreated && (
             <Route element={<CreateJobOffer />} path="/joboffer/create" />
           )}
           <Route element={<Profile />} path="/profile/:userId" />

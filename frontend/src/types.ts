@@ -41,6 +41,8 @@ export type Offer = {
   };
   type: string;
   createdAt: string;
+  taken: boolean;
+  location: string;
 };
 
 export interface GetOffersData {
