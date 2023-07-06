@@ -12,6 +12,8 @@ import {
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Input from "../../../ui/inputs/Input";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store";
 
 const navItems = [
   { text: "Home", icon: OutlineHome },

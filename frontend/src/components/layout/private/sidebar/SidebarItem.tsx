@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dispatch, SetStateAction } from "react";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../../state/userSlice/userSlice";
 
 interface SideBarItemProps {
   title: string;
@@ -11,9 +13,11 @@ interface SideBarItemProps {
 }
 
 const SidebarItem = ({ Icon, title, setActive, active }: SideBarItemProps) => {
+  const user = useSelector(selectUser);
+
   const url = title.toLocaleLowerCase();
   return (
-    <Link to={`/${url}`} onClick={() => setActive(url)}>
+    <Link to={url} onClick={() => setActive(url)}>
       <li
         className={`w-full    cursor-pointer   py-3  flex items-center space-x-7
         ${active == url ? "font-bold" : "font-medium"}

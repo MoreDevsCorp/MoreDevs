@@ -2,8 +2,13 @@ import { FC } from "react";
 import Button from "../Button";
 import Google from "../../../assets/companyLogo.png";
 import { Link } from "react-router-dom";
+import { Offer } from "../../../types";
 
-const JobCard: FC = () => {
+interface JobCardProps {
+  offer: Offer;
+}
+
+const JobCard = ({ offer }: JobCardProps) => {
   return (
     <div className="py-4 px-2 border-b-2 border-gray-100">
       <div className="flex space-x-2">
@@ -20,17 +25,13 @@ const JobCard: FC = () => {
 
         <div className="space-y-8 flex-col items-start md:flex-row flex md:items-center justify-between md:space-x-28 py-4 px-2">
           <div>
-            <h1 className="text-md font-semibold">UX/UI designer</h1>
+            <h1 className="text-lg font-semibold">{offer.title}</h1>
             <div className="space-x-2">
-              <span className="font-medium text-sm">Upwork</span>
+              <span className="font-medium text-md">{offer.company.name}</span>
 
-              <span className="text-xs">Remote only</span>
+              <span className="text-xs">{offer.type.toUpperCase()}</span>
             </div>
-            <p className="mt-2 text-sm">
-              On Upwork you'll find a range of top freelancers and agencies,
-              from developers and development agencies to designers and creative
-              agencies, copywriters,
-            </p>
+            <p className="mt-2 text-sm">{offer.description}</p>
           </div>
           <div>
             <Button>

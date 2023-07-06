@@ -10,14 +10,18 @@ interface MyTabs {
 export default function MyTabs({ tabsArr, c1, c2, c3 }: MyTabs) {
   return (
     <Tab.Group>
-      <Tab.List className={"inline-block  items-center  bg-black-100"}>
+      <Tab.List
+        className={
+          " flex justify-between  lg:justify-start bg-black-100 w-full"
+        }
+      >
         {tabsArr.map((link) => {
           return (
-            <Tab as={Fragment}>
+            <Tab as={Fragment} key={link}>
               {({ selected }) => (
                 /* Use the `selected` state to conditionally style the selected tab. */
                 <button
-                  className={`py-1 px-5 border-b-2 hover:bg-blue-400 hover:text-white transition-all 
+                  className={`py-1 px-5 w-full lg:w-auto border-b-2 hover:bg-blue-400 hover:text-white transition-all 
                     ${
                       selected
                         ? "bg-blue-500  text-white border-white"

@@ -7,6 +7,7 @@ import notification from "./notification";
 import follow from "./follow";
 import offer from "./offer";
 import profile from "./profile";
+import company from "./company";
 
 export default [
   userTypeDefs,
@@ -18,4 +19,5 @@ export default [
   follow,
   offer,
   profile,
+  company,
 ];

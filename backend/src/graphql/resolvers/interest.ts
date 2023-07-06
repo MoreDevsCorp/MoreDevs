@@ -20,7 +20,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error getting interests :", error.message);
-        throw new GraphQLError("Error querying interests", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }

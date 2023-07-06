@@ -1,6 +1,7 @@
 import { GraphQLError } from "graphql";
 import { Context } from "../../utils/types";
 import jwt from "jsonwebtoken";
+import { Prisma } from "@prisma/client";
 
 export default {
   Query: {
@@ -14,30 +15,21 @@ export default {
       }
 
       try {
+        const exisitingUser = await prisma.user.findFirst({
+          where: { id: args.userId },
+        });
+
+        if (!exisitingUser) {
+          throw new GraphQLError("Not found user !", {
+            extensions: { code: 404 },
+          });
+        }
+
         const posts = await prisma.post.findMany({
           where: {
             authorId: args.userId,
           },
-          select: {
-            author: {
-              select: {
-                id: true,
-                image: true,
-                createdAt: true,
-                name: true,
-              },
-            },
-            comments: {
-              include: {
-                _count: true,
-              },
-            },
-            likes: {
-              select: {
-                id: true,
-              },
-            },
-          },
+          select: postPopulated,
         });
 
         return {
@@ -45,7 +37,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error getting posts :", error.message);
-        throw new GraphQLError("Error querying posts", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -75,7 +67,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error creating post :", error.message);
-        throw new GraphQLError("Error creating post", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -110,7 +102,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error updating post :", error.message);
-        throw new GraphQLError("Error updating post", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -133,10 +125,33 @@ export default {
         };
       } catch (error: any) {
         console.log("Error deleting post :", error.message);
-        throw new GraphQLError("Error deleting post", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
     },
   },
 };
+
+export const postPopulated = Prisma.validator<Prisma.PostSelect>()({
+  author: {
+    select: {
+      id: true,
+      image: true,
+      name: true,
+      job_title: true,
+    },
+  },
+  comments: {
+    include: {
+      _count: true,
+    },
+  },
+  likes: {
+    select: {
+      id: true,
+    },
+  },
+  content: true,
+  createdAt: true,
+});

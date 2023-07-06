@@ -4,7 +4,7 @@ const typeDefs = gql`
   scalar Date
 
   type Query {
-    getOffers: GetOffersReturnType
+    getOffers(companyId: String): GetOffersReturnType
   }
 
   type Mutation {
@@ -13,7 +13,7 @@ const typeDefs = gql`
       description: String!
       location: String!
       type: String!
-      skillIds: [String]!
+      skillsIds: [String]!
       companyId: String!
     ): CreateOfferReturnType
     updateOffer(
@@ -41,8 +41,12 @@ const typeDefs = gql`
   type Offer {
     id: String
     title: String
+    description: String
+    taken: Boolean
+    type: String
     company: Company
     createdAt: Date
+    location: String
   }
 
   type GetOffersReturnType {

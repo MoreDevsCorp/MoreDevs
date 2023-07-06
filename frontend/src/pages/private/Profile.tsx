@@ -1,26 +1,29 @@
 import { IoIosShareAlt } from "react-icons/io";
-import profile from "../../assets/profile.jpg";
+// import profile from "../../assets/profile.jpg";
 import { GoPrimitiveDot } from "react-icons/go";
 import Button from "../../components/ui/Button";
 import MyTabs from "../../components/ui/Tabs";
 import About from "../../components/ui/profile/About";
 import Skills from "../../components/ui/profile/Skills/Skills";
-import Projects from "../../components/ui/profile/Project/Projects";
+// import Projects from "../../components/ui/profile/Project/Projects";
 import Experience from "../../components/ui/profile/Experiences/Experience";
 import Education from "../../components/ui/profile/Education/Education";
-import Post from "../../components/ui/post";
 import ProfileSettings from "../../components/ui/profile/Profile Setting/ProfileSettings";
 import { useParams } from "react-router-dom";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GetProfileData, GetProfileVariables } from "../../types";
 import profileOperations from "../../graphql/operations/profile";
+import { useSelector } from "react-redux";
+import Posts from "./Posts";
+import { selectUser } from "../../state/userSlice/userSlice";
 
 const bgImage = null;
 
 const Profile = () => {
   const { userId } = useParams();
+  const user = useSelector(selectUser);
 
-  const { data } = useQuery<GetProfileData, GetProfileVariables>(
+  const { data, refetch } = useQuery<GetProfileData, GetProfileVariables>(
     profileOperations.Queries.getProfile,
     {
       variables: {
@@ -48,7 +51,11 @@ const Profile = () => {
           <div className="-mt-[90px] p-5 ">
             <div className="bg-white  inline-block rounded-full">
               <img
-                src={profile}
+                src={
+                  data?.getProfile.profile.image
+                    ? data.getProfile.profile.image
+                    : "/images/img_avatar.png"
+                }
                 alt="profile image"
                 className="w-[160px] h-[160px] rounded-full m-1"
               />
@@ -56,17 +63,21 @@ const Profile = () => {
 
             <div className="flex flex-col space-y-1">
               <h1 className="font-semibold text-2xl text-black-900">
-                Jon Snow
+                {data?.getProfile.profile.name}
               </h1>
-              <p className="text-black-600">🚩 Agadir, Morocco</p>
+              <p className="text-black-600">
+                🚩 {data?.getProfile.profile.location}
+              </p>
               <div className="block space-x-1 items-center sm:flex">
-                <h4>@Jsnow21</h4>
-                <GoPrimitiveDot className="hidden sm:block text-black-600" />
+                {/* <h4>@Jsnow21</h4> */}
+                {/* <GoPrimitiveDot className="hidden sm:block text-black-600" /> */}
                 <h4 className="font-medium">
-                  Lead product designer at MoreDevs.
+                  {data?.getProfile.profile.job_title}
                 </h4>
                 <GoPrimitiveDot className="text-black-600 hidden sm:block" />
-                <h4 className="text-black-600">Full-time</h4>
+                <h4 className="text-black-600">
+                  {data?.getProfile.profile.job_type}
+                </h4>
               </div>
             </div>
 
@@ -80,35 +91,40 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="mt-6 mr-4">
-            <Button type="button">
-              <span className="flex space-x-1 items-center text-white ">
-                <span>Follow +</span>
-              </span>
-            </Button>
-          </div>
+          {user.id !== userId && (
+            <div className="mt-6 mr-4">
+              <Button type="button">
+                <span className="flex space-x-1 items-center text-white ">
+                  <span>Follow +</span>
+                </span>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
       <MyTabs
-        tabsArr={["Profile", "Posts", "Settings"]}
+        tabsArr={
+          userId === user.id
+            ? ["Profile", "Posts", "Settings"]
+            : ["Profile", "Posts"]
+        }
         c1={
           <div className={"space-y-6"}>
-            <About />
-            <Skills />
-            <Projects />
-            <Experience />
-            <Education />
+            <About content={data?.getProfile.profile.bio} />
+            <Skills skills={data?.getProfile.profile.skills} />
+            {/* <Projects /> */}
+            <Experience experiences={data?.getProfile.profile.experiences} />
+            <Education educations={data?.getProfile.profile.educations} />
           </div>
         }
-        c2={
-          <div className="max-w-[600px]">
-            <Post />
-            <Post />
-            <Post />
-          </div>
+        c2={<Posts />}
+        c3={
+          <ProfileSettings
+            profile={data?.getProfile.profile}
+            refetch={refetch}
+          />
         }
-        c3={<ProfileSettings />}
       />
     </div>
   );

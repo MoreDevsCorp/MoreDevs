@@ -1,11 +1,11 @@
 import HeroSection from "../../components/layout/public/Hero";
 import Navbar from "../../components/layout/public/Navbar";
-import { RootState } from "../../store";
+import { selectUser } from "../../state/userSlice/userSlice";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 const Welcome: React.FC = () => {
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
 
   return user ? (
     <Navigate to="/home" replace />

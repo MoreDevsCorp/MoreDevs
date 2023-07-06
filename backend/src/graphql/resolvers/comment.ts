@@ -57,7 +57,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error creating comment: ", error.message);
-        throw new GraphQLError("Error creating comment", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -83,7 +83,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error deleting comment: ", error.message);
-        throw new GraphQLError("Error deleting comment", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }

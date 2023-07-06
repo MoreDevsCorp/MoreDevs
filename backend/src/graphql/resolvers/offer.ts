@@ -4,8 +4,13 @@ import { Context } from "../../utils/types";
 
 export default {
   Query: {
-    getOffers: async (_p: any, _a: any, context: Context) => {
+    getOffers: async (
+      _p: any,
+      args: { companyId: string },
+      context: Context
+    ) => {
       const { session, prisma } = context;
+      const { companyId } = args;
 
       if (!session?.user) {
         throw new GraphQLError("You're not authenticated !", {
@@ -14,19 +19,25 @@ export default {
       }
 
       try {
-        const offers = await prisma.offer.findMany({
-          include: {
-            company: {
-              select: { name: true, location: true, id: true, avatar: true },
+        let offers;
+
+        if (companyId) {
+          offers = await prisma.offer.findMany({ where: { companyId } });
+        } else {
+          offers = await prisma.offer.findMany({
+            include: {
+              company: {
+                select: { name: true, location: true, id: true, avatar: true },
+              },
             },
-          },
-        });
+          });
+        }
         return {
           offers,
         };
       } catch (error: any) {
         console.log("Error getting offers :", error.message);
-        throw new GraphQLError("Error querying offers", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -76,7 +87,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error creating Offer :", error.message);
-        throw new GraphQLError("Error creating Offer", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -147,7 +158,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error updating Offer :", error.message);
-        throw new GraphQLError("Error updating Offer", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -175,7 +186,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error deleting Offer :", error.message);
-        throw new GraphQLError("Error deleting Offer", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }

@@ -3,15 +3,16 @@ import { gql } from "@apollo/client";
 const postOperations = {
   Queries: {
     getPosts: gql`
-      query GetPosts {
-        getPosts {
+      query GetPosts($userId: String!) {
+        getPosts(userId: $userId) {
           posts {
             author {
               id
               name
               image
-              createdAt
+              job_title
             }
+            createdAt
             comments
             likes {
               id
@@ -23,13 +24,11 @@ const postOperations = {
   },
   Mutations: {
     createPost: gql`
-        mutation CreatePost{
-            createPost($content : String!){
-                    createPost(content : $content){
-                        success
-                    }
-            }
+      mutation CreatePost($content: String!) {
+        createPost(content: $content) {
+          success
         }
+      }
     `,
   },
 };

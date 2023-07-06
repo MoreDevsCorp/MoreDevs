@@ -39,7 +39,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error getting followers :", error.message);
-        throw new GraphQLError("Error querying followers", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -80,7 +80,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error getting following :", error.message);
-        throw new GraphQLError("Error querying following", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -137,7 +137,7 @@ export default {
         };
       } catch (error: any) {
         console.log("Error attempting to follow this user :", error.message);
-        throw new GraphQLError("Error attempting to follow this user", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }
@@ -203,7 +203,7 @@ export default {
           "Error attempting to remove the following !",
           error.message
         );
-        throw new GraphQLError("Error attempting to remove the following", {
+        throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
       }

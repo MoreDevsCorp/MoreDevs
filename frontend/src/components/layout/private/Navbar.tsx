@@ -1,18 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots, faBell } from "@fortawesome/free-solid-svg-icons";
-import profile from "../../../assets/profile.jpg";
-
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-
 import { AiOutlineClose } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useEffect, useState } from "react";
 import { Menu } from "@headlessui/react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { singOutAction } from "../../../state/actions/userActions";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
+import { selectUser, userLogout } from "../../../state/userSlice/userSlice";
 
 interface NavBar {
   isSideBarOpen: boolean;
@@ -22,14 +17,14 @@ interface NavBar {
 export function DropDown() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
   return (
     <div>
       <Menu as="div" className="relative inline-block text-left ">
         <div>
           <Menu.Button className="inline-flex w-full justify-center ">
             <img
-              src={profile}
+              src={user.image ? user.image : "/images/img_avatar.png"}
               alt="profile image"
               width={40}
               height={40}
@@ -67,7 +62,10 @@ export function DropDown() {
             <Menu.Item>
               {({ active }) => (
                 <button
-                  onClick={() => dispatch(singOutAction())}
+                  onClick={() => {
+                    dispatch(userLogout());
+                    window.location.reload();
+                  }}
                   className={`${
                     active ? "bg-black-900 text-white" : "text-black-600"
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm hover:text-gray-500`}
@@ -83,6 +81,7 @@ export function DropDown() {
   );
 }
 const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
+  const user = useSelector(selectUser);
   return (
     <nav className="z-50 px-10 py-4  w-[100%] border  border-gray-100 bg-white flex items-center justify-between">
       <div className="flex items-center space-x-4">
@@ -116,7 +115,7 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
         />
 
         <div className="flex items-center space-x-2">
-          <h4 className="font-medium hidden  lg:block">Jon Snow</h4>
+          <h4 className="font-medium hidden  lg:block">{user.name}</h4>
           <DropDown />
         </div>
       </div>
