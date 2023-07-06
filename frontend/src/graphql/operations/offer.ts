@@ -3,14 +3,15 @@ import { gql } from "@apollo/client";
 export default {
   Queries: {
     getOffers: gql`
-      query GetOffers {
-        getOffers {
+      query GetOffers($companyId: String) {
+        getOffers(companyId: $companyId) {
           offers {
             id
             title
             description
             taken
             type
+            location
             company {
               id
               name
