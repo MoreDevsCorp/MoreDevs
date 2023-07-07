@@ -23,7 +23,7 @@ const JobCard = ({ offer }: JobCardProps) => {
           />
         </div>
 
-        <div className="space-y-8 flex-col items-start md:flex-row flex md:items-center justify-between md:space-x-28 py-4 px-2">
+        <div className="w-full space-y-8 flex-col items-start md:flex-row flex md:items-center justify-between md:space-x-28 py-4 px-2">
           <div>
             <h1 className="text-lg font-semibold">{offer.title}</h1>
             <div className="space-x-2">
@@ -35,9 +35,8 @@ const JobCard = ({ offer }: JobCardProps) => {
           </div>
           <div>
             <Button>
-              <Link to={"/jobs/12312"}>More</Link>
+              <Link to={`/jobs/${offer.id}`}>More</Link>
             </Button>
-            <h3>Internship</h3>
           </div>
         </div>
       </div>

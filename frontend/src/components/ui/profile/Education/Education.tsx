@@ -28,9 +28,22 @@ export default function Education({ educations }: EducationProps) {
       </div>
 
       <div className="flex flex-wrap space-y-10 bg-white  py-6 ">
-        {educations?.map((edc) => {
-          return <EducationRow key={edc.id} />;
-        })}
+        {educations?.length == 0 ? (
+          user.id == userId ? (
+            <h3 className="italic text-gray-500">
+              Add your educations to improve your profile.
+            </h3>
+          ) : (
+            <h3 className="italic text-gray-500">
+              This User has not added his educations yet.
+            </h3>
+          )
+        ) : (
+          educations?.map((edc) => {
+            return <EducationRow key={edc.id} />;
+          })
+        )}
+        {}
       </div>
     </div>
   );

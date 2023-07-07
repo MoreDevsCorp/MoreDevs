@@ -14,12 +14,13 @@ import EducationRow from "./EducationRow";
 import EducationForm from "./EducationForm";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store";
+import { selectUser } from "../../../../state/userSlice/userSlice";
 
 const EducationPage = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
 
   const [educationInputs, setEducationInputs] = useState("");
   const [data, setData] = useState([

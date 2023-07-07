@@ -43,12 +43,25 @@ export type Offer = {
   createdAt: string;
   taken: boolean;
   location: string;
+  skills: {
+    skill: Skill;
+  }[];
 };
 
 export interface GetOffersData {
   getOffers: {
     offers: Offer[];
   };
+}
+
+export interface GetOfferData {
+  getOffer: {
+    offer: Offer;
+  };
+}
+
+export interface GetOfferVariables {
+  id: string;
 }
 
 export interface CreateOfferVariables {

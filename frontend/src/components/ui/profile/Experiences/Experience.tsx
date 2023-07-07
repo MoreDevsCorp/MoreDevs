@@ -27,9 +27,21 @@ export default function Experience({ experiences }: ExperienceProps) {
       </div>
 
       <div className="flex flex-wrap space-y-10 bg-white  py-6 ">
-        {experiences?.map((exp) => {
-          return <ExperienceRow key={exp.id} />;
-        })}
+        {experiences?.length == 0 ? (
+          user.id == userId ? (
+            <h3 className="italic text-gray-500">
+              Add your experiences to improve your profile.
+            </h3>
+          ) : (
+            <h3 className="italic text-gray-500">
+              This User has not added his experiences yet.
+            </h3>
+          )
+        ) : (
+          experiences?.map((exp) => {
+            return <ExperienceRow key={exp.id} />;
+          })
+        )}
       </div>
     </div>
   );
