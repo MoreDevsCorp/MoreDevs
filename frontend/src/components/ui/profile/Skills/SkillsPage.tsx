@@ -12,10 +12,12 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store";
+import { selectUser } from "../../../../state/userSlice/userSlice";
 
 const SkillsPage = () => {
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
+
   const [isOpen, setIsOpen] = useState(false);
   const [skill, setSkill] = useState(" ");
   const [skills, setSkills] = useState([

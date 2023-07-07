@@ -14,10 +14,11 @@ import ExperienceRow from "./ExperienceRow";
 import ExperienceForm from "./ExperienceForm";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store";
+import { selectUser } from "../../../../state/userSlice/userSlice";
 
 const ExperiencePage = () => {
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
   const [isOpen, setIsOpen] = useState(false);
   const [experienceInputs, setExperienceInputs] = useState("");
   const [data, setData] = useState([
