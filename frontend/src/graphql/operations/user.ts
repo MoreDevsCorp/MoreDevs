@@ -14,6 +14,7 @@ export default {
             companyCreated
             company {
               id
+              name
             }
           }
         }
