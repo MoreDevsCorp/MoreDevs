@@ -1,8 +1,7 @@
-import { FC } from "react";
-import Button from "../Button";
-import Google from "../../../assets/companyLogo.png";
 import { Link } from "react-router-dom";
+import Google from "../../../assets/companyLogo.png";
 import { Offer } from "../../../types";
+import Button from "../Button";
 
 interface JobCardProps {
   offer: Offer;

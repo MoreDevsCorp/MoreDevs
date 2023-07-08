@@ -1,4 +1,8 @@
 import { useQuery } from "@apollo/client";
+import { useSelector } from "react-redux";
+import offer from "../../../graphql/operations/offer";
+import { selectUser } from "../../../state/userSlice/userSlice";
+import { GetOffersData } from "../../../types";
 import Button from "../Button";
 import {
   Table,
@@ -9,10 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from "../table";
-import offer from "../../../graphql/operations/offer";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../../state/userSlice/userSlice";
-import { GetOffersData } from "../../../types";
 
 const JobList = () => {
   const user = useSelector(selectUser);

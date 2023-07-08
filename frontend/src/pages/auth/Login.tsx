@@ -1,8 +1,7 @@
 import axios from "axios";
-import LoginForm from "../../components/ui/LoginForm";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import LoginForm from "../../components/ui/LoginForm";
 import { selectUser, userLogin } from "../../state/userSlice/userSlice";
 
 const LoginPage = () => {

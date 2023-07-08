@@ -1,6 +1,3 @@
-import { FC } from "react";
-import { IconType } from "react-icons/lib";
-
 interface InputProps {
   Icon?: any;
   placeHolder?: string;

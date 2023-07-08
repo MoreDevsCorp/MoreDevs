@@ -1,10 +1,9 @@
+import { PencilIcon } from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { selectUser } from "../../../../state/userSlice/userSlice";
 import { Experience as ExperienceType } from "../../../../types";
 import ExperienceRow from "./ExperienceRow";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../store";
-import { PencilIcon } from "@heroicons/react/24/outline";
-import { selectUser } from "../../../../state/userSlice/userSlice";
 
 interface ExperienceProps {
   experiences: ExperienceType[] | undefined;
@@ -20,7 +19,7 @@ export default function Experience({ experiences }: ExperienceProps) {
         <h1 className="font-semibold text-2xl text-black-900">Experience</h1>
         {userId === user.id && (
           <PencilIcon
-            onClick={() => navigate("details/experience")}
+            onClick={() => navigate("/profile/details/experience")}
             className="hover:opacity-50 cursor-pointer h-5 w-5"
           />
         )}

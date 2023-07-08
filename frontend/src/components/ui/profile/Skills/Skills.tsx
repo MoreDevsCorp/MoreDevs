@@ -1,16 +1,10 @@
 import Tag from "../../Tag";
-import { HiOutlinePencilAlt } from "react-icons/hi";
-import { useState } from "react";
-import { Dialog } from "@headlessui/react";
 
-import Button from "../../Button";
-import Input from "../../inputs/Input";
-import { useNavigate, useParams } from "react-router-dom";
 import { PencilIcon } from "@heroicons/react/24/outline";
-import { Skill } from "../../../../types";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../store";
+import { useNavigate, useParams } from "react-router-dom";
 import { selectUser } from "../../../../state/userSlice/userSlice";
+import { Skill } from "../../../../types";
 
 interface SkillsProps {
   skills: Skill[] | undefined;
@@ -35,7 +29,7 @@ export default function Skills({ skills }: SkillsProps) {
         <h1 className="font-semibold text-2xl text-black-900">Skills</h1>
         {userId === user.id && (
           <PencilIcon
-            onClick={() => navigate("details/skills")}
+            onClick={() => navigate("/profile/details/skills")}
             className="hover:opacity-50 cursor-pointer h-5 w-5"
           />
         )}

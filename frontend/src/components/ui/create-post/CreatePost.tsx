@@ -1,8 +1,8 @@
-import profile from "../../../assets/profile.jpg";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
-import Button from "../Button";
-import { IoImageOutline } from "react-icons/io5";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
+import { IoImageOutline } from "react-icons/io5";
+import profile from "../../../assets/profile.jpg";
+import Button from "../Button";
 
 const CreatePost = () => {
   return (

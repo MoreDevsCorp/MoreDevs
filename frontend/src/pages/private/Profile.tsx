@@ -6,16 +6,16 @@ import MyTabs from "../../components/ui/Tabs";
 import About from "../../components/ui/profile/About";
 import Skills from "../../components/ui/profile/Skills/Skills";
 // import Projects from "../../components/ui/profile/Project/Projects";
-import Experience from "../../components/ui/profile/Experiences/Experience";
-import Education from "../../components/ui/profile/Education/Education";
-import ProfileSettings from "../../components/ui/profile/Profile Setting/ProfileSettings";
-import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { GetProfileData, GetProfileVariables } from "../../types";
-import profileOperations from "../../graphql/operations/profile";
 import { useSelector } from "react-redux";
-import Posts from "./Posts";
+import { useParams } from "react-router-dom";
+import Education from "../../components/ui/profile/Education/Education";
+import Experience from "../../components/ui/profile/Experiences/Experience";
+import ProfileSettings from "../../components/ui/profile/Profile Setting/ProfileSettings";
+import profileOperations from "../../graphql/operations/profile";
 import { selectUser } from "../../state/userSlice/userSlice";
+import { GetProfileData, GetProfileVariables } from "../../types";
+import Posts from "./Posts";
 
 const bgImage = null;
 

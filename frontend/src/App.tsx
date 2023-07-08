@@ -1,28 +1,27 @@
-import Welcome from "./pages/public/Welcome";
+import { useLazyQuery } from "@apollo/client";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import PrivateLayout from "./components/layout/private/Layout";
+import CreateCompany from "./components/ui/company/CreateCompany";
+import CreateJobOffer from "./components/ui/jobs/CreateJobOffer";
+import JobPage from "./components/ui/jobs/JobPage";
+import EducationPage from "./components/ui/profile/Education/EducationPage";
+import ExperiencePage from "./components/ui/profile/Experiences/ExperiencePage";
+import SkillsPage from "./components/ui/profile/Skills/SkillsPage";
+import companyOperations from "./graphql/operations/company";
+import userOperations from "./graphql/operations/user";
+import Protected from "./lib/isLoggedIn";
 import LoginPage from "./pages/auth/Login";
 import RegisterPage from "./pages/auth/Register";
-import PrivateLayout from "./components/layout/private/Layout";
-import Home from "./pages/private/Home";
-import Profile from "./pages/private/Profile";
 import CompanyProfile from "./pages/private/CompanyProfile";
-import CreateCompany from "./components/ui/company/CreateCompany";
+import Home from "./pages/private/Home";
 import Jobs from "./pages/private/Jobs";
-import JobPage from "./components/ui/jobs/JobPage";
-import CreateJobOffer from "./components/ui/jobs/CreateJobOffer";
-import Protected from "./lib/isLoggedIn";
-import { useSelector } from "react-redux";
-import SkillsPage from "./components/ui/profile/Skills/SkillsPage";
-import EducationPage from "./components/ui/profile/Education/EducationPage";
-import { useLazyQuery } from "@apollo/client";
-import userOperations from "./graphql/operations/user";
-import { GetCompanyData, GetCompanyVariables, GetUserData } from "./types";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import companyOperations from "./graphql/operations/company";
-import ExperiencePage from "./components/ui/profile/Experiences/ExperiencePage";
-import { selectUser, userLogin } from "./state/userSlice/userSlice";
+import Profile from "./pages/private/Profile";
 import NotFound from "./pages/public/NotFound";
+import Welcome from "./pages/public/Welcome";
+import { selectUser, userLogin } from "./state/userSlice/userSlice";
+import { GetCompanyData, GetCompanyVariables, GetUserData } from "./types";
 
 function App() {
   const user = useSelector(selectUser);
@@ -85,17 +84,14 @@ function App() {
             <Route element={<CreateJobOffer />} path="/joboffer/create" />
           )}
           <Route element={<Profile />} path="/profile/:userId" />
-          <Route
-            element={<SkillsPage />}
-            path="/profile/:userId/details/skills"
-          />
+          <Route element={<SkillsPage />} path="/profile/details/skills" />
           <Route
             element={<EducationPage />}
-            path="/profile/:userId/details/education"
+            path="/profile/details/education"
           />
           <Route
             element={<ExperiencePage />}
-            path="/profile/:userId/details/experience"
+            path="/profile/details/experience"
           />
           <Route
             element={

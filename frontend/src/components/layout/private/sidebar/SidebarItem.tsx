@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dispatch, SetStateAction } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../state/userSlice/userSlice";

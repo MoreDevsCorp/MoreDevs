@@ -1,20 +1,11 @@
-import { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { FaUniversity } from "react-icons/fa";
-import Button from "../../Button";
-import Input from "../../inputs/Input";
-import {
-  PencilIcon,
-  PlusIcon,
-  TrashIcon,
-  ArrowLeftIcon,
-} from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
-import ExperienceRow from "./ExperienceRow";
-import ExperienceForm from "./ExperienceForm";
+import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../store";
+import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../../../state/userSlice/userSlice";
+import ExperienceForm from "./ExperienceForm";
+import ExperienceRow from "./ExperienceRow";
 
 const ExperiencePage = () => {
   const navigate = useNavigate();

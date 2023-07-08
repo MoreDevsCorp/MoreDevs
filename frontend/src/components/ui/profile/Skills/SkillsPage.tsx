@@ -1,18 +1,16 @@
-import { useState } from "react";
 import { Dialog } from "@headlessui/react";
+import { useState } from "react";
 
-import Button from "../../Button";
-import Input from "../../inputs/Input";
 import {
-  PencilIcon,
+  ArrowLeftIcon,
   PlusIcon,
   TrashIcon,
-  ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../store";
+import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../../../state/userSlice/userSlice";
+import Button from "../../Button";
+import Input from "../../inputs/Input";
 
 const SkillsPage = () => {
   const navigate = useNavigate();

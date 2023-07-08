@@ -1,20 +1,16 @@
-import { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { FaUniversity } from "react-icons/fa";
-import Button from "../../Button";
-import Input from "../../inputs/Input";
 import {
+  ArrowLeftIcon,
   PencilIcon,
   PlusIcon,
   TrashIcon,
-  ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
-import EducationRow from "./EducationRow";
-import EducationForm from "./EducationForm";
+import { useState } from "react";
+import { FaUniversity } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../store";
+import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../../../state/userSlice/userSlice";
+import EducationForm from "./EducationForm";
 
 const EducationPage = () => {
   const navigate = useNavigate();

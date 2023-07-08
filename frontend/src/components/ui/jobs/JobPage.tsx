@@ -1,17 +1,17 @@
-import { FC } from "react";
-import Button from "../Button";
-import Google from "../../../assets/companyLogo.png";
-import {
-  MapPinIcon,
-  BriefcaseIcon,
-  ListBulletIcon,
-  ClockIcon,
-  CheckIcon,
-} from "@heroicons/react/24/outline";
 import { useQuery } from "@apollo/client";
+import {
+  BriefcaseIcon,
+  CheckIcon,
+  ClockIcon,
+  ListBulletIcon,
+  MapPinIcon,
+} from "@heroicons/react/24/outline";
+import { FC } from "react";
+import { useParams } from "react-router-dom";
+import Google from "../../../assets/companyLogo.png";
 import offerOperations from "../../../graphql/operations/offer";
 import { GetOfferData, GetOfferVariables } from "../../../types";
-import { useParams } from "react-router-dom";
+import Button from "../Button";
 
 import { getDifferenceInDays } from "../../../lib/utils";
 
@@ -26,8 +26,6 @@ const JobPage: FC = () => {
       },
     }
   );
-
-  console.log(data?.getOffer.offer);
 
   const daysPassed = data && getDifferenceInDays(data.getOffer.offer.createdAt);
 

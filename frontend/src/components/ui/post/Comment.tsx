@@ -1,9 +1,9 @@
+import { FavoriteBorder } from "@mui/icons-material";
+import Favorite from "@mui/icons-material/Favorite";
+import { Checkbox } from "@mui/material";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import user from "../../../assets/user.jpg";
-import { Checkbox } from "@mui/material";
-import { FavoriteBorder } from "@mui/icons-material";
-import Favorite from "@mui/icons-material/Favorite";
 
 export default function Comment() {
   return (

@@ -1,7 +1,5 @@
-import React from "react";
+import { Field, Form, Formik } from "formik";
 import Button from "../../Button";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
 
 interface EducationFormProps {
   setIsOpen: (value: boolean) => void;

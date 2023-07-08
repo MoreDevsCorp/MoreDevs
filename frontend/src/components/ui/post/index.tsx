@@ -1,14 +1,14 @@
-import { AiOutlineShareAlt, AiOutlineClockCircle } from "react-icons/ai";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaRegCommentAlt } from "react-icons/fa";
-import user from "../../../assets/user.jpg";
-import profile from "../../../assets/profile.jpg";
-import mydesk from "../../../assets/mydesk.png";
-import Comment from "./Comment";
-import { Checkbox } from "@mui/material";
+import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { FavoriteBorder } from "@mui/icons-material";
 import Favorite from "@mui/icons-material/Favorite";
-import TextareaAutosize from "@mui/base/TextareaAutosize";
+import { Checkbox } from "@mui/material";
+import { AiOutlineClockCircle, AiOutlineShareAlt } from "react-icons/ai";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaRegCommentAlt } from "react-icons/fa";
+import mydesk from "../../../assets/mydesk.png";
+import profile from "../../../assets/profile.jpg";
+import user from "../../../assets/user.jpg";
+import Comment from "./Comment";
 
 export default function Post() {
   return (
