@@ -1,27 +1,24 @@
 import SidebarItem from "./SidebarItem";
 
-import {
-  OutlineChat,
-  OutlineCompany,
-  OutlineHome,
-  OutlineMarketPlace,
-  OutlineNetwork,
-  OutlineWorkBag,
-} from "./Icons";
-
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Input from "../../../ui/inputs/Input";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../store";
+
+import {
+  MegaphoneIcon,
+  HomeIcon,
+  ChatBubbleBottomCenterTextIcon,
+  UserGroupIcon,
+  BuildingStorefrontIcon,
+  BuildingOfficeIcon,
+} from "@heroicons/react/24/outline";
 
 const navItems = [
-  { text: "Home", icon: OutlineHome },
-  { text: "Messages", icon: OutlineChat },
-  { text: "Network", icon: OutlineNetwork },
-  { text: "Jobs", icon: OutlineWorkBag },
-  { text: "Marketplace", icon: OutlineMarketPlace },
-  { text: "Company", icon: OutlineCompany },
+  { text: "Home", icon: HomeIcon },
+  { text: "Messages", icon: ChatBubbleBottomCenterTextIcon },
+  { text: "Network", icon: UserGroupIcon },
+  { text: "Jobs", icon: MegaphoneIcon },
+  { text: "Marketplace", icon: BuildingStorefrontIcon },
+  { text: "Company", icon: BuildingOfficeIcon },
 ];
 
 interface SideBar {
