@@ -23,6 +23,33 @@ export default {
         }
       }
     `,
+    getOffer: gql`
+      query GetOffers($id: String!) {
+        getOffer(id: $id) {
+          offer {
+            id
+            title
+            description
+            taken
+            type
+            location
+            company {
+              id
+              name
+              location
+              avatar
+            }
+            skills {
+              skill {
+                id
+                name
+              }
+            }
+            createdAt
+          }
+        }
+      }
+    `,
   },
   Mutations: {
     createOffer: gql`

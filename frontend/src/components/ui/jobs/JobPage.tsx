@@ -8,16 +8,41 @@ import {
   ClockIcon,
   CheckIcon,
 } from "@heroicons/react/24/outline";
+import { useQuery } from "@apollo/client";
+import offerOperations from "../../../graphql/operations/offer";
+import { GetOfferData, GetOfferVariables } from "../../../types";
+import { useParams } from "react-router-dom";
+
+import { getDifferenceInDays } from "../../../lib/utils";
 
 const JobPage: FC = () => {
+  const { id } = useParams();
+
+  const { data } = useQuery<GetOfferData, GetOfferVariables>(
+    offerOperations.Queries.getOffer,
+    {
+      variables: {
+        id: id || "",
+      },
+    }
+  );
+
+  console.log(data?.getOffer.offer);
+
+  const daysPassed = data && getDifferenceInDays(data.getOffer.offer.createdAt);
+
   return (
     <div className="space-y-2 px-2 py-4">
       <div className="flex space-x-2 py-2">
         <CheckIcon className="h-5 w-5" />
-        <span className="text-md font-medium">Job Status: Taken</span>
+        <span className="text-md font-medium">
+          Job Status: {data?.getOffer.offer.taken ? "Taken" : "Not Taken"}
+        </span>
       </div>
 
-      <h1 className="text-2xl font-semibold tracking-tight">UX/UI Designer</h1>
+      <h1 className="text-2xl font-semibold tracking-tight">
+        {data?.getOffer.offer.title}
+      </h1>
 
       <div>
         <img
@@ -29,46 +54,49 @@ const JobPage: FC = () => {
         />
       </div>
 
-      <h1 className="text-xl font-medium py-4">Google</h1>
+      <h1 className="text-xl font-medium py-4">
+        {data?.getOffer.offer.company.name}
+      </h1>
 
-      <div className="flex space-x-2">
+      <div className="flex space-x-2 items-center">
         <ClockIcon className="h-5 w-5" />{" "}
-        <span className="text-md font-medium">1 week ago</span>
+        {daysPassed && (
+          <span className="text-md font-medium">{daysPassed}</span>
+        )}
       </div>
 
-      <div className="flex space-x-2">
+      <div className="flex space-x-2 items-center">
         <MapPinIcon className="h-5 w-5" />{" "}
-        <span className="text-md font-medium">Agadir</span>
+        <span className="text-md font-medium">
+          {data?.getOffer.offer.location}
+        </span>
       </div>
 
-      <div className="flex space-x-2">
+      <div className="flex space-x-2 items-center">
         <BriefcaseIcon className="h-5 w-5" />{" "}
-        <span className="text-md font-medium">Internship</span>
+        <span className="text-md font-medium">
+          {data?.getOffer.offer.type.toUpperCase()}
+        </span>
       </div>
 
-      <div className="flex space-x-2">
+      <div className="flex space-x-2 items-center">
         <ListBulletIcon className="h5 w-5" />{" "}
         <span className="text-md font-medium">Skills</span>
       </div>
 
       <ul className="ml-10 list-disc">
-        <li>Web Design</li>
-        <li>CSS</li>
-        <li>PHP</li>
-        <li>Web Developement</li>
+        {data?.getOffer.offer.skills.map((skill) => {
+          return <li key={skill.skill.id}>{skill.skill.name}</li>;
+        })}
       </ul>
 
       <h1 className="pt-5 text-xl tracking-tight font-medium">
         Job Description
       </h1>
       <p className="text-sm pb-3">
-        Location: Agadir <br /> SCHEDULE: Part-time <br /> Are you a good
-        developer wants to learn how to code, and how things work behind the
-        scenes, well you're in the wrong place, we will use to make projects and
-        never give you a cent, and put the pressure on you, and never let have
-        free time, and forget you have something called weekend, we will turn
-        your life into a hell. Please kindly apply to the job if you're ready
-        for circumstances.
+        Location: {data?.getOffer.offer.location} <br /> SCHEDULE:{" "}
+        {data?.getOffer.offer.type.toUpperCase()} <br />{" "}
+        {data?.getOffer.offer.description}
       </p>
 
       <Button>Apply</Button>

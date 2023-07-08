@@ -35,7 +35,7 @@ const JobCard = ({ offer }: JobCardProps) => {
           </div>
           <div>
             <Button>
-              <Link to={"/jobs/12312"}>More</Link>
+              <Link to={`/jobs/${offer.id}`}>More</Link>
             </Button>
           </div>
         </div>
