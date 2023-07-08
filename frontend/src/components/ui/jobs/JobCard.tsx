@@ -37,7 +37,6 @@ const JobCard = ({ offer }: JobCardProps) => {
             <Button>
               <Link to={"/jobs/12312"}>More</Link>
             </Button>
-            <h3>Internship</h3>
           </div>
         </div>
       </div>
