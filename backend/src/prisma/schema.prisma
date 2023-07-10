@@ -212,6 +212,7 @@ model OfferSkill {
 model Skill {
   id         String       @id @default(cuid())
   name       String
+  slug       String
   UserSkill  UserSkill[]
   OfferSkill OfferSkill[]
 }

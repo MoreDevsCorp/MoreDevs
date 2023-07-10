@@ -50,4 +50,39 @@ export default {
       }
     },
   },
+  Mutation: {
+    addSkill: async (_: any, args: { name: string }, context: Context) => {
+      const { session, prisma } = context;
+      const { name } = args;
+
+      if (!session?.user) {
+        throw new GraphQLError("You're not authenticated !", {
+          extensions: { code: 401 },
+        });
+      }
+
+      try {
+        const existingSkill = await prisma.skill.findFirst({
+          where: { name: {} },
+        });
+        await prisma.user.update({
+          where: { id: session.user.id },
+          data: {
+            skills: {
+              create: {
+                skill: { create: { slug: name.toLowerCase(), name } },
+              },
+            },
+          },
+        });
+
+        return {};
+      } catch (error: any) {
+        console.log("Error adding skill :", error.message);
+        throw new GraphQLError(error.message, {
+          extensions: { code: 500 },
+        });
+      }
+    },
+  },
 };

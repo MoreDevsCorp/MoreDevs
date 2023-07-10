@@ -9,6 +9,14 @@ const typeDefs = gql`
     skills: [Skill]
   }
 
+  type Mutation {
+    addSkill(name: String): AddSkillReturnType
+  }
+
+  type AddSkillReturnType {
+    success: Boolean
+  }
+
   type Skill {
     id: String
     name: String

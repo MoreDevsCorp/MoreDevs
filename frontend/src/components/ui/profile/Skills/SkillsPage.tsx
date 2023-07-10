@@ -19,7 +19,7 @@ const SkillsPage = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
 
-  const { data, loading, error } = useQuery<GetSkillsData>(
+  const { data, loading, error, refetch } = useQuery<GetSkillsData>(
     skillOperations.Queries.getSkills,
     {
       variables: {
@@ -27,10 +27,6 @@ const SkillsPage = () => {
       },
     }
   );
-
-  useEffect(() => {
-    console.log(data?.getSkills.skills);
-  }, [data]);
 
   const [isOpen, setIsOpen] = useState(false);
   const [skill, setSkill] = useState(" ");
@@ -58,11 +54,11 @@ const SkillsPage = () => {
         </div>
 
         <div className="flex flex-wrap space-y-4  gap-2 bg-white  py-6 text-black-900">
-          {skills.map((skill) => {
+          {data?.getSkills.skills.map((skill) => {
             return (
-              <div className="w-full" key={skill}>
+              <div className="w-full" key={skill.id}>
                 <div className="flex items-center justify-between pb-2">
-                  <h3>{skill}</h3>
+                  <h3>{skill.name}</h3>
                   <TrashIcon
                     onClick={() => {}}
                     className="hover:opacity-50 cursor-pointer h-5 w-5"
@@ -91,7 +87,7 @@ const SkillsPage = () => {
           <div className="fixed inset-0 flex items-center justify-center p-4">
             {/* The actual dialog panel  */}
             <Dialog.Panel className="flex flex-col space-y-5 w-1/2 mx-auto max-w-sm rounded bg-white p-4">
-              <Dialog.Title>Edit your bio</Dialog.Title>
+              <Dialog.Title>Add New Skill</Dialog.Title>
 
               <Input
                 placeHolder="Enter your skill"
