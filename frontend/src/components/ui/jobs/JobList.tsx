@@ -13,6 +13,7 @@ import offer from "../../../graphql/operations/offer";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../state/userSlice/userSlice";
 import { GetOffersData } from "../../../types";
+import { Link } from "react-router-dom";
 
 const JobList = () => {
   const user = useSelector(selectUser);
@@ -51,6 +52,10 @@ const JobList = () => {
                 <Button size="text-xs">View</Button>
                 <Button size="text-xs">Edit</Button>
                 <Button size="text-xs">Delete</Button>
+
+                <Link to={"/job/applicants"}>
+                  <Button size="text-xs">Applicants</Button>
+                </Link>
               </TableCell>
             </TableRow>
           );

@@ -23,6 +23,8 @@ import companyOperations from "./graphql/operations/company";
 import ExperiencePage from "./components/ui/profile/Experiences/ExperiencePage";
 import { selectUser, userLogin } from "./state/userSlice/userSlice";
 import NotFound from "./pages/public/NotFound";
+import AppliedJob from "./components/ui/jobs/AppliedJob";
+import JobApplicants from "./components/ui/jobs/JobApplicants";
 
 function App() {
   const user = useSelector(selectUser);
@@ -81,6 +83,8 @@ function App() {
           <Route element={<Home />} path="/home" />
           <Route element={<Jobs />} path="/jobs" />
           <Route element={<JobPage />} path="/jobs/:id" />
+          <Route element={<JobApplicants />} path="/job/applicants" />
+          <Route element={<AppliedJob />} path="/profile/:userId/appliedjobs" />
           {user && user.companyCreated && (
             <Route element={<CreateJobOffer />} path="/joboffer/create" />
           )}
