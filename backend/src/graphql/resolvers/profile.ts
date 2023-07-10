@@ -26,8 +26,13 @@ export default {
           });
         }
 
+        const skills = profile.skills.map((skill) => ({
+          id: skill.skill?.id,
+          name: skill.skill?.name,
+        }));
+
         return {
-          profile,
+          profile: { ...profile, skills },
         };
       } catch (error: any) {
         console.log("Error getting profile :", error.message);
