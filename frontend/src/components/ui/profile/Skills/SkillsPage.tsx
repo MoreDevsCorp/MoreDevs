@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   ArrowLeftIcon,
@@ -11,10 +11,26 @@ import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../../../state/userSlice/userSlice";
 import Button from "../../Button";
 import Input from "../../inputs/Input";
+import { useQuery } from "@apollo/client";
+import { GetSkillsData } from "../../../../types";
+import skillOperations from "../../../../graphql/operations/skill";
 
 const SkillsPage = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
+
+  const { data, loading, error } = useQuery<GetSkillsData>(
+    skillOperations.Queries.getSkills,
+    {
+      variables: {
+        userId: user.id,
+      },
+    }
+  );
+
+  useEffect(() => {
+    console.log(data?.getSkills.skills);
+  }, [data]);
 
   const [isOpen, setIsOpen] = useState(false);
   const [skill, setSkill] = useState(" ");

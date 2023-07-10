@@ -17,7 +17,6 @@ import { selectUser } from "../../state/userSlice/userSlice";
 import { Company, GetCompanyData, GetCompanyVariables } from "../../types";
 
 const bgImage = null;
-const companyCreated = false;
 
 interface CompanyProfileProps {
   company?: Company | null;

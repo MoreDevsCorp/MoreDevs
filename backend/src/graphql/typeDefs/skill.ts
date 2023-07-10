@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 const typeDefs = gql`
   type Query {
-    getSkills: GetSkillsReturnType
+    getSkills(userId: String): GetSkillsReturnType
   }
 
   type GetSkillsReturnType {
