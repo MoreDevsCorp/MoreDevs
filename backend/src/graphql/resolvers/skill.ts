@@ -63,20 +63,36 @@ export default {
 
       try {
         const existingSkill = await prisma.skill.findFirst({
-          where: { name: {} },
-        });
-        await prisma.user.update({
-          where: { id: session.user.id },
-          data: {
-            skills: {
-              create: {
-                skill: { create: { slug: name.toLowerCase(), name } },
-              },
-            },
-          },
+          where: { slug: name.toLowerCase() },
         });
 
-        return {};
+        if (existingSkill) {
+          await prisma.user.update({
+            where: { id: session.user.id },
+            data: {
+              skills: {
+                connect: {
+                  id: existingSkill.id,
+                },
+              },
+            },
+          });
+        } else {
+          await prisma.user.update({
+            where: { id: session.user.id },
+            data: {
+              skills: {
+                create: {
+                  skill: { create: { slug: name.toLowerCase(), name } },
+                },
+              },
+            },
+          });
+        }
+
+        return {
+          success: true,
+        };
       } catch (error: any) {
         console.log("Error adding skill :", error.message);
         throw new GraphQLError(error.message, {

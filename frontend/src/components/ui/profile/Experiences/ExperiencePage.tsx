@@ -6,32 +6,53 @@ import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../../../state/userSlice/userSlice";
 import ExperienceForm from "./ExperienceForm";
 import ExperienceRow from "./ExperienceRow";
+import { Experience, GetExperiencesData } from "../../../../types";
+import { useQuery } from "@apollo/client";
+import experienceOperations from "../../../../graphql/operations/experience";
 
 const ExperiencePage = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const [isOpen, setIsOpen] = useState(false);
   const [experienceInputs, setExperienceInputs] = useState("");
-  const [data, setData] = useState([
+  const [data, setData] = useState<Experience[]>([
     {
-      id: 1,
+      id: "1",
       title: "Ecole Fraincaise D'enseignement Technique",
-      diploma: "Technicien Specialisee",
       startDate: "2020",
-      endDate: null,
+      endDate: "",
       present: true,
-      body: "Additional English classes and UX profile courses.",
+      description: "Additional English classes and UX profile courses.",
+      location: "Agadir",
+      company: {
+        id: "ss",
+        name: "FikraLabs",
+        location: "Agadir",
+        avatar: "null",
+      },
     },
     {
-      id: 2,
+      id: "2",
       title: "Ecole Fraincaise D'enseignement Technique",
-      diploma: "Technicien Specialisee",
       startDate: "2020",
-      endDate: null,
+      endDate: "",
       present: true,
-      body: "Additional English classes and UX profile courses.",
+      description: "Additional English classes and UX profile courses.",
+      location: "Agadir",
+      company: {
+        id: "ss",
+        name: "FikraLabs",
+        location: "Agadir",
+        avatar: "null",
+      },
     },
   ]);
+
+  const { data: experiencesData } = useQuery<GetExperiencesData>(
+    experienceOperations.Queries.getExperiences
+  );
+
+  console.log(experiencesData);
 
   return (
     <>
@@ -48,11 +69,15 @@ const ExperiencePage = () => {
           />
         </div>
 
+        {experiencesData?.getExperiences?.experiences.map((experience) => {
+          return <ExperienceRow experience={experience} />;
+        })}
+        {/* 
         <div className="flex flex-col space-y-10 bg-white  py-6 ">
-          <ExperienceRow />
+          <ExperienceRow experience={data[0]} />
           <hr />
-          <ExperienceRow />
-        </div>
+          <ExperienceRow experience={data[1]} />
+        </div> */}
 
         <Dialog
           open={isOpen}

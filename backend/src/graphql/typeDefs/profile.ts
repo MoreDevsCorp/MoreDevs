@@ -52,16 +52,6 @@ const typeDefs = gql`
       city: String
     ): SetupProfileReturnType
   }
-
-  type Experience {
-    id: String
-    title: String
-    description: String
-    location: String
-    company: Company
-    startDate: Date
-    endDate: Date
-  }
 `;
 
 export default typeDefs;

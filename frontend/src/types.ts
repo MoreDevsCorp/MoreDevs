@@ -16,12 +16,27 @@ export interface GetUserData {
   };
 }
 
+/**
+ * Skill related types
+ */
+
 export interface GetSkillsData {
   getSkills: {
     skills: {
       id: string;
+      slug: string;
       name: string;
     }[];
+  };
+}
+
+export interface AddSkillVariables {
+  name: string;
+}
+
+export interface AddSkillData {
+  addSkill: {
+    success: boolean;
   };
 }
 
@@ -74,6 +89,16 @@ export interface CreateOfferVariables {
 }
 export interface CreateOfferData {
   success: boolean;
+}
+
+/**
+ * Skill related types
+ */
+
+export interface GetExperiencesData {
+  getExperiences: {
+    experiences: Experience[];
+  };
 }
 
 /**
@@ -132,6 +157,7 @@ export interface Experience {
   };
   startDate: string;
   endDate: string;
+  present: boolean;
 }
 
 export interface Education {

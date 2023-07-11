@@ -8,7 +8,17 @@ export default {
           skills {
             id
             name
+            slug
           }
+        }
+      }
+    `,
+  },
+  Mutation: {
+    addSkill: gql`
+      mutation AddSkill($name: String!) {
+        addSkill(name: $name) {
+          success
         }
       }
     `,

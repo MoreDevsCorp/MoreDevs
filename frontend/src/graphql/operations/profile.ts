@@ -19,10 +19,16 @@ const profileOperations = {
             }
             experiences {
               id
+              location
               description
               startDate
               endDate
               title
+              company {
+                id
+                name
+              }
+              present
             }
             following
             followers

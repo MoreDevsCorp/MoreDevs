@@ -10,7 +10,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addSkill(name: String): AddSkillReturnType
+    addSkill(name: String!): AddSkillReturnType
   }
 
   type AddSkillReturnType {
@@ -20,6 +20,7 @@ const typeDefs = gql`
   type Skill {
     id: String
     name: String
+    slug: String
   }
 `;
 

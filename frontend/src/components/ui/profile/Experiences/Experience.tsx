@@ -13,6 +13,7 @@ export default function Experience({ experiences }: ExperienceProps) {
   const navigate = useNavigate();
   const { userId } = useParams();
   const user = useSelector(selectUser);
+
   return (
     <div className="p-6 space-y-4 border border-gray-100 rounded">
       <div className="flex justify-between items-center">
@@ -38,7 +39,7 @@ export default function Experience({ experiences }: ExperienceProps) {
           )
         ) : (
           experiences?.map((exp) => {
-            return <ExperienceRow key={exp.id} />;
+            return <ExperienceRow key={exp.id} experience={exp} />;
           })
         )}
       </div>

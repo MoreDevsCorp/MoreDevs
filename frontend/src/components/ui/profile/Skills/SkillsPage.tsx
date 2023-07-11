@@ -11,9 +11,14 @@ import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../../../state/userSlice/userSlice";
 import Button from "../../Button";
 import Input from "../../inputs/Input";
-import { useQuery } from "@apollo/client";
-import { GetSkillsData } from "../../../../types";
+import { useMutation, useQuery } from "@apollo/client";
+import {
+  AddSkillData,
+  AddSkillVariables,
+  GetSkillsData,
+} from "../../../../types";
 import skillOperations from "../../../../graphql/operations/skill";
+import { toast } from "react-hot-toast";
 
 const SkillsPage = () => {
   const navigate = useNavigate();
@@ -28,8 +33,13 @@ const SkillsPage = () => {
     }
   );
 
+  const [addSkill, { data: addSkillData }] = useMutation<
+    AddSkillData,
+    AddSkillVariables
+  >(skillOperations.Mutation.addSkill);
+
   const [isOpen, setIsOpen] = useState(false);
-  const [skill, setSkill] = useState(" ");
+  const [skill, setSkill] = useState("");
   const [skills, setSkills] = useState([
     "HTML",
     "CSS",
@@ -96,9 +106,19 @@ const SkillsPage = () => {
               />
               <Button
                 onClick={() => {
-                  setIsOpen(false);
-                  setSkills([...skills, skill]);
-                  setSkill(" ");
+                  addSkill({
+                    variables: {
+                      name: skill,
+                    },
+                    onCompleted: (data) => {
+                      setIsOpen(false);
+                      setSkill("");
+                      toast.success(
+                        `${skill} has been added to your skill set 🚀`
+                      );
+                      refetch();
+                    },
+                  });
                 }}
               >
                 Submit
