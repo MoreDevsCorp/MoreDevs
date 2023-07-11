@@ -6,7 +6,7 @@ const Home: React.FC = () => {
     <div className=" w-full p-2 ">
       <div className="max-w-[700px] space-y-5">
         <CreatePost />
-        <Post />
+        {/* <Post /> */}
       </div>
     </div>
   );

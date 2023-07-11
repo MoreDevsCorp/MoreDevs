@@ -25,6 +25,7 @@ import { selectUser, userLogin } from "./state/userSlice/userSlice";
 import NotFound from "./pages/public/NotFound";
 import AppliedJob from "./components/ui/jobs/AppliedJob";
 import JobApplicants from "./components/ui/jobs/JobApplicants";
+import ComingSoon from "./pages/private/ComingSoon";
 
 function App() {
   const user = useSelector(selectUser);
@@ -80,6 +81,11 @@ function App() {
             </Protected>
           }
         >
+          {/* coming soon pages */}
+          <Route element={<ComingSoon />} path="/messages" />
+          <Route element={<ComingSoon />} path="/network" />
+          <Route element={<ComingSoon />} path="/marketplace" />
+
           <Route element={<Home />} path="/home" />
           <Route element={<Jobs />} path="/jobs" />
           <Route element={<JobPage />} path="/jobs/:id" />

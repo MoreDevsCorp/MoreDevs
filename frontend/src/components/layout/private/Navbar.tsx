@@ -48,7 +48,7 @@ export function DropDown() {
                 </button>
               )}
             </Menu.Item>
-
+            <hr />
             <Menu.Item>
               {({ active }) => (
                 <button
@@ -60,7 +60,7 @@ export function DropDown() {
                 </button>
               )}
             </Menu.Item>
-
+            <hr />
             <Menu.Item>
               {({ active }) => (
                 <button

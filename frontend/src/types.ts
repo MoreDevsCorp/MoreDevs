@@ -83,18 +83,28 @@ export interface CreateOfferData {
 export interface CreatePostVariables {
   content: string;
 }
+export interface UpdatePostVariables {
+  content: string;
+  postId: string;
+}
+export interface DeletePostVariables {
+  postId: string;
+}
 export interface CreatePostData {
-  sucess: boolean;
+  success: boolean;
 }
 
 export interface Post {
+  id: string;
   author: {
     id: string;
     name: string;
     image: string;
+    job_title: string;
   };
+  content: string;
   createdAt: string;
-  comments: number;
+  comments?: number;
   likes: {
     id: string;
   };

@@ -3,8 +3,19 @@ import TextareaAutosize from "@mui/base/TextareaAutosize";
 import Button from "../Button";
 import { IoImageOutline } from "react-icons/io5";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
+import { useMutation, useQuery } from "@apollo/client";
+import postOperations from "../../../graphql/operations/post";
+import { CreatePostData, CreatePostVariables } from "../../../types";
+import { useState } from "react";
 
 const CreatePost = () => {
+  const [createPostMutation, {}] = useMutation<
+    CreatePostData,
+    CreatePostVariables
+  >(postOperations.Mutations.createPost);
+
+  const [text, setText] = useState("");
+
   return (
     <div className="py-5 px-3 border border-gray-100 bg-white w-[100%] rounded space-y-4">
       <div className="flex items-start space-x-4 ">
@@ -18,6 +29,8 @@ const CreatePost = () => {
         <TextareaAutosize
           maxRows={5}
           minRows={2}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
           className="w-[100%] outline-none resize-none min-h-1 max-h-20 bg-gray-50 h-auto rounded placeholder-zinc-400 py-2 px-4 text-sm"
           aria-label="maximum height"
           placeholder="What's on your mind?"
@@ -31,7 +44,18 @@ const CreatePost = () => {
           <IoLocationOutline className="cursor-pointer" /> */}
           <HiOutlineEmojiHappy className="cursor-pointer" />
         </div>
-        <Button outline>Post</Button>
+        <Button
+          outline
+          onClick={() => {
+            createPostMutation({
+              variables: {
+                content: text,
+              },
+            });
+          }}
+        >
+          Post
+        </Button>
       </div>
     </div>
   );
