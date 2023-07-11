@@ -6,6 +6,7 @@ const typeDefs = gql`
   type Query {
     getOffers(companyId: String): GetOffersReturnType
     getOffer(id: String!): GetOfferReturnType
+    getApplicants(offerId: String!): GetApplicantsReturnType
   }
 
   type Mutation {
@@ -26,10 +27,30 @@ const typeDefs = gql`
       companyId: String
     ): CreateOfferReturnType
     deleteOffer: CreateOfferReturnType
+
+    apply(offerId: String!): ApplyReturnType
   }
 
   type CreateOfferReturnType {
     success: Boolean
+  }
+
+  type GetApplicantsReturnType {
+    applicants: [Applicant]
+  }
+
+  type Applicant {
+    id: String
+    name: String
+    email: String
+    job_title: String
+    image: String
+    location: String
+    experiences: [MiniExperience]
+  }
+
+  type MiniExperience {
+    title: String
   }
 
   type Company {
@@ -61,6 +82,10 @@ const typeDefs = gql`
 
   type GetOfferReturnType {
     offer: Offer
+  }
+
+  type ApplyReturnType {
+    success: Boolean
   }
 `;
 
