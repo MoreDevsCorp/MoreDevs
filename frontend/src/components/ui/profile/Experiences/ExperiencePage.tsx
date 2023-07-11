@@ -1,5 +1,10 @@
 import { Dialog } from "@headlessui/react";
-import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftIcon,
+  PencilIcon,
+  PlusIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -83,53 +88,52 @@ const ExperiencePage = () => {
           <hr />
           <ExperienceRow experience={data[1]} />
         </div> */}
-          {data.map((db) => {
-            return (
-              <div key={db.id}>
-                <div className="flex items-start justify-between w-full pb-2">
-                  <div className="flex space-x-6 w-full">
-                    <div>
-                      <MdOutlineWorkOutline
-                        size={40}
-                        className="text-black-900"
-                      />
-                    </div>
-
-                    <div className="flex flex-col space-y-3">
-                      <h2 className="text-xl font-semibold text-black-900">
-                        {db.title}
-                      </h2>
-
-                      <h6 className="text-md font-medium text-black-900">
-                        {db.diploma}
-                      </h6>
-
-                      <h6 className="text-md font-light text-black-900">
-                        {db.startDate} - {db.endDate && db.endDate}{" "}
-                        {db.present && "Present"}
-                      </h6>
-
-                      <h6 className="text-md text-black-900">{db.body}</h6>
-                    </div>
+        {data.map((db) => {
+          return (
+            <div key={db.id}>
+              <div className="flex items-start justify-between w-full pb-2">
+                <div className="flex space-x-6 w-full">
+                  <div>
+                    <MdOutlineWorkOutline
+                      size={40}
+                      className="text-black-900"
+                    />
                   </div>
-                  <div className="flex space-x-1">
-                    <PencilIcon
-                      onClick={() => {
-                        setIsOpenEdit(true);
-                      }}
-                      className="hover:opacity-50 cursor-pointer h-5 w-5"
-                    />
-                    <TrashIcon
-                      onClick={() => {}}
-                      className="hover:opacity-50 cursor-pointer h-5 w-5"
-                    />
+
+                  <div className="flex flex-col space-y-3">
+                    <h2 className="text-xl font-semibold text-black-900">
+                      {db.title}
+                    </h2>
+
+                    {/* <h6 className="text-md font-medium text-black-900">
+                      {db.diploma}
+                    </h6> */}
+
+                    <h6 className="text-md font-light text-black-900">
+                      {db.startDate} - {db.endDate && db.endDate}{" "}
+                      {db.present && "Present"}
+                    </h6>
+
+                    <h6 className="text-md text-black-900">{db.description}</h6>
                   </div>
                 </div>
-                <hr />
+                <div className="flex space-x-1">
+                  <PencilIcon
+                    onClick={() => {
+                      setIsOpenEdit(true);
+                    }}
+                    className="hover:opacity-50 cursor-pointer h-5 w-5"
+                  />
+                  <TrashIcon
+                    onClick={() => {}}
+                    className="hover:opacity-50 cursor-pointer h-5 w-5"
+                  />
+                </div>
               </div>
-            );
-          })}
-        </div>
+              <hr />
+            </div>
+          );
+        })}
 
         <Dialog
           open={isOpen || isOpenEdit}
