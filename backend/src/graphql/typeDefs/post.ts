@@ -11,6 +11,8 @@ const typeDefs = gql`
     createPost(content: String): PostReturnType
     updatePost(postId: String!, content: String!): PostReturnType
     deletePost(postId: String): PostReturnType
+    like(postId: String!): PostReturnType
+    dislike(postId: String!): PostReturnType
   }
 
   type Author {
@@ -22,6 +24,7 @@ const typeDefs = gql`
 
   type Like {
     id: String
+    userId: String
   }
 
   type Post {
@@ -31,6 +34,7 @@ const typeDefs = gql`
     createdAt: Date
     likes: [Like]
     comments: Int
+    isLiked: Boolean
   }
 
   type GetPostsReturnType {

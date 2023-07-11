@@ -50,7 +50,25 @@ export default {
         }
       }
     `,
+    getApplicants: gql`
+      query GetApplicants($offerId: String!) {
+        getApplicants(offerId: $offerId) {
+          applicants {
+            id
+            name
+            job_title
+            email
+            image
+            location
+            experiences {
+              title
+            }
+          }
+        }
+      }
+    `,
   },
+
   Mutations: {
     createOffer: gql`
       mutation CreateOffer(
@@ -69,6 +87,14 @@ export default {
           skillsIds: $skillsIds
           type: $type
         ) {
+          success
+        }
+      }
+    `,
+
+    apply: gql`
+      mutation Apply($offerId: String!) {
+        apply(offerId: $offerId) {
           success
         }
       }

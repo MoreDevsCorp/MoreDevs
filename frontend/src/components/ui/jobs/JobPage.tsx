@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   BriefcaseIcon,
   CheckIcon,
@@ -14,6 +14,7 @@ import { GetOfferData, GetOfferVariables } from "../../../types";
 import Button from "../Button";
 
 import { getDifferenceInDays } from "../../../lib/utils";
+import { toast } from "react-hot-toast";
 
 const JobPage: FC = () => {
   const { id } = useParams();
@@ -26,8 +27,22 @@ const JobPage: FC = () => {
       },
     }
   );
-
   const daysPassed = data && getDifferenceInDays(data.getOffer.offer.createdAt);
+
+  const [apply, { data: applyData }] = useMutation(
+    offerOperations.Mutations.apply
+  );
+
+  const handleApply = async () => {
+    apply({
+      variables: {
+        offerId: id,
+      },
+      onCompleted: (data) => {
+        toast.success("You have successfully applied to this offer 👍");
+      },
+    });
+  };
 
   return (
     <div className="space-y-2 px-2 py-4">
@@ -97,7 +112,7 @@ const JobPage: FC = () => {
         {data?.getOffer.offer.description}
       </p>
 
-      <Button>Apply</Button>
+      <Button onClick={handleApply}>Apply</Button>
     </div>
   );
 };

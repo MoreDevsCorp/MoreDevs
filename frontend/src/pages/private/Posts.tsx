@@ -3,10 +3,9 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 
 import { useParams } from "react-router-dom";
+import Post from "../../components/ui/post";
 import postOperations from "../../graphql/operations/post";
 import { GetPostsData, GetProfileVariables } from "../../types";
-import { useParams } from "react-router-dom";
-import Post from "../../components/ui/post";
 
 interface PostsProps {}
 
@@ -28,18 +27,10 @@ const Posts: React.FC<PostsProps> = () => {
       {loading ? (
         <h1>Loading..</h1>
       ) : (
-        data?.getPosts.posts.map((ps, num) => {
+        data?.getPosts.posts.map((ps) => {
           return (
-            <div className="mb-8">
-              <Post
-                refetch={refetch}
-                postId={ps.id}
-                author={ps.author.name}
-                content={ps.content}
-                jobtitle={ps.author.job_title}
-                createdAt={ps.createdAt}
-                key={num}
-              />
+            <div className="mb-8" key={ps.id}>
+              <Post post={ps} refetch={refetch} key={ps.id} />
             </div>
           );
         })

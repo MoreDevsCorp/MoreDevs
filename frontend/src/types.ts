@@ -91,6 +91,28 @@ export interface CreateOfferData {
   success: boolean;
 }
 
+export interface GetApplicantsVariables {
+  offerId: string;
+}
+
+export interface GetApplicantsData {
+  getApplicants: {
+    applicants: Applicant[];
+  };
+}
+
+export type Applicant = {
+  email: string;
+  name: string;
+  id: string;
+  location: string;
+  job_title: string;
+  experiences: {
+    title: string;
+  };
+  image: string | null;
+};
+
 /**
  * Skill related types
  */
@@ -121,18 +143,30 @@ export interface CreatePostData {
 
 export interface Post {
   id: string;
-  author: {
-    id: string;
-    name: string;
-    image: string;
-    job_title: string;
-  };
+  author: Author;
   content: string;
   createdAt: string;
   comments?: number;
   likes: {
     id: string;
-  };
+    userId: string;
+  }[];
+  isLiked: boolean;
+}
+
+export interface LikeVariables {
+  postId: string;
+}
+
+export interface LikeData {
+  success: boolean;
+}
+
+export interface Author {
+  id: string;
+  name: string;
+  image: string;
+  job_title: string;
 }
 
 export interface GetPostsData {

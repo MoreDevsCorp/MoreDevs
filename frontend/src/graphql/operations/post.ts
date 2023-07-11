@@ -17,13 +17,29 @@ const postOperations = {
             content
             likes {
               id
+              userId
             }
+            isLiked
           }
         }
       }
     `,
   },
   Mutations: {
+    like: gql`
+      mutation Like($postId: String!) {
+        like(postId: $postId) {
+          success
+        }
+      }
+    `,
+    dislike: gql`
+      mutation Dislike($postId: String!) {
+        dislike(postId: $postId) {
+          success
+        }
+      }
+    `,
     createPost: gql`
       mutation CreatePost($content: String!) {
         createPost(content: $content) {

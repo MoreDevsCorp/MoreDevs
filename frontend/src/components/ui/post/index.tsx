@@ -1,7 +1,3 @@
-import TextareaAutosize from "@mui/base/TextareaAutosize";
-import { FavoriteBorder } from "@mui/icons-material";
-import Favorite from "@mui/icons-material/Favorite";
-import { Checkbox } from "@mui/material";
 import { AiOutlineClockCircle, AiOutlineShareAlt } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegCommentAlt } from "react-icons/fa";
@@ -23,17 +19,15 @@ import {
   CreatePostData,
   CreatePostVariables,
   DeletePostVariables,
+  LikeData,
+  LikeVariables,
+  Post as PostType,
   UpdatePostVariables,
 } from "../../../types";
 import { toast } from "react-hot-toast";
 
 interface PostProps {
-  postId: string;
-  author: string;
-  jobtitle: string;
-  content: string;
-  postImg?: string;
-  createdAt: string;
+  post: PostType;
   refetch: () => void;
 }
 interface DropDownProps {
@@ -103,16 +97,23 @@ export function DropDown({ SetIsPostEdit, postId, refetch }: DropDownProps) {
   );
 }
 
-export default function Post({ ...postData }: PostProps) {
-  console.log(postData.postId);
+export default function Post({ post, refetch }: PostProps) {
+  console.log(post.id);
   const [isPostEdit, SetIsPostEdit] = useState(false);
-  const [textContent, setTextContent] = useState(postData.content);
+  const [textContent, setTextContent] = useState(post.content);
   const [updatePostMutation, { error }] = useMutation<
     CreatePostData,
     UpdatePostVariables
   >(postOperations.Mutations.updatePost);
 
-  const daysPassed = postData && getDifferenceInDays(postData.createdAt);
+  const [like, { data: likeData }] = useMutation<LikeData, LikeVariables>(
+    postOperations.Mutations.like
+  );
+  const [dislike, { data: dislikeData }] = useMutation<LikeData, LikeVariables>(
+    postOperations.Mutations.dislike
+  );
+
+  const daysPassed = post && getDifferenceInDays(post.createdAt);
 
   return (
     <div className="p-4 border border-gray-100 bg-white rounded ">
@@ -130,9 +131,9 @@ export default function Post({ ...postData }: PostProps) {
           </div>
           <div>
             <h2 className="text-md font-semibold">
-              {postData.author || "John Doe"}{" "}
+              {post.author.name ? post.author.name : "John Doe"}{" "}
               <span className="text-sm  font-normal">
-                {postData.jobtitle || "Software Developer"}
+                {post.author.job_title || "Software Developer"}
               </span>
             </h2>
             <p className="flex items-center space-x-1 text-sm text-gray-500">
@@ -143,8 +144,8 @@ export default function Post({ ...postData }: PostProps) {
 
         <DropDown
           SetIsPostEdit={SetIsPostEdit}
-          postId={postData.postId}
-          refetch={postData.refetch}
+          postId={post.id}
+          refetch={refetch}
         />
       </div>
 
@@ -167,11 +168,11 @@ export default function Post({ ...postData }: PostProps) {
               updatePostMutation({
                 variables: {
                   content: textContent,
-                  postId: postData.postId,
+                  postId: post.id,
                 },
                 onCompleted: () => {
                   toast.success("Post has been updated!");
-                  postData.refetch();
+                  refetch();
                 },
               });
               SetIsPostEdit(false);
@@ -183,19 +184,19 @@ export default function Post({ ...postData }: PostProps) {
         </div>
       ) : (
         <p className="my-3">
-          {postData.content ||
+          {post.content ||
             "Things just ain't the same for gangsters, becoming OG's in the game changer, best friends and money I lost'em both."}
         </p>
       )}
 
       {/* image place */}
-      {postData.postImg && (
+      {/* {post.postImg && (
         <img
           src={mydesk}
           alt="post image"
           className="h-[20%] rounded   w-[100%]"
         />
-      )}
+      )} */}
       {/* like comment share */}
       <div className="flex items-center justify-between my-1 pb-2 border-b border-gray-100">
         <div className="flex items-center space-x-4">
@@ -204,8 +205,34 @@ export default function Post({ ...postData }: PostProps) {
               className="-ml-2 z-[5]"
               icon={<FavoriteBorder />}
               checkedIcon={<Favorite sx={{ color: "red" }} />}
+              checked={post.isLiked}
+              onChange={(e) => {
+                if (!e.currentTarget.checked) {
+                  dislike({
+                    variables: { postId: post.id },
+                    onCompleted: (data) => {
+                      refetch();
+                    },
+                    onError: (error) => {
+                      console.log(error.message);
+                    },
+                  });
+                } else {
+                  like({
+                    variables: {
+                      postId: post.id,
+                    },
+                    onCompleted: (data) => {
+                      refetch();
+                    },
+                    onError: (error) => {
+                      console.log(error.message);
+                    },
+                  });
+                }
+              }}
             />
-            <h5>12</h5>
+            <h5>{post.likes.length}</h5>
           </div>
 
           <div className="flex items-center space-x-2 cursor-pointer">

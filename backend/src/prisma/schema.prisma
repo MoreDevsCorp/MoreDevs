@@ -82,6 +82,8 @@ model PostLike {
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   createdAt DateTime @default(now())
+
+  @@unique([postId, userId])
 }
 
 model Post {
