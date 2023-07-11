@@ -1,27 +1,26 @@
-import { AiOutlineShareAlt, AiOutlineClockCircle } from "react-icons/ai";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaRegCommentAlt } from "react-icons/fa";
-import user from "../../../assets/user.jpg";
-import profile from "../../../assets/profile.jpg";
-import mydesk from "../../../assets/mydesk.png";
-import Comment from "./Comment";
-import { Checkbox } from "@mui/material";
+import { useMutation } from "@apollo/client";
+import { Menu } from "@headlessui/react";
+import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { FavoriteBorder } from "@mui/icons-material";
 import Favorite from "@mui/icons-material/Favorite";
-import TextareaAutosize from "@mui/base/TextareaAutosize";
-import { getDifferenceInDays } from "../../../lib/utils";
-import { Menu } from "@headlessui/react";
+import { Checkbox } from "@mui/material";
 import { useState } from "react";
-import Button from "../Button";
-import { useMutation } from "@apollo/client";
+import { toast } from "react-hot-toast";
+import { AiOutlineClockCircle, AiOutlineShareAlt } from "react-icons/ai";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaRegCommentAlt } from "react-icons/fa";
+import mydesk from "../../../assets/mydesk.png";
+import profile from "../../../assets/profile.jpg";
+import user from "../../../assets/user.jpg";
 import postOperations from "../../../graphql/operations/post";
+import { getDifferenceInDays } from "../../../lib/utils";
 import {
   CreatePostData,
-  CreatePostVariables,
   DeletePostVariables,
   UpdatePostVariables,
 } from "../../../types";
-import { toast } from "react-hot-toast";
+import Button from "../Button";
+import Comment from "./Comment";
 
 interface PostProps {
   postId: string;
