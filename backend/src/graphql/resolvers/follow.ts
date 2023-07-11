@@ -205,37 +205,37 @@ export default {
           },
         });
 
-        await prisma.user.update({
-          where: {
-            id: session.user.id,
-          },
-          data: {
-            following: {
-              delete: {
-                followerId_followingId: {
-                  followerId: session.user.id,
-                  followingId: userId,
-                },
-              },
-            },
-          },
-        });
+        // await prisma.user.update({
+        //   where: {
+        //     id: session.user.id,
+        //   },
+        //   data: {
+        //     following: {
+        //       delete: {
+        //         followerId_followingId: {
+        //           followerId: session.user.id,
+        //           followingId: userId,
+        //         },
+        //       },
+        //     },
+        //   },
+        // });
 
-        await prisma.user.update({
-          where: {
-            id: userId,
-          },
-          data: {
-            followers: {
-              delete: {
-                followerId_followingId: {
-                  followerId: session.user.id,
-                  followingId: userId,
-                },
-              },
-            },
-          },
-        });
+        // await prisma.user.update({
+        //   where: {
+        //     id: userId,
+        //   },
+        //   data: {
+        //     followers: {
+        //       delete: {
+        //         followerId_followingId: {
+        //           followerId: session.user.id,
+        //           followingId: userId,
+        //         },
+        //       },
+        //     },
+        //   },
+        // });
       } catch (error: any) {
         console.log(
           "Error attempting to remove the following !",
