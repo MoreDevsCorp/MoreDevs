@@ -28,10 +28,10 @@ export default function ExperienceRow({ experience }: ExperienceRowProps) {
         <h2 className="text-xl font-semibold text-black-900">
           {experience?.title}
         </h2>
-
+        {/* 
         <h6 className="text-md font-medium text-black-900">
           {experience?.company.name}
-        </h6>
+        </h6> */}
 
         <h6 className="text-md font-light text-black-900">
           {dates.startDate.getFullYear()} -{" "}
