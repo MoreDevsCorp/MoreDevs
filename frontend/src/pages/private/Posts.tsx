@@ -3,10 +3,9 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 
 import { useParams } from "react-router-dom";
+import Post from "../../components/ui/post";
 import postOperations from "../../graphql/operations/post";
 import { GetPostsData, GetProfileVariables } from "../../types";
-import { useParams } from "react-router-dom";
-import Post from "../../components/ui/post";
 
 interface PostsProps {}
 
