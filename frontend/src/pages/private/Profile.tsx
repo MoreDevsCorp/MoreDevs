@@ -15,6 +15,7 @@ import ProfileSettings from "../../components/ui/profile/Profile Setting/Profile
 import profileOperations from "../../graphql/operations/profile";
 import { selectUser } from "../../state/userSlice/userSlice";
 import {
+  DeleteFollowData,
   FollowData,
   FollowVariables,
   GetProfileData,
@@ -45,7 +46,7 @@ const Profile = () => {
   >(followOperations.Mutation.follow);
 
   const [deleteFollow, { data: deleteFollowData }] = useMutation<
-    FollowData,
+    DeleteFollowData,
     FollowVariables
   >(followOperations.Mutation.deletFollow);
 
@@ -73,7 +74,8 @@ const Profile = () => {
         userId: userId || "",
       },
       onCompleted: (data) => {
-        if (data.follow.success) {
+        console.log(data);
+        if (data.deleteFollow.success) {
           refetch();
         }
       },

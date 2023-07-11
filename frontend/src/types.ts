@@ -145,6 +145,12 @@ export interface FollowData {
   };
 }
 
+export interface DeleteFollowData {
+  deleteFollow: {
+    success: boolean;
+  };
+}
+
 /**
  *  Profile related types
  */

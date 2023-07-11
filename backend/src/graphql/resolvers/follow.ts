@@ -236,6 +236,10 @@ export default {
         //     },
         //   },
         // });
+
+        return {
+          success: true,
+        };
       } catch (error: any) {
         console.log(
           "Error attempting to remove the following !",
