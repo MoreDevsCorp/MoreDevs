@@ -1,9 +1,7 @@
-import { FaGithub, FaLinkedin, FaGoogle } from "react-icons/fa";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+import { Field, Form, Formik } from "formik";
 import { Link } from "react-router-dom";
+import * as Yup from "yup";
 
-import { useEffect } from "react";
 import Button from "./Button";
 
 const SignupSchema = Yup.object().shape({

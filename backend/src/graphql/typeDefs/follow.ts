@@ -7,8 +7,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    follow: FollowReturnType
-    deleteFollow: FollowReturnType
+    follow(userId: String!): FollowReturnType
+    deleteFollow(userId: String!): FollowReturnType
   }
 
   type FollowReturnType {

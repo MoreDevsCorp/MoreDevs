@@ -106,31 +106,69 @@ export default {
         //   },
         // });
 
-        await prisma.user.update({
-          where: {
-            id: session.user.id,
-          },
+        // await prisma.user.update({
+        //   where: {
+        //     id: session.user.id,
+        //   },
+        //   data: {
+        //     following: {
+        //       create: {
+        //         followerId: session.user.id,
+        //       },
+        //     },
+        //   },
+        // });
+
+        // await prisma.user.update({
+        //   where: {
+        //     id: userId,
+        //   },
+        //   data: {
+        //     followers: {
+        //       create: {
+        //         followingId: session.user.id,
+        //       },
+        //     },
+        //   },
+        // });
+
+        await prisma.follows.create({
           data: {
-            following: {
-              create: {
-                followerId: session.user.id,
-              },
-            },
+            followerId: session.user.id,
+            followingId: userId,
           },
         });
 
-        await prisma.user.update({
-          where: {
-            id: userId,
-          },
-          data: {
-            followers: {
-              create: {
-                followingId: session.user.id,
-              },
-            },
-          },
-        });
+        // await prisma.user.update({
+        //   where: {
+        //     id: session.user.id,
+        //   },
+        //   data: {
+        //     following: {
+        //       connect: {
+        //         followerId_followingId: {
+        //           followerId: session.user.id,
+        //           followingId: userId,
+        //         },
+        //       },
+        //     },
+        //   },
+        // });
+        // await prisma.user.update({
+        //   where: {
+        //     id: userId,
+        //   },
+        //   data: {
+        //     followers: {
+        //       connect: {
+        //         followerId_followingId: {
+        //           followerId: session.user.id,
+        //           followingId: userId,
+        //         },
+        //       },
+        //     },
+        //   },
+        // });
 
         return {
           success: true,
@@ -158,46 +196,50 @@ export default {
       }
 
       try {
-        // await prisma.follows.delete({
+        await prisma.follows.delete({
+          where: {
+            followerId_followingId: {
+              followerId: session.user.id,
+              followingId: userId,
+            },
+          },
+        });
+
+        // await prisma.user.update({
         //   where: {
-        //     followerId_followingId: {
-        //       followerId: sessionId,
-        //       followingId: userId,
+        //     id: session.user.id,
+        //   },
+        //   data: {
+        //     following: {
+        //       delete: {
+        //         followerId_followingId: {
+        //           followerId: session.user.id,
+        //           followingId: userId,
+        //         },
+        //       },
         //     },
         //   },
         // });
 
-        await prisma.user.update({
-          where: {
-            id: session.user.id,
-          },
-          data: {
-            following: {
-              delete: {
-                followerId_followingId: {
-                  followerId: session.user.id,
-                  followingId: userId,
-                },
-              },
-            },
-          },
-        });
+        // await prisma.user.update({
+        //   where: {
+        //     id: userId,
+        //   },
+        //   data: {
+        //     followers: {
+        //       delete: {
+        //         followerId_followingId: {
+        //           followerId: session.user.id,
+        //           followingId: userId,
+        //         },
+        //       },
+        //     },
+        //   },
+        // });
 
-        await prisma.user.update({
-          where: {
-            id: userId,
-          },
-          data: {
-            followers: {
-              delete: {
-                followerId_followingId: {
-                  followerId: session.user.id,
-                  followingId: userId,
-                },
-              },
-            },
-          },
-        });
+        return {
+          success: true,
+        };
       } catch (error: any) {
         console.log(
           "Error attempting to remove the following !",

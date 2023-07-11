@@ -73,18 +73,23 @@ const interestsArray = [
 const skills = [
   {
     name: "Javascript",
+    slug: "javascript",
   },
   {
     name: "ReactJS",
+    slug: "reactjs",
   },
   {
     name: "Laravel",
+    slug: "laravel",
   },
   {
     name: "Java",
+    slug: "java",
   },
   {
     name: ".NET",
+    slug: ".net",
   },
 ];
 

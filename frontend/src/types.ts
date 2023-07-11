@@ -16,12 +16,27 @@ export interface GetUserData {
   };
 }
 
+/**
+ * Skill related types
+ */
+
 export interface GetSkillsData {
   getSkills: {
     skills: {
       id: string;
+      slug: string;
       name: string;
     }[];
+  };
+}
+
+export interface AddSkillVariables {
+  name: string;
+}
+
+export interface AddSkillData {
+  addSkill: {
+    success: boolean;
   };
 }
 
@@ -43,12 +58,25 @@ export type Offer = {
   createdAt: string;
   taken: boolean;
   location: string;
+  skills: {
+    skill: Skill;
+  }[];
 };
 
 export interface GetOffersData {
   getOffers: {
     offers: Offer[];
   };
+}
+
+export interface GetOfferData {
+  getOffer: {
+    offer: Offer;
+  };
+}
+
+export interface GetOfferVariables {
+  id: string;
 }
 
 export interface CreateOfferVariables {
@@ -64,24 +92,44 @@ export interface CreateOfferData {
 }
 
 /**
+ * Skill related types
+ */
+
+export interface GetExperiencesData {
+  getExperiences: {
+    experiences: Experience[];
+  };
+}
+
+/**
  *  Post related types
  */
 
 export interface CreatePostVariables {
   content: string;
 }
+export interface UpdatePostVariables {
+  content: string;
+  postId: string;
+}
+export interface DeletePostVariables {
+  postId: string;
+}
 export interface CreatePostData {
-  sucess: boolean;
+  success: boolean;
 }
 
 export interface Post {
+  id: string;
   author: {
     id: string;
     name: string;
     image: string;
+    job_title: string;
   };
+  content: string;
   createdAt: string;
-  comments: number;
+  comments?: number;
   likes: {
     id: string;
   };
@@ -90,6 +138,26 @@ export interface Post {
 export interface GetPostsData {
   getPosts: {
     posts: Post[];
+  };
+}
+
+/**
+ * Follow related types
+ *  */
+
+export interface FollowVariables {
+  userId: string;
+}
+
+export interface FollowData {
+  follow: {
+    success: boolean;
+  };
+}
+
+export interface DeleteFollowData {
+  deleteFollow: {
+    success: boolean;
   };
 }
 
@@ -119,6 +187,7 @@ export interface Experience {
   };
   startDate: string;
   endDate: string;
+  present: boolean;
 }
 
 export interface Education {
@@ -145,6 +214,7 @@ export interface Profile {
   job_type: string;
   job_title: string;
   city: string;
+  isFollowed: boolean;
 }
 
 export interface GetProfileData {

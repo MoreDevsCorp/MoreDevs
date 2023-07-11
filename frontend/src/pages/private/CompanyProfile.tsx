@@ -1,24 +1,22 @@
-import companyLogo from "../../assets/companyLogo.png";
 import { GoPrimitiveDot } from "react-icons/go";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import companyLogo from "../../assets/companyLogo.png";
 import Button from "../../components/ui/Button";
 import MyTabs from "../../components/ui/Tabs";
-import About from "../../components/ui/profile/About";
-import ProfileSettings from "../../components/ui/profile/Profile Setting/ProfileSettings";
-import RecentJobs from "../../components/ui/company/RecentJobs";
 import CompanyCheck from "../../components/ui/company/CompanyCheck";
-import { Link, useNavigate } from "react-router-dom";
+import RecentJobs from "../../components/ui/company/RecentJobs";
 import JobList from "../../components/ui/jobs/JobList";
-import { useSelector } from "react-redux";
+import About from "../../components/ui/profile/About";
 
 import { useLazyQuery } from "@apollo/client";
-import companyOperations from "../../graphql/operations/company";
-import { Company, GetCompanyData, GetCompanyVariables } from "../../types";
 import { useEffect } from "react";
-import { selectUser } from "../../state/userSlice/userSlice";
 import CompanyProfileSettings from "../../components/ui/company/CompanyProfileSettings";
+import companyOperations from "../../graphql/operations/company";
+import { selectUser } from "../../state/userSlice/userSlice";
+import { Company, GetCompanyData, GetCompanyVariables } from "../../types";
 
 const bgImage = null;
-const companyCreated = false;
 
 interface CompanyProfileProps {
   company?: Company | null;

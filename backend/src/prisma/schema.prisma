@@ -212,6 +212,7 @@ model OfferSkill {
 model Skill {
   id         String       @id @default(cuid())
   name       String
+  slug       String
   UserSkill  UserSkill[]
   OfferSkill OfferSkill[]
 }
@@ -223,10 +224,11 @@ model Experience {
   location    String
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
-  company     Company   @relation(fields: [companyId], references: [id])
-  companyId   String
+  company     Company?  @relation(fields: [companyId], references: [id])
+  companyId   String?
   startDate   DateTime
   endDate     DateTime?
+  present     Boolean
 }
 
 model Company {

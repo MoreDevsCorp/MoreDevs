@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dispatch, SetStateAction } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../state/userSlice/userSlice";
@@ -25,7 +24,11 @@ const SidebarItem = ({ Icon, title, setActive, active }: SideBarItemProps) => {
       >
         {/* <FontAwesomeIcon icon={Icon} /> */}
 
-        <Icon active={active == url} />
+        <Icon
+          active={active == url}
+          className="w-6 h-6"
+          strokeWidth={active == url ? 2 : 1.5}
+        />
         <p className=" text-lg">{title}</p>
       </li>
     </Link>

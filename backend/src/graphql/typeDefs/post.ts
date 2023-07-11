@@ -9,7 +9,7 @@ const typeDefs = gql`
 
   type Mutation {
     createPost(content: String): PostReturnType
-    updatePost(postId: String, content: String): PostReturnType
+    updatePost(postId: String!, content: String!): PostReturnType
     deletePost(postId: String): PostReturnType
   }
 
@@ -25,6 +25,7 @@ const typeDefs = gql`
   }
 
   type Post {
+    id: String
     author: Author
     content: String
     createdAt: Date

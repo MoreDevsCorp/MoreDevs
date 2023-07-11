@@ -1,25 +1,25 @@
-import { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { FaUniversity } from "react-icons/fa";
-import Button from "../../Button";
-import Input from "../../inputs/Input";
 import {
+  ArrowLeftIcon,
   PencilIcon,
   PlusIcon,
   TrashIcon,
-  ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
-import EducationRow from "./EducationRow";
-import EducationForm from "./EducationForm";
+import { useState } from "react";
+import { FaUniversity } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../store";
+import { useNavigate } from "react-router-dom";
+import { selectUser } from "../../../../state/userSlice/userSlice";
+import EducationForm from "./EducationForm";
+
+import EducationEditForm from "./EducationEditForm";
 
 const EducationPage = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
 
-  const user = useSelector((state: RootState) => state.userLogin.userInfo);
+  const user = useSelector(selectUser);
 
   const [educationInputs, setEducationInputs] = useState("");
   const [data, setData] = useState([
@@ -87,7 +87,10 @@ const EducationPage = () => {
                   </div>
                   <div className="flex space-x-1">
                     <PencilIcon
-                      onClick={() => {}}
+                      onClick={() => {
+                        setIsOpenEdit(true);
+                        console.log("hola");
+                      }}
                       className="hover:opacity-50 cursor-pointer h-5 w-5"
                     />
                     <TrashIcon
@@ -103,8 +106,11 @@ const EducationPage = () => {
         </div>
 
         <Dialog
-          open={isOpen}
-          onClose={() => setIsOpen(false)}
+          open={isOpen || isOpenEdit}
+          onClose={() => {
+            setIsOpen(false);
+            setIsOpenEdit(false);
+          }}
           className="relative z-50 "
         >
           <div
@@ -114,8 +120,15 @@ const EducationPage = () => {
 
           <div className="fixed inset-0 flex items-center justify-center p-8 ">
             <Dialog.Panel className="flex flex-col space-y-5 w-1/2 mx-auto max-w-lg rounded bg-white p-4 ">
-              <Dialog.Title>Add Education</Dialog.Title>
-              <EducationForm setIsOpen={setIsOpen} />
+              <Dialog.Title>
+                {isOpen ? "Add Education" : "Update Education"}
+              </Dialog.Title>
+              {isOpen ? (
+                <EducationForm setIsOpen={setIsOpen} />
+              ) : (
+                <EducationEditForm isOpenEdit={setIsOpenEdit} />
+              )}
+
               {/* <Button
                 onClick={() => {
                   setIsOpen(false);

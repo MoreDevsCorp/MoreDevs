@@ -1,4 +1,4 @@
-import { OfferType } from "@prisma/client";
+import { OfferType, Prisma } from "@prisma/client";
 import { GraphQLError } from "graphql";
 import { Context } from "../../utils/types";
 
@@ -25,15 +25,45 @@ export default {
           offers = await prisma.offer.findMany({ where: { companyId } });
         } else {
           offers = await prisma.offer.findMany({
-            include: {
-              company: {
-                select: { name: true, location: true, id: true, avatar: true },
-              },
-            },
+            include: offerPopulated,
           });
         }
         return {
           offers,
+        };
+      } catch (error: any) {
+        console.log("Error getting offers :", error.message);
+        throw new GraphQLError(error.message, {
+          extensions: { code: 500 },
+        });
+      }
+    },
+
+    getOffer: async (_p: any, args: { id: string }, context: Context) => {
+      const { session, prisma } = context;
+      const { id } = args;
+
+      if (!session?.user) {
+        throw new GraphQLError("You're not authenticated !", {
+          extensions: { code: 401 },
+        });
+      }
+
+      try {
+        const offer = prisma.offer.findFirst({
+          where: { id },
+          include: {
+            company: {
+              select: { name: true, location: true, id: true, avatar: true },
+            },
+            skills: {
+              select: { skill: { select: { id: true, name: true } } },
+            },
+          },
+        });
+
+        return {
+          offer,
         };
       } catch (error: any) {
         console.log("Error getting offers :", error.message);
@@ -195,3 +225,12 @@ export default {
     // End of Mutation Object
   },
 };
+
+export const offerPopulated = Prisma.validator<Prisma.OfferInclude>()({
+  company: {
+    select: { name: true, location: true, id: true, avatar: true },
+  },
+  skills: {
+    select: { skill: { select: { id: true, name: true } } },
+  },
+});

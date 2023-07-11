@@ -1,4 +1,8 @@
 import { useQuery } from "@apollo/client";
+import { useSelector } from "react-redux";
+import offer from "../../../graphql/operations/offer";
+import { selectUser } from "../../../state/userSlice/userSlice";
+import { GetOffersData } from "../../../types";
 import Button from "../Button";
 import {
   Table,
@@ -9,11 +13,8 @@ import {
   TableHeader,
   TableRow,
 } from "../table";
-import offer from "../../../graphql/operations/offer";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../../state/userSlice/userSlice";
-import { GetOffersData } from "../../../types";
 
+import { Link } from "react-router-dom";
 const JobList = () => {
   const user = useSelector(selectUser);
   const params = new URLSearchParams(window.location.search);
@@ -51,6 +52,10 @@ const JobList = () => {
                 <Button size="text-xs">View</Button>
                 <Button size="text-xs">Edit</Button>
                 <Button size="text-xs">Delete</Button>
+
+                <Link to={"/job/applicants"}>
+                  <Button size="text-xs">Applicants</Button>
+                </Link>
               </TableCell>
             </TableRow>
           );

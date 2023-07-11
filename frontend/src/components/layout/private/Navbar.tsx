@@ -1,13 +1,19 @@
+import { faBell, faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCommentDots, faBell } from "@fortawesome/free-solid-svg-icons";
+import { Menu } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { AiOutlineClose } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Menu } from "@headlessui/react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import { Menu } from "@headlessui/react";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { selectUser, userLogout } from "../../../state/userSlice/userSlice";
+import { BriefcaseIcon } from "@heroicons/react/24/outline";
+import TooltipComponent from "../../ui/Tooltip";
 
 interface NavBar {
   isSideBarOpen: boolean;
@@ -46,7 +52,7 @@ export function DropDown() {
                 </button>
               )}
             </Menu.Item>
-
+            <hr />
             <Menu.Item>
               {({ active }) => (
                 <button
@@ -58,7 +64,7 @@ export function DropDown() {
                 </button>
               )}
             </Menu.Item>
-
+            <hr />
             <Menu.Item>
               {({ active }) => (
                 <button
@@ -104,6 +110,17 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
       </div>
 
       <div className="flex items-center space-x-3">
+        <TooltipComponent
+          children={
+            <Link to={`/profile/${user.id}/appliedjobs`}>
+              <BriefcaseIcon
+                className="w-10 h-10 bg-gray-50 border border-gray-100 p-2 rounded-full "
+                strokeWidth={1.5}
+              />
+            </Link>
+          }
+        />
+
         <FontAwesomeIcon
           icon={faCommentDots}
           className="bg-gray-50 border border-gray-100 p-2 rounded-full text-xl"

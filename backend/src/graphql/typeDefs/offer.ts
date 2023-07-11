@@ -5,6 +5,7 @@ const typeDefs = gql`
 
   type Query {
     getOffers(companyId: String): GetOffersReturnType
+    getOffer(id: String!): GetOfferReturnType
   }
 
   type Mutation {
@@ -38,6 +39,10 @@ const typeDefs = gql`
     avatar: String
   }
 
+  type Skills {
+    skill: Skill
+  }
+
   type Offer {
     id: String
     title: String
@@ -47,10 +52,15 @@ const typeDefs = gql`
     company: Company
     createdAt: Date
     location: String
+    skills: [Skills]
   }
 
   type GetOffersReturnType {
     offers: [Offer]
+  }
+
+  type GetOfferReturnType {
+    offer: Offer
   }
 `;
 

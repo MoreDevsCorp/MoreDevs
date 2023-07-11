@@ -1,26 +1,27 @@
-import { Field, Form, Formik } from "formik";
+import React from "react";
 import Button from "../../Button";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 
-interface EducationFormProps {
-  setIsOpen: (value: boolean) => void;
+interface EducationEditFormProps {
+  isOpenEdit: (value: boolean) => void;
 }
 
-const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
+const EducationEditForm = ({ isOpenEdit }: EducationEditFormProps) => {
   return (
     <div>
       <Formik
         initialValues={{
-          jobTitle: "",
-          company: "",
-          location: "",
+          title: "",
+          diploma: "",
           startDate: "",
           endDate: "",
           present: "",
-          description: "",
+          body: "",
         }}
         onSubmit={(values) => {
           console.log(values);
-          setIsOpen(false);
+          isOpenEdit(false);
         }}
       >
         {({ errors, touched, values }) => (
@@ -28,31 +29,21 @@ const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
             <div className="flex flex-col ">
               <span>Title</span>
               <Field
-                name="jobTitle"
+                name="title"
                 type="text"
                 className={`border rounded  outline-none p-2 ${
-                  errors.jobTitle && touched.jobTitle && "border-red-500"
+                  errors.title && touched.title && "border-red-500"
                 }`}
               />
             </div>
 
             <div className="flex flex-col ">
-              <span>Company</span>
+              <span>Diploma</span>
               <Field
-                name="company"
+                name="diploma"
                 type="text"
                 className={`border rounded  outline-none p-2 ${
-                  errors.company && touched.company && "border-red-500"
-                }`}
-              />
-            </div>
-            <div className="flex flex-col ">
-              <span>Location</span>
-              <Field
-                name="location"
-                type="text"
-                className={`border rounded  outline-none p-2 ${
-                  errors.location && touched.location && "border-red-500"
+                  errors.diploma && touched.diploma && "border-red-500"
                 }`}
               />
             </div>
@@ -93,17 +84,17 @@ const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
             )}
 
             <div className="flex flex-col ">
-              <span>Description</span>
+              <span>Body</span>
               <Field
-                name="description"
+                name="body"
                 type="text"
                 className={`border rounded  outline-none p-2 ${
-                  errors.description && touched.description && "border-red-500"
+                  errors.body && touched.body && "border-red-500"
                 }`}
               />
             </div>
 
-            <Button type="submit">Create</Button>
+            <Button type="submit">Update</Button>
           </Form>
         )}
       </Formik>
@@ -111,4 +102,4 @@ const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
   );
 };
 
-export default ExperienceForm;
+export default EducationEditForm;

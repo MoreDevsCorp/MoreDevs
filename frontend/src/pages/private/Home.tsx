@@ -4,9 +4,9 @@ import Post from "../../components/ui/post";
 const Home: React.FC = () => {
   return (
     <div className=" w-full p-2 ">
-      <div className="max-w-[800px] space-y-5">
+      <div className="max-w-[700px] space-y-5">
         <CreatePost />
-        <Post />
+        {/* <Post /> */}
       </div>
     </div>
   );
