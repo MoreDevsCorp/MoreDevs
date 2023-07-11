@@ -30,6 +30,7 @@ export default {
             authorId: args.userId,
           },
           select: postPopulated,
+          orderBy: { createdAt: "desc" },
         });
 
         return {
@@ -134,6 +135,7 @@ export default {
 };
 
 export const postPopulated = Prisma.validator<Prisma.PostSelect>()({
+  id: true,
   author: {
     select: {
       id: true,

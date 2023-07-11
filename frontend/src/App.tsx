@@ -23,6 +23,11 @@ import Welcome from "./pages/public/Welcome";
 import { selectUser, userLogin } from "./state/userSlice/userSlice";
 import { GetCompanyData, GetCompanyVariables, GetUserData } from "./types";
 
+import AppliedJob from "./components/ui/jobs/AppliedJob";
+import JobApplicants from "./components/ui/jobs/JobApplicants";
+import ComingSoon from "./pages/private/ComingSoon";
+
+
 function App() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
@@ -77,9 +82,16 @@ function App() {
             </Protected>
           }
         >
+          {/* coming soon pages */}
+          <Route element={<ComingSoon />} path="/messages" />
+          <Route element={<ComingSoon />} path="/network" />
+          <Route element={<ComingSoon />} path="/marketplace" />
+
           <Route element={<Home />} path="/home" />
           <Route element={<Jobs />} path="/jobs" />
           <Route element={<JobPage />} path="/jobs/:id" />
+          <Route element={<JobApplicants />} path="/job/applicants" />
+          <Route element={<AppliedJob />} path="/profile/:userId/appliedjobs" />
           {user && user.companyCreated && (
             <Route element={<CreateJobOffer />} path="/joboffer/create" />
           )}

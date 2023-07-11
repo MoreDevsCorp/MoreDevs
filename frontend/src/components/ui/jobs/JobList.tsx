@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "../table";
 
+import { Link } from "react-router-dom";
 const JobList = () => {
   const user = useSelector(selectUser);
   const params = new URLSearchParams(window.location.search);
@@ -51,6 +52,10 @@ const JobList = () => {
                 <Button size="text-xs">View</Button>
                 <Button size="text-xs">Edit</Button>
                 <Button size="text-xs">Delete</Button>
+
+                <Link to={"/job/applicants"}>
+                  <Button size="text-xs">Applicants</Button>
+                </Link>
               </TableCell>
             </TableRow>
           );

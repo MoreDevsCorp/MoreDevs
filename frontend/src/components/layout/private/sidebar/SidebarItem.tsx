@@ -24,7 +24,11 @@ const SidebarItem = ({ Icon, title, setActive, active }: SideBarItemProps) => {
       >
         {/* <FontAwesomeIcon icon={Icon} /> */}
 
-        <Icon active={active == url} />
+        <Icon
+          active={active == url}
+          className="w-6 h-6"
+          strokeWidth={active == url ? 2 : 1.5}
+        />
         <p className=" text-lg">{title}</p>
       </li>
     </Link>

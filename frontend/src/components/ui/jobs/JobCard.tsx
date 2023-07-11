@@ -1,3 +1,5 @@
+
+
 import { Link } from "react-router-dom";
 import Google from "../../../assets/companyLogo.png";
 import { Offer } from "../../../types";
@@ -12,7 +14,6 @@ const JobCard = ({ offer }: JobCardProps) => {
     <div className="py-4 px-2 border-b-2 border-gray-100">
       <div className="flex space-x-2">
         <div className="">
-          {" "}
           <img
             src={Google}
             alt="company logo"
