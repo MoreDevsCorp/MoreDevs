@@ -1,6 +1,5 @@
 import { GraphQLError } from "graphql";
 import { Context } from "../../utils/types";
-import jwt from "jsonwebtoken";
 
 export default {
   Query: {

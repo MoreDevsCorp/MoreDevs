@@ -1,10 +1,9 @@
-import EducationRow from "./EducationRow";
 import { PencilIcon } from "@heroicons/react/24/outline";
-import { useNavigate, useParams } from "react-router-dom";
-import { Education as EducationType } from "../../../../types";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../store";
+import { useNavigate, useParams } from "react-router-dom";
 import { selectUser } from "../../../../state/userSlice/userSlice";
+import { Education as EducationType } from "../../../../types";
+import EducationRow from "./EducationRow";
 
 interface EducationProps {
   educations: EducationType[] | undefined;
@@ -21,7 +20,7 @@ export default function Education({ educations }: EducationProps) {
         <h1 className="font-semibold text-2xl text-black-900">Education</h1>
         {userId === user.id && (
           <PencilIcon
-            onClick={() => navigate("details/education")}
+            onClick={() => navigate("/profile/details/education")}
             className="hover:opacity-50 cursor-pointer h-5 w-5"
           />
         )}

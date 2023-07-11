@@ -26,8 +26,30 @@ export default {
           });
         }
 
+        const skills = profile.skills.map((skill) => ({
+          id: skill.skill?.id,
+          name: skill.skill?.name,
+        }));
+
+        let isFollowed;
+
+        const existingFollow = await prisma.follows.findFirst({
+          where: {
+            followingId: userId,
+            AND: {
+              followerId: session.user.id,
+            },
+          },
+        });
+
+        if (existingFollow) {
+          isFollowed = true;
+        } else {
+          isFollowed = false;
+        }
+
         return {
-          profile,
+          profile: { ...profile, skills, isFollowed },
         };
       } catch (error: any) {
         console.log("Error getting profile :", error.message);

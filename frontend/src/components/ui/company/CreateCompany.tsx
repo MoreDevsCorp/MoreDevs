@@ -1,15 +1,13 @@
-import { Formik, Form, Field } from "formik";
+import { Field, Form, Formik } from "formik";
 
 import Button from "../Button";
 
 import { useMutation } from "@apollo/client";
 
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import companyOperations from "../../../graphql/operations/company";
 import { CreateCompanyData, CreateCompanyVariables } from "../../../types";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
 
 interface CreateCompanyProps {
   refetch: () => void;

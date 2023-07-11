@@ -1,20 +1,20 @@
-import { Formik, Form, Field } from "formik";
-import Button from "../Button";
-import CreatableSelect from "react-select/creatable";
-import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
+import { Field, Form, Formik } from "formik";
+import { useEffect, useState } from "react";
+import CreatableSelect from "react-select/creatable";
+import Button from "../Button";
 
 // import skillOperations from "../../../graphql/operations/skill";
-import skillOperations from "../../../graphql/operations/skill";
+import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 import offerOperations from "../../../graphql/operations/offer";
+import skillOperations from "../../../graphql/operations/skill";
+import { selectUser } from "../../../state/userSlice/userSlice";
 import {
-  GetSkillsData,
   CreateOfferData,
   CreateOfferVariables,
+  GetSkillsData,
 } from "../../../types";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../../state/userSlice/userSlice";
-import { toast } from "react-hot-toast";
 
 const CreateJobOffer = () => {
   const [skillsInput, setSkillsInput] = useState<string[]>([]);

@@ -1,9 +1,9 @@
 import ReactDOM from "react-dom/client";
+import { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
 import App from "./App.tsx";
 import "./index.css";
-import { Provider } from "react-redux";
 import store from "./store.ts";
-import { Toaster } from "react-hot-toast";
 
 import { ApolloProvider } from "@apollo/client";
 

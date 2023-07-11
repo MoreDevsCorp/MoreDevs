@@ -1,20 +1,15 @@
-import { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { FaUniversity } from "react-icons/fa";
-import Button from "../../Button";
-import Input from "../../inputs/Input";
-import {
-  PencilIcon,
-  PlusIcon,
-  TrashIcon,
-  ArrowLeftIcon,
-} from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
-import ExperienceRow from "./ExperienceRow";
-import ExperienceForm from "./ExperienceForm";
+import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../store";
+import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../../../state/userSlice/userSlice";
+import ExperienceForm from "./ExperienceForm";
+import ExperienceRow from "./ExperienceRow";
+import { Experience, GetExperiencesData } from "../../../../types";
+import { useQuery } from "@apollo/client";
+import experienceOperations from "../../../../graphql/operations/experience";
+
 import { MdOutlineWorkOutline } from "react-icons/md";
 import ExperienceEditForm from "./ExperienceEditForm";
 
@@ -25,26 +20,44 @@ const ExperiencePage = () => {
   const [isOpenEdit, setIsOpenEdit] = useState(false);
 
   const [experienceInputs, setExperienceInputs] = useState("");
-  const [data, setData] = useState([
+  const [data, setData] = useState<Experience[]>([
     {
-      id: 1,
+      id: "1",
       title: "Ecole Fraincaise D'enseignement Technique",
-      diploma: "Technicien Specialisee",
       startDate: "2020",
-      endDate: null,
+      endDate: "",
       present: true,
-      body: "Additional English classes and UX profile courses.",
+      description: "Additional English classes and UX profile courses.",
+      location: "Agadir",
+      company: {
+        id: "ss",
+        name: "FikraLabs",
+        location: "Agadir",
+        avatar: "null",
+      },
     },
     {
-      id: 2,
+      id: "2",
       title: "Ecole Fraincaise D'enseignement Technique",
-      diploma: "Technicien Specialisee",
       startDate: "2020",
-      endDate: null,
+      endDate: "",
       present: true,
-      body: "Additional English classes and UX profile courses.",
+      description: "Additional English classes and UX profile courses.",
+      location: "Agadir",
+      company: {
+        id: "ss",
+        name: "FikraLabs",
+        location: "Agadir",
+        avatar: "null",
+      },
     },
   ]);
+
+  const { data: experiencesData } = useQuery<GetExperiencesData>(
+    experienceOperations.Queries.getExperiences
+  );
+
+  console.log(experiencesData);
 
   return (
     <>
@@ -61,7 +74,15 @@ const ExperiencePage = () => {
           />
         </div>
 
+        {experiencesData?.getExperiences?.experiences.map((experience) => {
+          return <ExperienceRow experience={experience} />;
+        })}
+        {/* 
         <div className="flex flex-col space-y-10 bg-white  py-6 ">
+          <ExperienceRow experience={data[0]} />
+          <hr />
+          <ExperienceRow experience={data[1]} />
+        </div> */}
           {data.map((db) => {
             return (
               <div key={db.id}>

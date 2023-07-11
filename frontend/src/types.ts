@@ -16,12 +16,27 @@ export interface GetUserData {
   };
 }
 
+/**
+ * Skill related types
+ */
+
 export interface GetSkillsData {
   getSkills: {
     skills: {
       id: string;
+      slug: string;
       name: string;
     }[];
+  };
+}
+
+export interface AddSkillVariables {
+  name: string;
+}
+
+export interface AddSkillData {
+  addSkill: {
+    success: boolean;
   };
 }
 
@@ -77,6 +92,16 @@ export interface CreateOfferData {
 }
 
 /**
+ * Skill related types
+ */
+
+export interface GetExperiencesData {
+  getExperiences: {
+    experiences: Experience[];
+  };
+}
+
+/**
  *  Post related types
  */
 
@@ -117,6 +142,26 @@ export interface GetPostsData {
 }
 
 /**
+ * Follow related types
+ *  */
+
+export interface FollowVariables {
+  userId: string;
+}
+
+export interface FollowData {
+  follow: {
+    success: boolean;
+  };
+}
+
+export interface DeleteFollowData {
+  deleteFollow: {
+    success: boolean;
+  };
+}
+
+/**
  *  Profile related types
  */
 
@@ -142,6 +187,7 @@ export interface Experience {
   };
   startDate: string;
   endDate: string;
+  present: boolean;
 }
 
 export interface Education {
@@ -168,6 +214,7 @@ export interface Profile {
   job_type: string;
   job_title: string;
   city: string;
+  isFollowed: boolean;
 }
 
 export interface GetProfileData {

@@ -29,6 +29,7 @@ const resolvers = {
             company: {
               select: {
                 id: true,
+                name: true,
               },
             },
             password: false,

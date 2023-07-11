@@ -2,6 +2,7 @@ import React from "react";
 
 import { useQuery } from "@apollo/client";
 
+import { useParams } from "react-router-dom";
 import postOperations from "../../graphql/operations/post";
 import { GetPostsData, GetProfileVariables } from "../../types";
 import { useParams } from "react-router-dom";

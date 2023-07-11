@@ -1,19 +1,19 @@
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 
 // import profile from "../../../../assets/profile.jpg";
-import Button from "../Button";
 import { useSelector } from "react-redux";
+import Button from "../Button";
 
 import { useMutation } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import companyOperations from "../../../graphql/operations/company";
+import { selectUser } from "../../../state/userSlice/userSlice";
 import {
   Company,
   UpdateCompanyData,
   UpdateCompanyVariables,
 } from "../../../types";
-import companyOperations from "../../../graphql/operations/company";
-import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
-import { selectUser } from "../../../state/userSlice/userSlice";
 
 interface Input {
   placeholder: string;

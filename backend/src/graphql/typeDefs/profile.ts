@@ -20,6 +20,7 @@ const typeDefs = gql`
     first_name: String
     last_name: String
     city: String
+    isFollowed: Boolean
   }
 
   type Query {
@@ -51,16 +52,6 @@ const typeDefs = gql`
       bio: String
       city: String
     ): SetupProfileReturnType
-  }
-
-  type Experience {
-    id: String
-    title: String
-    description: String
-    location: String
-    company: Company
-    startDate: Date
-    endDate: Date
   }
 `;
 
