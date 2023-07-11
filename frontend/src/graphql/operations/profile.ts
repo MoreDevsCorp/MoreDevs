@@ -11,6 +11,7 @@ const profileOperations = {
             email
             city
             bio
+            isFollowed
             educations {
               endDate
               id

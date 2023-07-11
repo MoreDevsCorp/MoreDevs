@@ -132,6 +132,20 @@ export interface GetPostsData {
 }
 
 /**
+ * Follow related types
+ *  */
+
+export interface FollowVariables {
+  userId: string;
+}
+
+export interface FollowData {
+  follow: {
+    success: boolean;
+  };
+}
+
+/**
  *  Profile related types
  */
 
@@ -184,6 +198,7 @@ export interface Profile {
   job_type: string;
   job_title: string;
   city: string;
+  isFollowed: boolean;
 }
 
 export interface GetProfileData {

@@ -6,7 +6,7 @@ import MyTabs from "../../components/ui/Tabs";
 import About from "../../components/ui/profile/About";
 import Skills from "../../components/ui/profile/Skills/Skills";
 // import Projects from "../../components/ui/profile/Project/Projects";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Education from "../../components/ui/profile/Education/Education";
@@ -14,8 +14,15 @@ import Experience from "../../components/ui/profile/Experiences/Experience";
 import ProfileSettings from "../../components/ui/profile/Profile Setting/ProfileSettings";
 import profileOperations from "../../graphql/operations/profile";
 import { selectUser } from "../../state/userSlice/userSlice";
-import { GetProfileData, GetProfileVariables } from "../../types";
+import {
+  FollowData,
+  FollowVariables,
+  GetProfileData,
+  GetProfileVariables,
+} from "../../types";
 import Posts from "./Posts";
+import followOperations from "../../graphql/operations/follow";
+import { toast } from "react-hot-toast";
 
 const bgImage = null;
 
@@ -32,7 +39,50 @@ const Profile = () => {
     }
   );
 
+  const [follow, { data: followData }] = useMutation<
+    FollowData,
+    FollowVariables
+  >(followOperations.Mutation.follow);
+
+  const [deleteFollow, { data: deleteFollowData }] = useMutation<
+    FollowData,
+    FollowVariables
+  >(followOperations.Mutation.deletFollow);
+
   console.log(data);
+
+  const createFollow = async () => {
+    follow({
+      variables: {
+        userId: userId || "",
+      },
+      onCompleted: (data) => {
+        if (data.follow.success) {
+          refetch();
+        }
+      },
+      onError: (error) => {
+        console.log(error.message);
+      },
+    });
+  };
+
+  const removeFollow = async () => {
+    deleteFollow({
+      variables: {
+        userId: userId || "",
+      },
+      onCompleted: (data) => {
+        if (data.follow.success) {
+          refetch();
+        }
+      },
+      onError: (error) => {
+        // toast.error(error.message);
+        console.log(error.message);
+      },
+    });
+  };
 
   return (
     <div className="w-full space-y-6 max-w-[1100px] mb-20">
@@ -93,11 +143,15 @@ const Profile = () => {
 
           {user.id !== userId && (
             <div className="mt-6 mr-4">
-              <Button type="button">
-                <span className="flex space-x-1 items-center text-white ">
-                  <span>Follow +</span>
-                </span>
-              </Button>
+              <div>
+                {data?.getProfile.profile.isFollowed ? (
+                  <Button outline hover onClick={removeFollow}>
+                    Unfollow -
+                  </Button>
+                ) : (
+                  <Button onClick={createFollow}>Follow +</Button>
+                )}
+              </div>
             </div>
           )}
         </div>
