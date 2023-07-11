@@ -1,9 +1,8 @@
-import { toast } from "react-hot-toast";
-import RegisterForm from "../../components/ui/RegisterForm";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import RegisterForm from "../../components/ui/RegisterForm";
 import { selectUser, userLogin } from "../../state/userSlice/userSlice";
 
 const RegisterPage = () => {

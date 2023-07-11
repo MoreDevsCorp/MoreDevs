@@ -1,7 +1,5 @@
-import React from "react";
+import { Field, Form, Formik } from "formik";
 import Button from "../../Button";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
 
 interface EducationFormProps {
   setIsOpen: (value: boolean) => void;
@@ -14,10 +12,11 @@ const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
         initialValues={{
           jobTitle: "",
           company: "",
+          location: "",
           startDate: "",
           endDate: "",
           present: "",
-          body: "",
+          description: "",
         }}
         onSubmit={(values) => {
           console.log(values);
@@ -27,7 +26,7 @@ const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
         {({ errors, touched, values }) => (
           <Form className="space-y-6 flex flex-col">
             <div className="flex flex-col ">
-              <span>Job Title</span>
+              <span>Title</span>
               <Field
                 name="jobTitle"
                 type="text"
@@ -44,6 +43,16 @@ const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
                 type="text"
                 className={`border rounded  outline-none p-2 ${
                   errors.company && touched.company && "border-red-500"
+                }`}
+              />
+            </div>
+            <div className="flex flex-col ">
+              <span>Location</span>
+              <Field
+                name="location"
+                type="text"
+                className={`border rounded  outline-none p-2 ${
+                  errors.location && touched.location && "border-red-500"
                 }`}
               />
             </div>
@@ -84,12 +93,12 @@ const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
             )}
 
             <div className="flex flex-col ">
-              <span>Body</span>
+              <span>Description</span>
               <Field
-                name="body"
+                name="description"
                 type="text"
                 className={`border rounded  outline-none p-2 ${
-                  errors.body && touched.body && "border-red-500"
+                  errors.description && touched.description && "border-red-500"
                 }`}
               />
             </div>

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import NavBar from "./Navbar";
 import SideBar from "./sidebar/Sidebar";
-import Chat from "../../ui/chat";
 
 const PrivateLayout = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);

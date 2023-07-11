@@ -1,14 +1,7 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../card";
+import { Link } from "react-router-dom";
 import companyLogo from "../../../assets/companyLogo.png";
 import Button from "../Button";
-import { Link } from "react-router-dom";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../card";
 
 interface JobProps {
   jobTitle: string;
