@@ -349,3 +349,16 @@ export interface GetCompanyData {
     company: Company;
   };
 }
+
+export interface searchedUser {
+  name: string;
+  id: string;
+}
+
+export interface getSearchData {
+  result: searchedUser[];
+}
+
+export interface getSearchVariables {
+  searchQuery: string;
+}
