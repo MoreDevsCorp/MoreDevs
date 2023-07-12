@@ -72,6 +72,57 @@ export default {
         });
       }
     },
+
+    getApplicants: async (
+      _: any,
+      args: { offerId: string },
+      context: Context
+    ) => {
+      const { session, prisma } = context;
+      const { offerId } = args;
+
+      if (!session?.user) {
+        throw new GraphQLError("You're not authenticated !", {
+          extensions: { code: 401 },
+        });
+      }
+
+      try {
+        const applicants = await prisma.offer.findMany({
+          where: {
+            id: offerId,
+          },
+          include: applicantPopulated,
+        });
+
+        let customApplicants: any[] = [];
+
+        applicants.forEach((app) => {
+          app.applications.forEach((app2) => {
+            customApplicants.push({
+              id: app2.applicant.id,
+              name: app2.applicant.name,
+              email: app2.applicant.email,
+              image: app2.applicant.image,
+              job_title: app2.applicant.job_title,
+              location: app2.applicant.location,
+              experiences: app2.applicant.experiences,
+            });
+          });
+        });
+
+        console.log(customApplicants);
+
+        return {
+          applicants: customApplicants,
+        };
+      } catch (error: any) {
+        console.log("Error getting applicants :", error.message);
+        throw new GraphQLError(error.message, {
+          extensions: { code: 500 },
+        });
+      }
+    },
   },
   Mutation: {
     createOffer: async (
@@ -117,6 +168,35 @@ export default {
         };
       } catch (error: any) {
         console.log("Error creating Offer :", error.message);
+        throw new GraphQLError(error.message, {
+          extensions: { code: 500 },
+        });
+      }
+    },
+
+    apply: async (_: any, args: { offerId: string }, context: Context) => {
+      const { session, prisma } = context;
+      const { offerId } = args;
+
+      if (!session?.user) {
+        throw new GraphQLError("You're not authenticated !", {
+          extensions: { code: 401 },
+        });
+      }
+
+      try {
+        const application = await prisma.userApplicationOffer.create({
+          data: {
+            offerId: offerId,
+            applicantId: session.user.id,
+          },
+        });
+
+        return {
+          success: true,
+        };
+      } catch (error: any) {
+        console.log("Error updating Offer :", error.message);
         throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });
@@ -232,5 +312,28 @@ export const offerPopulated = Prisma.validator<Prisma.OfferInclude>()({
   },
   skills: {
     select: { skill: { select: { id: true, name: true } } },
+  },
+});
+
+export const applicantPopulated = Prisma.validator<Prisma.OfferInclude>()({
+  applications: {
+    include: {
+      applicant: {
+        select: {
+          id: true,
+          name: true,
+          job_title: true,
+          email: true,
+          image: true,
+          location: true,
+          city: true,
+          experiences: {
+            select: {
+              title: true,
+            },
+          },
+        },
+      },
+    },
   },
 });

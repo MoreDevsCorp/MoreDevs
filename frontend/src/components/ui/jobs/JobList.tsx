@@ -53,7 +53,7 @@ const JobList = () => {
                 <Button size="text-xs">Edit</Button>
                 <Button size="text-xs">Delete</Button>
 
-                <Link to={"/job/applicants"}>
+                <Link to={`/job/applicants?offerId=${offer.id}`}>
                   <Button size="text-xs">Applicants</Button>
                 </Link>
               </TableCell>
