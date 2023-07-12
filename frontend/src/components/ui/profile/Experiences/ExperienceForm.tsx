@@ -6,13 +6,14 @@ import {
   CreateExperienceVariables,
 } from "../../../../types";
 import experience from "../../../../graphql/operations/experience";
+import { toast } from "react-hot-toast";
 
 interface EducationFormProps {
   setIsOpen: (value: boolean) => void;
 }
 
 const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
-  const [addExperienceMutation, { error, data }] = useMutation<
+  const [addExperienceMutation, {}] = useMutation<
     CreateExperienceData,
     CreateExperienceVariables
   >(experience.Mutations.addExperience);
@@ -40,13 +41,11 @@ const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
               title: values.jobTitle,
             },
 
-            onCompleted: () => {
-              console.log(error);
-              console.log(data);
-              // setIsOpen(false);
-            },
-            onError: (err) => {
-              console.log(err);
+            onCompleted: (data) => {
+              if (data.addExperience.success) {
+                toast.success("Experience Added !");
+              }
+              setIsOpen(false);
             },
           });
         }}

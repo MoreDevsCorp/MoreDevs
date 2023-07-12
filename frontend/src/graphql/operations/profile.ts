@@ -25,14 +25,17 @@ const profileOperations = {
               startDate
               endDate
               title
-              company {
-                id
-                name
-              }
+              company
               present
             }
-            following
-            followers
+            following {
+              id
+              name
+            }
+            followers {
+              id
+              name
+            }
             id
             image
             location
