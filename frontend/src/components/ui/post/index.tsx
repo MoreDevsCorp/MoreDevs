@@ -103,10 +103,10 @@ export default function Post({ post, refetch }: PostProps) {
     UpdatePostVariables
   >(postOperations.Mutations.updatePost);
 
-  const [like, { data: likeData }] = useMutation<LikeData, LikeVariables>(
+  const [like] = useMutation<LikeData, LikeVariables>(
     postOperations.Mutations.like
   );
-  const [dislike, { data: dislikeData }] = useMutation<LikeData, LikeVariables>(
+  const [dislike] = useMutation<LikeData, LikeVariables>(
     postOperations.Mutations.dislike
   );
 
@@ -211,7 +211,7 @@ export default function Post({ post, refetch }: PostProps) {
                 if (!e.currentTarget.checked) {
                   dislike({
                     variables: { postId: post.id },
-                    onCompleted: (data) => {
+                    onCompleted: () => {
                       refetch();
                     },
                     onError: (error) => {
@@ -223,7 +223,7 @@ export default function Post({ post, refetch }: PostProps) {
                     variables: {
                       postId: post.id,
                     },
-                    onCompleted: (data) => {
+                    onCompleted: () => {
                       refetch();
                     },
                     onError: (error) => {

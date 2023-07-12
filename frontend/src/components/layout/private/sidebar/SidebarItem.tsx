@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
 import { Dispatch, SetStateAction } from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../../../state/userSlice/userSlice";
+// import { useSelector } from "react-redux";
+// import { selectUser } from "../../../../state/userSlice/userSlice";
 
 interface SideBarItemProps {
   title: string;
@@ -12,7 +12,7 @@ interface SideBarItemProps {
 }
 
 const SidebarItem = ({ Icon, title, setActive, active }: SideBarItemProps) => {
-  const user = useSelector(selectUser);
+  // const user = useSelector(selectUser);
 
   const url = title.toLocaleLowerCase();
   return (
