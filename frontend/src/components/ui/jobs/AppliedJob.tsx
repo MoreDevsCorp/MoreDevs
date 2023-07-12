@@ -11,9 +11,15 @@ const AppliedJob = () => {
         Jobs You Applied To
       </h1>
       <div className="max-w-[800px] space-y-5">
-        {data?.getOffers.offers.map((offer) => {
-          return <JobCard key={offer.id} offer={offer} />;
-        })}
+        {data?.getOffers.offers.length == 0 ? (
+          <h1 className="italic mt-5 text-gray-500">
+            You have Not applied to any jobs yet.
+          </h1>
+        ) : (
+          data?.getOffers.offers.map((offer) => {
+            return <JobCard key={offer.id} offer={offer} />;
+          })
+        )}
       </div>
     </div>
   );

@@ -17,9 +17,9 @@ import {
   TableHeader,
   TableRow,
 } from "../table";
-
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
+
 const JobList = () => {
   const user = useSelector(selectUser);
   const params = new URLSearchParams(window.location.search);
@@ -30,6 +30,7 @@ const JobList = () => {
       companyId: companyId || user.company.id,
     },
   });
+
   const [deleteOfferMutation, { error }] = useMutation<
     CreateOfferData,
     GetApplicantsVariables
@@ -39,7 +40,11 @@ const JobList = () => {
 
   return (
     <Table className="w-full">
-      <TableCaption>Lists of jobs</TableCaption>
+      <TableCaption>
+        {data?.getOffers.offers.length == 0
+          ? "You have not created any job offers yet"
+          : "Lists of jobs"}
+      </TableCaption>
 
       <TableHeader>
         <TableRow>

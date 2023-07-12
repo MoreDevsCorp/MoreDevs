@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import pp from "../../../assets/profile.jpg";
 import Button from "../Button";
 import { useQuery } from "@apollo/client";
@@ -9,6 +9,8 @@ import {
   GetApplicantsData,
   GetApplicantsVariables,
 } from "../../../types";
+import { selectUser } from "../../../state/userSlice/userSlice";
+import { useSelector } from "react-redux";
 
 interface FollowingProps {
   followingArr: Follow[] | undefined;
@@ -16,15 +18,29 @@ interface FollowingProps {
 
 const Following = ({ followingArr }: FollowingProps) => {
   const params = new URLSearchParams(window.location.search);
+  const { userId } = useParams();
+  const user = useSelector(selectUser);
 
   return (
     <div className="w-full">
       <h1 className="font-semibold text-2xl text-black-900">Following</h1>
 
       <div className="max-w-[800px] space-y-5">
-        {followingArr?.map((fl) => {
-          return <FollowingCard key={fl.id} applicant={fl} />;
-        })}
+        {followingArr?.length == 0 ? (
+          user.id == userId ? (
+            <h3 className="my-3 italic text-gray-500">
+              You are not following someone yet.
+            </h3>
+          ) : (
+            <h3 className="my-3 italic text-gray-500">
+              This user is not following anyone yet.
+            </h3>
+          )
+        ) : (
+          followingArr?.map((fl) => {
+            return <FollowingCard key={fl.id} applicant={fl} />;
+          })
+        )}
       </div>
     </div>
   );
