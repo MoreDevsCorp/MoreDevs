@@ -1,11 +1,8 @@
 import { faBell, faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Menu } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { AiOutlineClose } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import { Menu } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
@@ -30,7 +27,7 @@ export function DropDown() {
         <div>
           <Menu.Button className="inline-flex w-full justify-center ">
             <img
-              src={user.image ? user.image : "/images/img_avatar.png"}
+              src={user.image ? user.image : "/images/img_avatar.jpeg"}
               alt="profile image"
               width={40}
               height={40}
