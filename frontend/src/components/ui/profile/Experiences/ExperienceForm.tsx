@@ -11,7 +11,7 @@ interface EducationFormProps {
   setIsOpen: (value: boolean) => void;
 }
 
-const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
+const ExperienceForm = ({}: EducationFormProps) => {
   const [addExperienceMutation, { error, data }] = useMutation<
     CreateExperienceData,
     CreateExperienceVariables

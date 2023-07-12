@@ -24,8 +24,8 @@ const ExperiencePage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
 
-  const [experienceInputs, setExperienceInputs] = useState("");
-  const [data, setData] = useState<Experience[]>([
+  // const [experienceInputs, setExperienceInputs] = useState("");
+  const [data, _setData] = useState<Experience[]>([
     {
       id: "1",
       title: "Ecole Fraincaise D'enseignement Technique",
