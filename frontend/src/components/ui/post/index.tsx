@@ -5,24 +5,14 @@ import { FavoriteBorder } from "@mui/icons-material";
 import Favorite from "@mui/icons-material/Favorite";
 import { Checkbox } from "@mui/material";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 import { AiOutlineClockCircle, AiOutlineShareAlt } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegCommentAlt } from "react-icons/fa";
-import mydesk from "../../../assets/mydesk.png";
-import profile from "../../../assets/profile.jpg";
-import userImage from "../../../assets/user.jpg";
-import Comment from "./Comment";
-import { Checkbox } from "@mui/material";
-import { FavoriteBorder } from "@mui/icons-material";
-import Favorite from "@mui/icons-material/Favorite";
-import TextareaAutosize from "@mui/base/TextareaAutosize";
-import { getDifferenceInDays } from "../../../lib/utils";
-import { Menu } from "@headlessui/react";
-import { useState } from "react";
-import Button from "../Button";
-import { useMutation } from "@apollo/client";
+import { useSelector } from "react-redux";
 import postOperations from "../../../graphql/operations/post";
 import { getDifferenceInDays } from "../../../lib/utils";
+import { selectUser } from "../../../state/userSlice/userSlice";
 import {
   CreatePostData,
   DeletePostVariables,
@@ -32,11 +22,6 @@ import {
   UpdatePostVariables,
 } from "../../../types";
 import Button from "../Button";
-import Comment from "./Comment";
-import { toast } from "react-hot-toast";
-import user from "../../../assets/avatar.webp";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../../state/userSlice/userSlice";
 
 interface PostProps {
   post: PostType;
