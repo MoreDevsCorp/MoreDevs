@@ -140,6 +140,19 @@ export interface DeletePostVariables {
 export interface CreatePostData {
   success: boolean;
 }
+export interface CreateExperienceData {
+  success: boolean;
+}
+
+export interface CreateExperienceVariables {
+  title: string;
+  description: string;
+  location: string;
+  company: string;
+  startDate?: string | null;
+  endDate?: string | null;
+  present: boolean;
+}
 
 export interface Post {
   id: string;

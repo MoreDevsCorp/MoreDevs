@@ -36,8 +36,8 @@ export default {
         description: string;
         location: string;
         company: string;
-        startDate: Date;
-        endDate: Date;
+        startDate: string;
+        endDate: string;
         present: boolean;
       },
       context: Context
@@ -60,21 +60,16 @@ export default {
       }
 
       try {
-        await prisma.user.update({
-          where: {
-            id: session.user.id,
-          },
+        await prisma.experience.create({
           data: {
-            experiences: {
-              create: {
-                description,
-                location,
-                present,
-                startDate,
-                title,
-                endDate,
-              },
-            },
+            userId: session.user.id,
+            company,
+            description,
+            location,
+            present,
+            startDate,
+            title,
+            endDate,
           },
         });
 
@@ -87,6 +82,36 @@ export default {
           extensions: { code: 500 },
         });
       }
+
+      // thats update one
+      // try {
+      //   await prisma.user.update({
+      //     where: {
+      //       id: session.user.id,
+      //     },
+      //     data: {
+      //       experiences: {
+      //         create: {
+      //           description,
+      //           location,
+      //           present,
+      //           startDate,
+      //           title,
+      //           endDate,
+      //         },
+      //       },
+      //     },
+      //   });
+
+      //   return {
+      //     success: true,
+      //   };
+      // } catch (error: any) {
+      //   console.log("Error adding experience :", error.message);
+      //   throw new GraphQLError(error.message, {
+      //     extensions: { code: 500 },
+      //   });
+      // }
     },
   },
 };

@@ -1,3 +1,10 @@
+import { useMutation } from "@apollo/client";
+import { Menu } from "@headlessui/react";
+import TextareaAutosize from "@mui/base/TextareaAutosize";
+import { FavoriteBorder } from "@mui/icons-material";
+import Favorite from "@mui/icons-material/Favorite";
+import { Checkbox } from "@mui/material";
+import { useState } from "react";
 import { AiOutlineClockCircle, AiOutlineShareAlt } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegCommentAlt } from "react-icons/fa";
@@ -15,16 +22,19 @@ import { useState } from "react";
 import Button from "../Button";
 import { useMutation } from "@apollo/client";
 import postOperations from "../../../graphql/operations/post";
+import { getDifferenceInDays } from "../../../lib/utils";
 import {
   CreatePostData,
-  CreatePostVariables,
   DeletePostVariables,
   LikeData,
   LikeVariables,
   Post as PostType,
   UpdatePostVariables,
 } from "../../../types";
+import Button from "../Button";
+import Comment from "./Comment";
 import { toast } from "react-hot-toast";
+import user from "../../../assets/avatar.webp";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../state/userSlice/userSlice";
 
