@@ -20,10 +20,10 @@ const Posts: React.FC<PostsProps> = () => {
       userId: userId || "",
     },
   });
-  console.log(data, error);
 
   return (
     <div className="max-w-[600px]">
+      <h1 className="my-3 font-semibold text-2xl text-black-900">Posts</h1>
       {loading ? (
         <h1>Loading..</h1>
       ) : (

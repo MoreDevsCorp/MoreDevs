@@ -22,6 +22,7 @@ import {
   UpdatePostVariables,
 } from "../../../types";
 import Button from "../Button";
+import { Link } from "react-router-dom";
 
 interface PostProps {
   post: PostType;
@@ -127,7 +128,9 @@ export default function Post({ post, refetch }: PostProps) {
           </div>
           <div>
             <h2 className="text-md font-semibold">
-              {post.author.name ? post.author.name : "John Doe"}{" "}
+              <Link to={`/profile/${post.author.id}`}>
+                {post.author.name ? post.author.name : "John Doe"}{" "}
+              </Link>
               <span className="text-sm  font-normal">
                 {post.author.job_title || "Software Developer"}
               </span>

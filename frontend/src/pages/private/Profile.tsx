@@ -24,6 +24,8 @@ import {
 import Posts from "./Posts";
 import followOperations from "../../graphql/operations/follow";
 import { toast } from "react-hot-toast";
+import Followers from "../../components/ui/profile/Followers";
+import Following from "../../components/ui/profile/Following";
 
 const bgImage = null;
 
@@ -162,8 +164,8 @@ const Profile = () => {
       <MyTabs
         tabsArr={
           userId === user.id
-            ? ["Profile", "Posts", "Settings"]
-            : ["Profile", "Posts"]
+            ? ["Profile", "Posts", "Followers", "Following", "Settings"]
+            : ["Profile", "Posts", "Followers", "Following"]
         }
         c1={
           <div className={"space-y-6"}>
@@ -175,7 +177,9 @@ const Profile = () => {
           </div>
         }
         c2={<Posts />}
-        c3={
+        c3={<Followers followersArr={data?.getProfile.profile.followers} />}
+        c4={<Following followingArr={data?.getProfile.profile.following} />}
+        c5={
           <ProfileSettings
             profile={data?.getProfile.profile}
             refetch={refetch}
