@@ -10,6 +10,11 @@ export type User = {
   };
 };
 
+export type Follow = {
+  id: string;
+  name: string;
+};
+
 export interface GetUserData {
   getUser: {
     user: User;
@@ -32,6 +37,16 @@ export interface GetSkillsData {
 
 export interface AddSkillVariables {
   name: string;
+}
+
+export interface DeleteSkillVariables {
+  skillId: string;
+}
+
+export interface DeleteSkillData {
+  deleteSkill: {
+    success: boolean;
+  };
 }
 
 export interface AddSkillData {
@@ -124,6 +139,19 @@ export interface GetExperiencesData {
 }
 
 /**
+ * Experience related types
+ */
+
+export interface DeleteExperienceVariables {
+  experienceId: string;
+}
+export interface DeleteExperienceData {
+  deleteExperience: {
+    success: boolean;
+  };
+}
+
+/**
  *  Post related types
  */
 
@@ -141,7 +169,7 @@ export interface CreatePostData {
   success: boolean;
 }
 export interface CreateExperienceData {
-  success: boolean;
+  addExperience: { success: boolean };
 }
 
 export interface CreateExperienceVariables {
@@ -234,12 +262,7 @@ export interface Experience {
   title: string;
   description: string;
   location: string;
-  company: {
-    id: string;
-    name: string;
-    location: string;
-    avatar: string;
-  };
+  company: string;
   startDate: string;
   endDate: string;
   present: boolean;
@@ -264,8 +287,8 @@ export interface Profile {
   skills: Skill[];
   experiences: Experience[];
   educations: Education[];
-  followers: number;
-  following: number;
+  followers: Follow[];
+  following: Follow[];
   job_type: string;
   job_title: string;
   city: string;
@@ -348,4 +371,17 @@ export interface GetCompanyData {
   getCompany: {
     company: Company;
   };
+}
+
+export interface searchedUser {
+  name: string;
+  id: string;
+}
+
+export interface getSearchData {
+  result: searchedUser[];
+}
+
+export interface getSearchVariables {
+  searchQuery: string;
 }

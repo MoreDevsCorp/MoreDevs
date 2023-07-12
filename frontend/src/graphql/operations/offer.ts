@@ -99,5 +99,12 @@ export default {
         }
       }
     `,
+    deleteOffer: gql`
+      mutation DeleteOffer($offerId: String!) {
+        deleteOffer(offerId: $offerId) {
+          success
+        }
+      }
+    `,
   },
 };

@@ -13,14 +13,24 @@ const typeDefs = gql`
     skills: [Skill]
     experiences: [Experience]
     educations: [Education]
-    followers: Int
-    following: Int
+    followers: [Followers]
+    following: [Following]
     job_type: String
     job_title: String
     first_name: String
     last_name: String
     city: String
     isFollowed: Boolean
+  }
+
+  type Followers {
+    id: String
+    name: String
+  }
+
+  type Following {
+    id: String
+    name: String
   }
 
   type Query {

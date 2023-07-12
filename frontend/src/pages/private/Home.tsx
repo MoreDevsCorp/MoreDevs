@@ -11,7 +11,7 @@ const Home = ({ feed, refetch }: HomeProps) => {
   return (
     <div className=" w-full p-2 ">
       <div className="max-w-[700px] space-y-5">
-        <CreatePost />
+        <CreatePost refetch={refetch} />
         {/* <Post /> */}
         <Feed refetch={refetch} feed={feed} />
       </div>

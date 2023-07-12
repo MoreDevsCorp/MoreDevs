@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { selectUser, userLogout } from "../../../state/userSlice/userSlice";
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
 import TooltipComponent from "../../ui/Tooltip";
+import { useState } from "react";
 
 interface NavBar {
   isSideBarOpen: boolean;
@@ -84,6 +85,7 @@ export function DropDown() {
 }
 const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
   const user = useSelector(selectUser);
+  const [qry, setQry] = useState("");
   return (
     <nav className="z-50 px-10 py-4  w-[100%] border  border-gray-100 bg-white flex items-center justify-between">
       <div className="flex items-center space-x-4">
@@ -95,14 +97,23 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }: NavBar) => {
         </span>
       </div>
 
-      <div className="mx-4 md:ml-0 relative flex items-center  transition-all group">
-        <MagnifyingGlassIcon className="group-hover:rotate-[360deg] absolute ml-2 h-5 w-5 text-gray-500 transition-all duration-500" />
-
-        <input
-          type="text"
-          placeholder="Search in MoreDevs."
-          className={`pl-10 pr-3  py-2 w-[0%] md:w-[100%] text-sm bg-gray-50 placeholder-gray-500 rounded border outline-none group-hover:w-[100%] transition-all duration-500`}
-        />
+      <div className="relative">
+        <div className="mx-4 md:ml-0 relative flex items-center  transition-all group">
+          {" "}
+          <MagnifyingGlassIcon className="group-hover:rotate-[360deg] absolute ml-2 h-5 w-5 text-gray-500 transition-all duration-500" />
+          <input
+            value={qry}
+            onChange={(e) => setQry(e.target.value)}
+            type="text"
+            placeholder="Search in MoreDevs."
+            className={`pl-10 pr-3  py-2 w-[0%] md:w-[100%] text-sm bg-gray-50 placeholder-gray-500 rounded border outline-none group-hover:w-[100%] transition-all duration-500`}
+          />
+        </div>
+        {qry && (
+          <div className="bg-gray-50 p-4 w-full absolute top-9 left-0">
+            <p className="italic text-sm">Searching...</p>
+          </div>
+        )}
       </div>
 
       <div className="flex items-center space-x-3">

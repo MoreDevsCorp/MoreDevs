@@ -14,9 +14,11 @@ const typeDefs = gql`
       location: String!
       company: String!
       startDate: String!
-      endDate: String!
+      endDate: String
       present: Boolean
     ): AddExperienceReturnType
+
+    deleteExperience(experienceId: String!): AddExperienceReturnType
   }
 
   type AddExperienceReturnType {

@@ -67,14 +67,12 @@ export default {
         });
 
         if (existingSkill) {
-          await prisma.user.update({
-            where: { id: session.user.id },
+          console.log("exists : ", existingSkill.name);
+
+          await prisma.userSkill.create({
             data: {
-              skills: {
-                connect: {
-                  id: existingSkill.id,
-                },
-              },
+              skillId: existingSkill.id,
+              userId: session.user.id,
             },
           });
         } else {
@@ -83,7 +81,12 @@ export default {
             data: {
               skills: {
                 create: {
-                  skill: { create: { slug: name.toLowerCase(), name } },
+                  skill: {
+                    create: {
+                      name,
+                      slug: name.toLowerCase(),
+                    },
+                  },
                 },
               },
             },
@@ -95,6 +98,41 @@ export default {
         };
       } catch (error: any) {
         console.log("Error adding skill :", error.message);
+        throw new GraphQLError(error.message, {
+          extensions: { code: 500 },
+        });
+      }
+    },
+
+    deleteSkill: async (
+      _: any,
+      args: { skillId: string },
+      context: Context
+    ) => {
+      const { session, prisma } = context;
+      const { skillId } = args;
+
+      if (!session?.user) {
+        throw new GraphQLError("You're not authenticated !", {
+          extensions: { code: 401 },
+        });
+      }
+
+      try {
+        await prisma.userSkill.delete({
+          where: {
+            userId_skillId: {
+              userId: session.user.id,
+              skillId,
+            },
+          },
+        });
+
+        return {
+          success: true,
+        };
+      } catch (error: any) {
+        console.log("Error deleting skill :", error.message);
         throw new GraphQLError(error.message, {
           extensions: { code: 500 },
         });

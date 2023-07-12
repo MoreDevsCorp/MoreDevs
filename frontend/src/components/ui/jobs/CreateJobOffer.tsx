@@ -15,10 +15,12 @@ import {
   CreateOfferVariables,
   GetSkillsData,
 } from "../../../types";
+import { useNavigate } from "react-router-dom";
 
 const CreateJobOffer = () => {
   const [skillsInput, setSkillsInput] = useState<string[]>([]);
   const user = useSelector(selectUser);
+  const navigate = useNavigate();
 
   const { data } = useQuery<GetSkillsData>(skillOperations.Queries.getSkills);
 
@@ -67,6 +69,7 @@ const CreateJobOffer = () => {
             },
             onCompleted: () => {
               toast.success("Job Offer Successfully Created !");
+              navigate("/company");
             },
             onError: (error) => {
               toast.error(error.message);

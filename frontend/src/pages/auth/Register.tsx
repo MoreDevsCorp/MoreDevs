@@ -27,6 +27,7 @@ const RegisterPage = () => {
 
     if (data) {
       dispatch(userLogin(data));
+      window.location.reload();
     }
   };
   return user ? (

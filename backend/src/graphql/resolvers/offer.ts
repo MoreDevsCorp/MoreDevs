@@ -287,6 +287,7 @@ export default {
           extensions: { code: 401 },
         });
       }
+      console.log(offerId);
 
       try {
         await prisma.offer.delete({ where: { id: offerId } });

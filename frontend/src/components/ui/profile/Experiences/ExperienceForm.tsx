@@ -6,13 +6,17 @@ import {
   CreateExperienceVariables,
 } from "../../../../types";
 import experience from "../../../../graphql/operations/experience";
+import { toast } from "react-hot-toast";
 
 interface EducationFormProps {
   setIsOpen: (value: boolean) => void;
+  refetch: () => void;
 }
 
-const ExperienceForm = ({}: EducationFormProps) => {
-  const [addExperienceMutation, { error, data }] = useMutation<
+
+const ExperienceForm = ({ setIsOpen, refetch }: EducationFormProps) => {
+  const [addExperienceMutation, {}] = useMutation<
+
     CreateExperienceData,
     CreateExperienceVariables
   >(experience.Mutations.addExperience);
@@ -33,20 +37,21 @@ const ExperienceForm = ({}: EducationFormProps) => {
             variables: {
               company: values.company,
               startDate: new Date(values.startDate).toISOString(),
-              endDate: new Date(values.endDate).toISOString(),
+              endDate: values.endDate
+                ? new Date(values.endDate).toISOString()
+                : null,
               present: values.present,
               location: values.location,
               description: values.description,
               title: values.jobTitle,
             },
 
-            onCompleted: () => {
-              console.log(error);
-              console.log(data);
-              // setIsOpen(false);
-            },
-            onError: (err) => {
-              console.log(err);
+            onCompleted: (data) => {
+              if (data.addExperience.success) {
+                toast.success("Experience Added !");
+                refetch();
+              }
+              setIsOpen(false);
             },
           });
         }}

@@ -189,7 +189,7 @@ model UserApplicationOffer {
   id          String @id @default(cuid())
   applicant   User   @relation(fields: [applicantId], references: [id], onDelete: Cascade)
   applicantId String
-  offer       Offer  @relation(fields: [offerId], references: [id])
+  offer       Offer  @relation(fields: [offerId], references: [id], onDelete: Cascade)
   offerId     String
 
   createdAt DateTime @default(now())
@@ -201,11 +201,13 @@ model UserSkill {
   userId  String?
   skill   Skill?  @relation(fields: [skillId], references: [id])
   skillId String?
+
+  @@unique([userId, skillId])
 }
 
 model OfferSkill {
   id      String @id @default(cuid())
-  offer   Offer  @relation(fields: [offerId], references: [id])
+  offer   Offer  @relation(fields: [offerId], references: [id], onDelete: Cascade)
   offerId String
   skill   Skill  @relation(fields: [skillId], references: [id])
   skillId String

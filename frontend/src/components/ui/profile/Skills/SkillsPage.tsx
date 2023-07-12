@@ -15,12 +15,18 @@ import { useMutation, useQuery } from "@apollo/client";
 import {
   AddSkillData,
   AddSkillVariables,
+  DeleteSkillData,
+  DeleteSkillVariables,
   GetSkillsData,
 } from "../../../../types";
 import skillOperations from "../../../../graphql/operations/skill";
 import { toast } from "react-hot-toast";
 
-const SkillsPage = () => {
+interface SkillsPageProps {
+  refetchProfile: () => void;
+}
+
+const SkillsPage = ({ refetchProfile }: SkillsPageProps) => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
 
@@ -33,19 +39,18 @@ const SkillsPage = () => {
     }
   );
 
-  const [addSkill, {}] = useMutation<AddSkillData, AddSkillVariables>(
+
+  const [addSkill] = useMutation<AddSkillData, AddSkillVariables>(
     skillOperations.Mutation.addSkill
+  );
+
+  const [deleteSkill] = useMutation<DeleteSkillData, DeleteSkillVariables>(
+    skillOperations.Mutation.deleteSkill
   );
 
   const [isOpen, setIsOpen] = useState(false);
   const [skill, setSkill] = useState("");
-  // const [skills, setSkills] = useState([
-  //   "HTML",
-  //   "CSS",
-  //   "JS",
-  //   "Angular",
-  //   "React",
-  // ]);
+
 
   return (
     <>
@@ -69,7 +74,20 @@ const SkillsPage = () => {
                 <div className="flex items-center justify-between pb-2">
                   <h3>{skill.name}</h3>
                   <TrashIcon
-                    onClick={() => {}}
+                    onClick={() => {
+                      deleteSkill({
+                        variables: {
+                          skillId: skill.id,
+                        },
+                        onCompleted: (data) => {
+                          if (data.deleteSkill.success) {
+                            toast.success("Skill has been deleted !");
+                            refetch();
+                            refetchProfile();
+                          }
+                        },
+                      });
+                    }}
                     className="hover:opacity-50 cursor-pointer h-5 w-5"
                   />
                 </div>
@@ -116,6 +134,7 @@ const SkillsPage = () => {
                         `${skill} has been added to your skill set 🚀`
                       );
                       refetch();
+                      refetchProfile();
                     },
                   });
                 }}

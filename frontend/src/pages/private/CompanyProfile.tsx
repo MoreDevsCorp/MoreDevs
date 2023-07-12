@@ -40,7 +40,7 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
 
   useEffect(() => {
     if (companyId) {
-      if (companyId === user.company.id) {
+      if (user.companyCreated && companyId === user.company.id) {
         navigate("/company");
       }
       getCompany({
@@ -51,7 +51,7 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
     } else {
       getCompany({
         variables: {
-          id: user.company.id,
+          id: user?.company.id,
         },
       });
     }
@@ -81,7 +81,7 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
             <div className="flex flex-col space-y-1">
               <h1 className="font-semibold text-2xl text-black-900">
                 {data?.getCompany.company
-                  ? data.getCompany.company.name
+                  ? data?.getCompany.company.name
                   : company?.name}
               </h1>
               <p className="text-black-600">
@@ -106,7 +106,7 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
                   target="_blank"
                 >
                   {data?.getCompany.company
-                    ? data.getCompany.company.website
+                    ? data?.getCompany.company.website
                     : company?.website}
                 </a>
               </div>
@@ -120,7 +120,7 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
           </div>
 
           <div className="mt-6 mr-4">
-            {user.companyCreated && !companyId ? (
+            {user?.companyCreated && !companyId ? (
               <Button type="button">
                 <span className="flex space-x-1 items-center text-white ">
                   <Link to="/joboffer/create">
@@ -140,12 +140,16 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
       </div>
 
       <MyTabs
-        tabsArr={["Profile", "Jobs List", "Settings"]}
+        tabsArr={
+          user?.company?.id == data?.getCompany.company.id
+            ? ["Profile", "Jobs List", "Settings"]
+            : ["Profile"]
+        }
         c1={
           <div className={"space-y-6"}>
             <About
               content={
-                data?.getCompany.company
+                data?.getCompany?.company
                   ? data.getCompany.company.description
                   : company?.description
               }
