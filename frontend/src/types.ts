@@ -39,6 +39,16 @@ export interface AddSkillVariables {
   name: string;
 }
 
+export interface DeleteSkillVariables {
+  skillId: string;
+}
+
+export interface DeleteSkillData {
+  deleteSkill: {
+    success: boolean;
+  };
+}
+
 export interface AddSkillData {
   addSkill: {
     success: boolean;
@@ -125,6 +135,19 @@ export type Applicant = {
 export interface GetExperiencesData {
   getExperiences: {
     experiences: Experience[];
+  };
+}
+
+/**
+ * Experience related types
+ */
+
+export interface DeleteExperienceVariables {
+  experienceId: string;
+}
+export interface DeleteExperienceData {
+  deleteExperience: {
+    success: boolean;
   };
 }
 

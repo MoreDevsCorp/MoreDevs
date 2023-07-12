@@ -14,8 +14,8 @@ export default function ExperienceRow({ experience }: ExperienceRowProps) {
 
   useEffect(() => {
     setDates({
-      startDate: new Date(experience.startDate.replace(" ", "T")),
-      endDate: new Date(experience.endDate.replace(" ", "T")),
+      startDate: new Date(experience?.startDate?.replace(" ", "T")),
+      endDate: new Date(experience?.endDate?.replace(" ", "T")),
     });
   }, [experience]);
 

@@ -40,7 +40,7 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
 
   useEffect(() => {
     if (companyId) {
-      if (companyId === user.company.id) {
+      if (user.companyCreated && companyId === user.company.id) {
         navigate("/company");
       }
       getCompany({
@@ -141,7 +141,11 @@ const CompanyProfile = ({ company }: CompanyProfileProps) => {
 
       <MyTabs
         tabsArr={
+<<<<<<< HEAD
+          user.companyCreated && user.company.id === companyId
+=======
           user?.company?.id == data?.getCompany.company.id
+>>>>>>> dde0bec34e9b700449487c8f255dac3a5f153884
             ? ["Profile", "Jobs List", "Settings"]
             : ["Profile"]
         }

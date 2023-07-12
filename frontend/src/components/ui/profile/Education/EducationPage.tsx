@@ -14,7 +14,11 @@ import EducationForm from "./EducationForm";
 
 import EducationEditForm from "./EducationEditForm";
 
-const EducationPage = () => {
+interface EducationPageProps {
+  refetchProfile: () => void;
+}
+
+const EducationPage = ({ refetchProfile }: EducationPageProps) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);

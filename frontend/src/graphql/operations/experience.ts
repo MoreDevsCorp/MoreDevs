@@ -27,7 +27,7 @@ export default {
         $location: String!
         $company: String!
         $startDate: String!
-        $endDate: String!
+        $endDate: String
         $present: Boolean!
       ) {
         addExperience(
@@ -39,6 +39,14 @@ export default {
           endDate: $endDate
           present: $present
         ) {
+          success
+        }
+      }
+    `,
+
+    deleteExperience: gql`
+      mutation DeleteExperience($experienceId: String!) {
+        deleteExperience(experienceId: $experienceId) {
           success
         }
       }

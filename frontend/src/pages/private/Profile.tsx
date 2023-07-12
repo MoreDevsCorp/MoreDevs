@@ -20,27 +20,35 @@ import {
   FollowVariables,
   GetProfileData,
   GetProfileVariables,
+  Profile as ProfileType,
 } from "../../types";
 import Posts from "./Posts";
 import followOperations from "../../graphql/operations/follow";
 import { toast } from "react-hot-toast";
 import Followers from "../../components/ui/profile/Followers";
 import Following from "../../components/ui/profile/Following";
+import { useEffect } from "react";
 
 const bgImage = null;
 
-const Profile = () => {
+interface ProfileProps {
+  profile: ProfileType | undefined;
+  refetch: () => void;
+  getProfile: (args: { variables: GetProfileVariables }) => void;
+}
+
+const Profile = ({ profile, getProfile, refetch }: ProfileProps) => {
   const { userId } = useParams();
   const user = useSelector(selectUser);
 
-  const { data, refetch } = useQuery<GetProfileData, GetProfileVariables>(
-    profileOperations.Queries.getProfile,
-    {
-      variables: {
-        userId: userId || "",
-      },
-    }
-  );
+  // const { data, refetch } = useQuery<GetProfileData, GetProfileVariables>(
+  //   profileOperations.Queries.getProfile,
+  //   {
+  //     variables: {
+  //       userId: userId || "",
+  //     },
+  //   }
+  // );
 
   const [follow, { data: followData }] = useMutation<
     FollowData,
@@ -52,7 +60,13 @@ const Profile = () => {
     FollowVariables
   >(followOperations.Mutation.deletFollow);
 
-  console.log(data);
+  useEffect(() => {
+    getProfile({
+      variables: {
+        userId: userId || "",
+      },
+    });
+  }, [userId]);
 
   const createFollow = async () => {
     follow({
@@ -105,11 +119,7 @@ const Profile = () => {
           <div className="-mt-[90px] p-5 ">
             <div className="bg-white  inline-block rounded-full">
               <img
-                src={
-                  data?.getProfile.profile.image
-                    ? data.getProfile.profile.image
-                    : "/images/img_avatar.jpeg"
-                }
+                src={profile?.image ? profile.image : "/images/img_avatar.jpeg"}
                 alt="profile image"
                 className="w-[160px] h-[160px] rounded-full m-1"
               />
@@ -117,21 +127,15 @@ const Profile = () => {
 
             <div className="flex flex-col space-y-1">
               <h1 className="font-semibold text-2xl text-black-900">
-                {data?.getProfile.profile.name}
+                {profile?.name}
               </h1>
-              <p className="text-black-600">
-                🚩 {data?.getProfile.profile.location}
-              </p>
+              <p className="text-black-600">🚩 {profile?.location}</p>
               <div className="block space-x-1 items-center sm:flex">
                 {/* <h4>@Jsnow21</h4> */}
                 {/* <GoPrimitiveDot className="hidden sm:block text-black-600" /> */}
-                <h4 className="font-medium">
-                  {data?.getProfile.profile.job_title}
-                </h4>
+                <h4 className="font-medium">{profile?.job_title}</h4>
                 <GoPrimitiveDot className="text-black-600 hidden sm:block" />
-                <h4 className="text-black-600">
-                  {data?.getProfile.profile.job_type}
-                </h4>
+                <h4 className="text-black-600">{profile?.job_type}</h4>
               </div>
             </div>
 
@@ -148,7 +152,7 @@ const Profile = () => {
           {user.id !== userId && (
             <div className="mt-6 mr-4">
               <div>
-                {data?.getProfile.profile.isFollowed ? (
+                {profile?.isFollowed ? (
                   <Button outline hover onClick={removeFollow}>
                     Unfollow -
                   </Button>
@@ -169,22 +173,17 @@ const Profile = () => {
         }
         c1={
           <div className={"space-y-6"}>
-            <About content={data?.getProfile.profile.bio} />
-            <Skills skills={data?.getProfile.profile.skills} />
+            <About content={profile?.bio} />
+            <Skills skills={profile?.skills} />
             {/* <Projects /> */}
-            <Experience experiences={data?.getProfile.profile.experiences} />
-            <Education educations={data?.getProfile.profile.educations} />
+            <Experience experiences={profile?.experiences} />
+            <Education educations={profile?.educations} />
           </div>
         }
         c2={<Posts />}
-        c3={<Followers followersArr={data?.getProfile.profile.followers} />}
-        c4={<Following followingArr={data?.getProfile.profile.following} />}
-        c5={
-          <ProfileSettings
-            profile={data?.getProfile.profile}
-            refetch={refetch}
-          />
-        }
+        c3={<Followers followersArr={profile?.followers} />}
+        c4={<Following followingArr={profile?.following} />}
+        c5={<ProfileSettings profile={profile} refetch={refetch} />}
       />
     </div>
   );

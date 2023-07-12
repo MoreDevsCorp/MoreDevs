@@ -22,5 +22,13 @@ export default {
         }
       }
     `,
+
+    deleteSkill: gql`
+      mutation DeleteSkill($skillId: String!) {
+        deleteSkill(skillId: $skillId) {
+          success
+        }
+      }
+    `,
   },
 };

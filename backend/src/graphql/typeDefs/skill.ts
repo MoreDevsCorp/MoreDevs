@@ -11,6 +11,7 @@ const typeDefs = gql`
 
   type Mutation {
     addSkill(name: String!): AddSkillReturnType
+    deleteSkill(skillId: String!): AddSkillReturnType
   }
 
   type AddSkillReturnType {

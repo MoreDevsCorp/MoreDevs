@@ -25,6 +25,8 @@ import {
   GetCompanyData,
   GetCompanyVariables,
   GetFeedData,
+  GetProfileData,
+  GetProfileVariables,
   GetUserData,
 } from "./types";
 
@@ -32,10 +34,16 @@ import AppliedJob from "./components/ui/jobs/AppliedJob";
 import JobApplicants from "./components/ui/jobs/JobApplicants";
 import ComingSoon from "./pages/private/ComingSoon";
 import feedOperations from "./graphql/operations/feed";
+import profileOperations from "./graphql/operations/profile";
 
 function App() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+
+  const [getProfile, { data: getProfileData, refetch: getProfileRefetch }] =
+    useLazyQuery<GetProfileData, GetProfileVariables>(
+      profileOperations.Queries.getProfile
+    );
 
   const { data: feedData, refetch: feedRefetch } = useQuery<GetFeedData>(
     feedOperations.Queries.getFeed
@@ -109,14 +117,26 @@ function App() {
           {user && user.companyCreated && (
             <Route element={<CreateJobOffer />} path="/joboffer/create" />
           )}
-          <Route element={<Profile />} path="/profile/:userId" />
-          <Route element={<SkillsPage />} path="/profile/details/skills" />
           <Route
-            element={<EducationPage />}
+            element={
+              <Profile
+                profile={getProfileData?.getProfile.profile}
+                refetch={getProfileRefetch}
+                getProfile={getProfile}
+              />
+            }
+            path="/profile/:userId"
+          />
+          <Route
+            element={<SkillsPage refetchProfile={getProfileRefetch} />}
+            path="/profile/details/skills"
+          />
+          <Route
+            element={<EducationPage refetchProfile={getProfileRefetch} />}
             path="/profile/details/education"
           />
           <Route
-            element={<ExperiencePage />}
+            element={<ExperiencePage refetchProfile={getProfileRefetch} />}
             path="/profile/details/experience"
           />
           <Route

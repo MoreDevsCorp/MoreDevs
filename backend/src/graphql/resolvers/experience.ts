@@ -113,5 +113,36 @@ export default {
       //   });
       // }
     },
+
+    deleteExperience: async (
+      _: any,
+      args: { experienceId: string },
+      context: Context
+    ) => {
+      const { session, prisma } = context;
+      const { experienceId } = args;
+
+      if (!session?.user) {
+        throw new GraphQLError("You're not authenticated !", {
+          extensions: { code: 401 },
+        });
+      }
+
+      try {
+        await prisma.experience.delete({
+          where: {
+            id: experienceId,
+          },
+        });
+        return {
+          success: true,
+        };
+      } catch (error: any) {
+        console.log("Error deleting experience :", error.message);
+        throw new GraphQLError(error.message, {
+          extensions: { code: 500 },
+        });
+      }
+    },
   },
 };

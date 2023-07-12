@@ -11,24 +11,41 @@ import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../../../state/userSlice/userSlice";
 import ExperienceForm from "./ExperienceForm";
 import ExperienceRow from "./ExperienceRow";
-import { Experience, GetExperiencesData } from "../../../../types";
-import { useQuery } from "@apollo/client";
+import {
+  DeleteExperienceData,
+  DeleteExperienceVariables,
+  Experience,
+  GetExperiencesData,
+} from "../../../../types";
+import { useMutation, useQuery } from "@apollo/client";
 import experienceOperations from "../../../../graphql/operations/experience";
 
 import { MdOutlineWorkOutline } from "react-icons/md";
 import ExperienceEditForm from "./ExperienceEditForm";
+import { toast } from "react-hot-toast";
 
-const ExperiencePage = () => {
+interface ExperiencePageProps {
+  refetchProfile: () => void;
+}
+
+const ExperiencePage = ({ refetchProfile }: ExperiencePageProps) => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
 
-  const [experienceInputs, setExperienceInputs] = useState("");
+  // const [experienceInputs, setExperienceInputs] = useState("");
 
-  const { data: experiencesData, error } = useQuery<GetExperiencesData>(
-    experienceOperations.Queries.getExperiences
-  );
+  const {
+    data: experiencesData,
+    error,
+    refetch,
+  } = useQuery<GetExperiencesData>(experienceOperations.Queries.getExperiences);
+
+  const [deleteExperience] = useMutation<
+    DeleteExperienceData,
+    DeleteExperienceVariables
+  >(experienceOperations.Mutations.deleteExperience);
 
   console.log(experiencesData, error);
 
@@ -51,7 +68,7 @@ const ExperiencePage = () => {
           ? "You have no experiences yet"
           : experiencesData?.getExperiences?.experiences.map((db) => {
               const nsDate = new Date(db?.startDate.replace(" ", "T"));
-              const neDate = new Date(db.endDate.replace(" ", "T"));
+              const neDate = new Date(db?.endDate?.replace(" ", "T"));
 
               return (
                 <div key={db.id}>
@@ -89,7 +106,22 @@ const ExperiencePage = () => {
                         className="hover:opacity-50 cursor-pointer h-5 w-5"
                       /> */}
                       <TrashIcon
-                        onClick={() => {}}
+                        onClick={() => {
+                          deleteExperience({
+                            variables: {
+                              experienceId: db.id,
+                            },
+                            onCompleted: (data) => {
+                              console.log(data);
+
+                              if (data.deleteExperience.success) {
+                                toast.success("Experience has been deleted !");
+                                refetchProfile();
+                                refetch();
+                              }
+                            },
+                          });
+                        }}
                         className="hover:opacity-50 cursor-pointer h-5 w-5"
                       />
                     </div>
@@ -124,7 +156,13 @@ const ExperiencePage = () => {
                 {isOpen ? "Add Experience" : "Update Experience"}
               </Dialog.Title>
               {isOpen ? (
-                <ExperienceForm setIsOpen={setIsOpen} />
+                <ExperienceForm
+                  setIsOpen={setIsOpen}
+                  refetch={() => {
+                    refetch();
+                    refetchProfile();
+                  }}
+                />
               ) : (
                 <ExperienceEditForm isOpenEdit={setIsOpenEdit} />
               )}

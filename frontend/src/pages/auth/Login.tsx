@@ -16,6 +16,7 @@ const LoginPage = () => {
 
     if (data) {
       dispatch(userLogin(data));
+      window.location.reload();
     }
   };
 
