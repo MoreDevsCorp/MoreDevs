@@ -141,7 +141,7 @@ export interface CreatePostData {
   success: boolean;
 }
 export interface CreateExperienceData {
-  success: boolean;
+  addExperience: { success: boolean };
 }
 
 export interface CreateExperienceVariables {
