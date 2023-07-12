@@ -201,6 +201,8 @@ model UserSkill {
   userId  String?
   skill   Skill?  @relation(fields: [skillId], references: [id])
   skillId String?
+
+  @@unique([userId, skillId])
 }
 
 model OfferSkill {

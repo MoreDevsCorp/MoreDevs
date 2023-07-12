@@ -58,8 +58,6 @@ export default function ProfileSettings({
   // const { userId } = useParams();
   const user = useSelector(selectUser);
 
-  console.log(profile);
-
   const [formData, setFormData] = useState({
     first_name: profile?.first_name || "",
     last_name: profile?.last_name || "",
@@ -103,10 +101,6 @@ export default function ProfileSettings({
       },
     });
   };
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   return (
     <div className="w-full border border-gray-100 rounded p-6">

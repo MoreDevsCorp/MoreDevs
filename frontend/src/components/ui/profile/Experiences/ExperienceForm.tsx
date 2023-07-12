@@ -10,9 +10,10 @@ import { toast } from "react-hot-toast";
 
 interface EducationFormProps {
   setIsOpen: (value: boolean) => void;
+  refetch: () => void;
 }
 
-const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
+const ExperienceForm = ({ setIsOpen, refetch }: EducationFormProps) => {
   const [addExperienceMutation, {}] = useMutation<
     CreateExperienceData,
     CreateExperienceVariables
@@ -34,7 +35,9 @@ const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
             variables: {
               company: values.company,
               startDate: new Date(values.startDate).toISOString(),
-              endDate: new Date(values.endDate).toISOString(),
+              endDate: values.endDate
+                ? new Date(values.endDate).toISOString()
+                : null,
               present: values.present,
               location: values.location,
               description: values.description,
@@ -44,6 +47,7 @@ const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
             onCompleted: (data) => {
               if (data.addExperience.success) {
                 toast.success("Experience Added !");
+                refetch();
               }
               setIsOpen(false);
             },
