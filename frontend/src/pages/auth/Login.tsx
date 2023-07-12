@@ -10,7 +10,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const handleLogin = async (values: { email: string; password: string }) => {
     const { data } = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/auth/login`,
+      `${import.meta.env.VITE_BACKEND_URL}auth/login`,
       values
     );
 
