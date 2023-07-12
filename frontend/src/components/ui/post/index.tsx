@@ -10,6 +10,17 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegCommentAlt } from "react-icons/fa";
 import mydesk from "../../../assets/mydesk.png";
 import profile from "../../../assets/profile.jpg";
+import userImage from "../../../assets/user.jpg";
+import Comment from "./Comment";
+import { Checkbox } from "@mui/material";
+import { FavoriteBorder } from "@mui/icons-material";
+import Favorite from "@mui/icons-material/Favorite";
+import TextareaAutosize from "@mui/base/TextareaAutosize";
+import { getDifferenceInDays } from "../../../lib/utils";
+import { Menu } from "@headlessui/react";
+import { useState } from "react";
+import Button from "../Button";
+import { useMutation } from "@apollo/client";
 import postOperations from "../../../graphql/operations/post";
 import { getDifferenceInDays } from "../../../lib/utils";
 import {
@@ -24,6 +35,8 @@ import Button from "../Button";
 import Comment from "./Comment";
 import { toast } from "react-hot-toast";
 import user from "../../../assets/avatar.webp";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../state/userSlice/userSlice";
 
 interface PostProps {
   post: PostType;
@@ -35,11 +48,9 @@ interface DropDownProps {
   refetch: () => void;
 }
 export function DropDown({ SetIsPostEdit, postId, refetch }: DropDownProps) {
-  const [deletePostMutation, { error }] = useMutation<
-    CreatePostData,
-    DeletePostVariables
-  >(postOperations.Mutations.deletePost);
-  console.log(error);
+  const [deletePostMutation] = useMutation<CreatePostData, DeletePostVariables>(
+    postOperations.Mutations.deletePost
+  );
 
   return (
     <div>
@@ -97,7 +108,8 @@ export function DropDown({ SetIsPostEdit, postId, refetch }: DropDownProps) {
 }
 
 export default function Post({ post, refetch }: PostProps) {
-  console.log(post.id);
+  const user = useSelector(selectUser);
+
   const [isPostEdit, SetIsPostEdit] = useState(false);
   const [textContent, setTextContent] = useState(post.content);
   const [updatePostMutation, { error }] = useMutation<
@@ -121,7 +133,7 @@ export default function Post({ post, refetch }: PostProps) {
         <div className="flex space-x-3">
           <div>
             <img
-              src={user}
+              src={"/images/img_avatar.jpeg"}
               alt="profile image"
               width={40}
               height={40}
@@ -141,11 +153,13 @@ export default function Post({ post, refetch }: PostProps) {
           </div>
         </div>
 
-        <DropDown
-          SetIsPostEdit={SetIsPostEdit}
-          postId={post.id}
-          refetch={refetch}
-        />
+        {post.author.id === user.id && (
+          <DropDown
+            SetIsPostEdit={SetIsPostEdit}
+            postId={post.id}
+            refetch={refetch}
+          />
+        )}
       </div>
 
       {/* post description */}
@@ -236,7 +250,7 @@ export default function Post({ post, refetch }: PostProps) {
 
           <div className="flex items-center space-x-2 cursor-pointer">
             <FaRegCommentAlt />
-            <h5>Comment</h5>
+            <h5>Comment ({post?.comments?.length})</h5>
           </div>
         </div>
         <div className="flex items-center space-x-2 cursor-pointer">
@@ -248,7 +262,7 @@ export default function Post({ post, refetch }: PostProps) {
       {/* add comment for the person logged in */}
       <div className="flex items-center space-x-4 mt-2">
         <img
-          src={profile}
+          src={"/images/img_avatar.jpeg"}
           alt="profile image"
           width={40}
           height={40}
@@ -262,7 +276,7 @@ export default function Post({ post, refetch }: PostProps) {
         />
       </div>
 
-      <Comment />
+      {/* <Comment /> */}
     </div>
   );
 }

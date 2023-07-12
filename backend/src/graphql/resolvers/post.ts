@@ -1,6 +1,5 @@
 import { GraphQLError } from "graphql";
 import { Context } from "../../utils/types";
-import jwt from "jsonwebtoken";
 import { Prisma } from "@prisma/client";
 
 export default {
@@ -210,8 +209,8 @@ export const postPopulated = Prisma.validator<Prisma.PostSelect>()({
     },
   },
   comments: {
-    include: {
-      _count: true,
+    select: {
+      id: true,
     },
   },
   likes: {

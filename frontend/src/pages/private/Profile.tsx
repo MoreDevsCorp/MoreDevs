@@ -106,7 +106,7 @@ const Profile = () => {
                 src={
                   data?.getProfile.profile.image
                     ? data.getProfile.profile.image
-                    : "/images/img_avatar.png"
+                    : "/images/img_avatar.jpeg"
                 }
                 alt="profile image"
                 className="w-[160px] h-[160px] rounded-full m-1"

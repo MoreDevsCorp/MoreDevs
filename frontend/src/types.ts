@@ -159,12 +159,20 @@ export interface Post {
   author: Author;
   content: string;
   createdAt: string;
-  comments?: number;
+  comments: {
+    id: string;
+  }[];
   likes: {
     id: string;
     userId: string;
   }[];
   isLiked: boolean;
+}
+
+export interface GetFeedData {
+  getFeed: {
+    feed: Post[];
+  };
 }
 
 export interface LikeVariables {

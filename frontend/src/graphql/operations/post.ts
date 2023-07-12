@@ -15,6 +15,9 @@ const postOperations = {
             }
             createdAt
             content
+            comments {
+              id
+            }
             likes {
               id
               userId
