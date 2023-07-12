@@ -3,11 +3,13 @@ import { Tab } from "@headlessui/react";
 
 interface MyTabs {
   tabsArr: string[];
-  c1: ReactNode;
-  c2: ReactNode;
-  c3: ReactNode;
+  c1?: ReactNode;
+  c2?: ReactNode;
+  c3?: ReactNode;
+  c4?: ReactNode;
+  c5?: ReactNode;
 }
-export default function MyTabs({ tabsArr, c1, c2, c3 }: MyTabs) {
+export default function MyTabs({ tabsArr, c1, c2, c3, c4, c5 }: MyTabs) {
   return (
     <Tab.Group>
       <Tab.List
@@ -42,6 +44,8 @@ export default function MyTabs({ tabsArr, c1, c2, c3 }: MyTabs) {
         <Tab.Panel>{c1}</Tab.Panel>
         <Tab.Panel>{c2}</Tab.Panel>
         <Tab.Panel>{c3}</Tab.Panel>
+        <Tab.Panel>{c4}</Tab.Panel>
+        <Tab.Panel>{c5}</Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
   );
