@@ -3,11 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { AiOutlineClose } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Menu } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { selectUser, userLogout } from "../../../state/userSlice/userSlice";
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
 import TooltipComponent from "../../ui/Tooltip";

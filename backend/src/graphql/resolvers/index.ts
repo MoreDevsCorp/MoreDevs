@@ -10,10 +10,12 @@ import follow from "./follow";
 import offer from "./offer";
 import profile from "./profile";
 import company from "./company";
+import experience from "./experience";
 import feed from "./feed";
 
 export default merge(
   {},
+  experience,
   userResolvers,
   post,
   comment,

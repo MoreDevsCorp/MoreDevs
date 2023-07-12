@@ -226,8 +226,7 @@ model Experience {
   location    String
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
-  company     Company?  @relation(fields: [companyId], references: [id])
-  companyId   String?
+  company     String
   startDate   DateTime
   endDate     DateTime?
   present     Boolean
@@ -243,7 +242,6 @@ model Company {
   offers      Offer[]
   slogan      String?
   internships Internship[]
-  experiences Experience[]
   foundedAt   DateTime?
   user        User         @relation(fields: [userId], references: [id])
   userId      String       @unique

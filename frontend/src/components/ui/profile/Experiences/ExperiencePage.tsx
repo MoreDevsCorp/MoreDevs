@@ -105,6 +105,10 @@ const ExperiencePage = () => {
                       {db.title}
                     </h2>
 
+                    {/* <h6 className="text-md font-medium text-black-900">
+                      {db.diploma}
+                    </h6> */}
+
                     <h6 className="text-md font-light text-black-900">
                       {db.startDate} - {db.endDate && db.endDate}{" "}
                       {db.present && "Present"}
