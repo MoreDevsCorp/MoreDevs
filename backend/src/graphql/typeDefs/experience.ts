@@ -13,8 +13,8 @@ const typeDefs = gql`
       description: String!
       location: String!
       company: String!
-      startDate: Date!
-      endDate: Date
+      startDate: String!
+      endDate: String!
       present: Boolean
     ): AddExperienceReturnType
   }
@@ -32,7 +32,7 @@ const typeDefs = gql`
     title: String
     description: String
     location: String
-    company: Company
+    company: String
     startDate: Date
     endDate: Date
     present: Boolean

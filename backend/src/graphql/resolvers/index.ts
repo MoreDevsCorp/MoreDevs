@@ -10,9 +10,11 @@ import follow from "./follow";
 import offer from "./offer";
 import profile from "./profile";
 import company from "./company";
+import experience from "./experience";
 
 export default merge(
   {},
+  experience,
   userResolvers,
   post,
   comment,

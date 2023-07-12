@@ -1,11 +1,21 @@
 import { Field, Form, Formik } from "formik";
 import Button from "../../Button";
+import { useMutation } from "@apollo/client";
+import {
+  CreateExperienceData,
+  CreateExperienceVariables,
+} from "../../../../types";
+import experience from "../../../../graphql/operations/experience";
 
 interface EducationFormProps {
   setIsOpen: (value: boolean) => void;
 }
 
 const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
+  const [addExperienceMutation, { error, data }] = useMutation<
+    CreateExperienceData,
+    CreateExperienceVariables
+  >(experience.Mutations.addExperience);
   return (
     <div>
       <Formik
@@ -15,12 +25,30 @@ const ExperienceForm = ({ setIsOpen }: EducationFormProps) => {
           location: "",
           startDate: "",
           endDate: "",
-          present: "",
+          present: false,
           description: "",
         }}
         onSubmit={(values) => {
-          console.log(values);
-          setIsOpen(false);
+          addExperienceMutation({
+            variables: {
+              company: values.company,
+              startDate: new Date(values.startDate).toISOString(),
+              endDate: new Date(values.endDate).toISOString(),
+              present: values.present,
+              location: values.location,
+              description: values.description,
+              title: values.jobTitle,
+            },
+
+            onCompleted: () => {
+              console.log(error);
+              console.log(data);
+              // setIsOpen(false);
+            },
+            onError: (err) => {
+              console.log(err);
+            },
+          });
         }}
       >
         {({ errors, touched, values }) => (

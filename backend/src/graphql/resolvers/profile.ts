@@ -118,14 +118,7 @@ export const profilePopulated = Prisma.validator<Prisma.UserInclude>()({
       title: true,
       description: true,
       location: true,
-      company: {
-        select: {
-          id: true,
-          name: true,
-          location: true,
-          avatar: true,
-        },
-      },
+      company: true,
       startDate: true,
       endDate: true,
     },
