@@ -21,8 +21,8 @@ const EducationPage = () => {
 
   const user = useSelector(selectUser);
 
-  const [educationInputs, setEducationInputs] = useState("");
-  const [data, setData] = useState([
+  // const [educationInputs, setEducationInputs] = useState("");
+  const [data] = useState([
     {
       id: 1,
       title: "Ecole Fraincaise D'enseignement Technique",

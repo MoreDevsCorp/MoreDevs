@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   ArrowLeftIcon,
@@ -24,7 +24,7 @@ const SkillsPage = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
 
-  const { data, loading, error, refetch } = useQuery<GetSkillsData>(
+  const { data, refetch } = useQuery<GetSkillsData>(
     skillOperations.Queries.getSkills,
     {
       variables: {
@@ -33,20 +33,19 @@ const SkillsPage = () => {
     }
   );
 
-  const [addSkill, { data: addSkillData }] = useMutation<
-    AddSkillData,
-    AddSkillVariables
-  >(skillOperations.Mutation.addSkill);
+  const [addSkill, {}] = useMutation<AddSkillData, AddSkillVariables>(
+    skillOperations.Mutation.addSkill
+  );
 
   const [isOpen, setIsOpen] = useState(false);
   const [skill, setSkill] = useState("");
-  const [skills, setSkills] = useState([
-    "HTML",
-    "CSS",
-    "JS",
-    "Angular",
-    "React",
-  ]);
+  // const [skills, setSkills] = useState([
+  //   "HTML",
+  //   "CSS",
+  //   "JS",
+  //   "Angular",
+  //   "React",
+  // ]);
 
   return (
     <>
@@ -110,7 +109,7 @@ const SkillsPage = () => {
                     variables: {
                       name: skill,
                     },
-                    onCompleted: (data) => {
+                    onCompleted: () => {
                       setIsOpen(false);
                       setSkill("");
                       toast.success(

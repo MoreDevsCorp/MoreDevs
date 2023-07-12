@@ -75,7 +75,7 @@ export default function ProfileSettings({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const [setUpProfile, { data, loading, error }] = useMutation<
+  const [setUpProfile, { data }] = useMutation<
     SetUpProfileData,
     SetUpProfileVariables
   >(profileOperations.Mutations.setUpProfile);

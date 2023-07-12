@@ -2,10 +2,10 @@ import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 
 import { IoImageOutline } from "react-icons/io5";
-import profile from "../../../assets/profile.jpg";
+// import profile from "../../../assets/profile.jpg";
 import Button from "../Button";
 
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import postOperations from "../../../graphql/operations/post";
 import { CreatePostData, CreatePostVariables } from "../../../types";
 import { useState } from "react";

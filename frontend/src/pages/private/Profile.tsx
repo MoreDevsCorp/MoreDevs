@@ -23,7 +23,6 @@ import {
 } from "../../types";
 import Posts from "./Posts";
 import followOperations from "../../graphql/operations/follow";
-import { toast } from "react-hot-toast";
 
 const bgImage = null;
 
@@ -40,15 +39,13 @@ const Profile = () => {
     }
   );
 
-  const [follow, { data: followData }] = useMutation<
-    FollowData,
-    FollowVariables
-  >(followOperations.Mutation.follow);
+  const [follow, {}] = useMutation<FollowData, FollowVariables>(
+    followOperations.Mutation.follow
+  );
 
-  const [deleteFollow, { data: deleteFollowData }] = useMutation<
-    DeleteFollowData,
-    FollowVariables
-  >(followOperations.Mutation.deletFollow);
+  const [deleteFollow, {}] = useMutation<DeleteFollowData, FollowVariables>(
+    followOperations.Mutation.deletFollow
+  );
 
   console.log(data);
 
