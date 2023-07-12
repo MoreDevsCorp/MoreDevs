@@ -28,8 +28,14 @@ const profileOperations = {
               company
               present
             }
-            following
-            followers
+            following {
+              id
+              name
+            }
+            followers {
+              id
+              name
+            }
             id
             image
             location

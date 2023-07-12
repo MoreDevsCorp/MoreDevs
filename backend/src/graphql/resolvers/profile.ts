@@ -48,8 +48,73 @@ export default {
           isFollowed = false;
         }
 
+        // const followers = profile.followers.map((item) => {
+        //   return {
+        //     id: item.following.id,
+        //     name: item.following.name,
+        //   };
+        // });
+        // const following = profile.followers.map((item) => {
+        //   return {
+        //     id: item.following.id,
+        //     name: item.following.name,
+        //   };
+        // });
+
+        const following = await prisma.follows.findMany({
+          where: {
+            followerId: session.user.id,
+          },
+
+          include: {
+            following: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        });
+
+        const followers = await prisma.follows.findMany({
+          where: {
+            NOT: {
+              followerId: session.user.id,
+            },
+          },
+
+          include: {
+            follower: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        });
+
+        const followersArr = followers.map((item) => {
+          return {
+            id: item.follower.id,
+            name: item.follower.name,
+          };
+        });
+
+        const followingArr = following.map((item) => {
+          return {
+            id: item.following.id,
+            name: item.following.name,
+          };
+        });
+
         return {
-          profile: { ...profile, skills, isFollowed },
+          profile: {
+            ...profile,
+            skills,
+            isFollowed,
+            followers: followersArr,
+            following: followingArr,
+          },
         };
       } catch (error: any) {
         console.log("Error getting profile :", error.message);
@@ -132,6 +197,28 @@ export const profilePopulated = Prisma.validator<Prisma.UserInclude>()({
       endedAt: true,
     },
   },
+
+  // followers: {
+  //   select: {
+  //     following: {
+  //       select: {
+  //         id: true,
+  //         name: true,
+  //       },
+  //     },
+  //   },
+  // },
+
+  // following: {
+  //   select: {
+  //     follower: {
+  //       select: {
+  //         id: true,
+  //         name: true,
+  //       },
+  //     },
+  //   },
+  // },
 
   skills: {
     select: {
