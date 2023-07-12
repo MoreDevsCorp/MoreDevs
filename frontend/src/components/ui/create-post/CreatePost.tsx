@@ -22,7 +22,7 @@ const CreatePost = () => {
     <div className="py-5 px-3 border border-gray-100 bg-white w-[100%] rounded space-y-4">
       <div className="flex items-start space-x-4 ">
         <img
-          src={profile}
+          src={"/images/img_avatar.jpeg"}
           alt="profile image"
           width={40}
           height={40}

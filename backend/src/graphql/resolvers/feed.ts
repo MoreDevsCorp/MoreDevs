@@ -1,5 +1,6 @@
 import { GraphQLError } from "graphql";
 import { Context } from "../../utils/types";
+import { postPopulated } from "./post";
 
 export default {
   Query: {
@@ -13,6 +14,21 @@ export default {
       }
 
       try {
+        const feed = await prisma.post.findMany({
+          select: postPopulated,
+          orderBy: { createdAt: "desc" },
+        });
+
+        const newPosts = feed.map((post) => {
+          if (post.likes.some((l) => l.userId === session.user?.id)) {
+            return { ...post, isLiked: true };
+          }
+          return { ...post, isLiked: false };
+        });
+
+        return {
+          feed: newPosts,
+        };
       } catch (error: any) {
         console.log("Error getting Feed:", error.message);
         throw new GraphQLError(error.message, {

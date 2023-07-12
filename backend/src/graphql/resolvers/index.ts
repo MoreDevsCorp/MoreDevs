@@ -10,6 +10,7 @@ import follow from "./follow";
 import offer from "./offer";
 import profile from "./profile";
 import company from "./company";
+import feed from "./feed";
 
 export default merge(
   {},
@@ -22,5 +23,6 @@ export default merge(
   follow,
   offer,
   profile,
-  company
+  company,
+  feed
 );

@@ -1,4 +1,4 @@
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -21,16 +21,25 @@ import Profile from "./pages/private/Profile";
 import NotFound from "./pages/public/NotFound";
 import Welcome from "./pages/public/Welcome";
 import { selectUser, userLogin } from "./state/userSlice/userSlice";
-import { GetCompanyData, GetCompanyVariables, GetUserData } from "./types";
+import {
+  GetCompanyData,
+  GetCompanyVariables,
+  GetFeedData,
+  GetUserData,
+} from "./types";
 
 import AppliedJob from "./components/ui/jobs/AppliedJob";
 import JobApplicants from "./components/ui/jobs/JobApplicants";
 import ComingSoon from "./pages/private/ComingSoon";
-
+import feedOperations from "./graphql/operations/feed";
 
 function App() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+
+  const { data: feedData, refetch: feedRefetch } = useQuery<GetFeedData>(
+    feedOperations.Queries.getFeed
+  );
 
   const [getUser, { refetch: refetchUser }] = useLazyQuery<GetUserData>(
     userOperations.Queries.getUser
@@ -87,7 +96,12 @@ function App() {
           <Route element={<ComingSoon />} path="/network" />
           <Route element={<ComingSoon />} path="/marketplace" />
 
-          <Route element={<Home />} path="/home" />
+          <Route
+            element={
+              <Home refetch={feedRefetch} feed={feedData?.getFeed.feed} />
+            }
+            path="/home"
+          />
           <Route element={<Jobs />} path="/jobs" />
           <Route element={<JobPage />} path="/jobs/:id" />
           <Route element={<JobApplicants />} path="/job/applicants" />
