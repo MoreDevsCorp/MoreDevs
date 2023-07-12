@@ -1,12 +1,19 @@
+import Feed from "../../components/Feed";
 import CreatePost from "../../components/ui/create-post/CreatePost";
-import Post from "../../components/ui/post";
+import { Post as PostType } from "../../types";
 
-const Home: React.FC = () => {
+interface HomeProps {
+  feed: PostType[] | undefined;
+  refetch: () => void;
+}
+
+const Home = ({ feed, refetch }: HomeProps) => {
   return (
     <div className=" w-full p-2 ">
       <div className="max-w-[700px] space-y-5">
         <CreatePost />
         {/* <Post /> */}
+        <Feed refetch={refetch} feed={feed} />
       </div>
     </div>
   );

@@ -33,8 +33,12 @@ const typeDefs = gql`
     content: String
     createdAt: Date
     likes: [Like]
-    comments: Int
+    comments: [MiniComment]
     isLiked: Boolean
+  }
+
+  type MiniComment {
+    id: String
   }
 
   type GetPostsReturnType {
