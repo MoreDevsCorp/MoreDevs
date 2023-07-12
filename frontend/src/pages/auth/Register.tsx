@@ -21,7 +21,7 @@ const RegisterPage = () => {
     }
 
     const { data } = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}auth/register`,
+      `${import.meta.env.VITE_BACKEND_URL}/auth/register`,
       values
     );
 
