@@ -13,7 +13,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 const user = localStorage.getItem("MOREDEVS_USER") || "";
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: process.env.VITE_GRAPHQL_BACKEND_URL,
   credentials: "omit",
 });
 
