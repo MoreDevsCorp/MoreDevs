@@ -25,10 +25,7 @@ const profileOperations = {
               startDate
               endDate
               title
-              company {
-                id
-                name
-              }
+              company
               present
             }
             following
