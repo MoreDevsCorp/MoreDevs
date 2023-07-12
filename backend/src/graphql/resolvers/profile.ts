@@ -63,7 +63,7 @@ export default {
 
         const following = await prisma.follows.findMany({
           where: {
-            followerId: session.user.id,
+            followerId: userId || session.user.id,
           },
 
           include: {
@@ -79,7 +79,10 @@ export default {
         const followers = await prisma.follows.findMany({
           where: {
             NOT: {
-              followerId: session.user.id,
+              followerId: userId || session.user.id,
+            },
+            AND: {
+              followingId: userId || session.user.id,
             },
           },
 
@@ -180,6 +183,7 @@ export const profilePopulated = Prisma.validator<Prisma.UserInclude>()({
   experiences: {
     select: {
       id: true,
+      present: true,
       title: true,
       description: true,
       location: true,

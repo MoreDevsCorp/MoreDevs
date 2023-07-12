@@ -25,6 +25,7 @@ import Posts from "./Posts";
 import followOperations from "../../graphql/operations/follow";
 import { toast } from "react-hot-toast";
 import Followers from "../../components/ui/profile/Followers";
+import Following from "../../components/ui/profile/Following";
 
 const bgImage = null;
 
@@ -176,8 +177,8 @@ const Profile = () => {
           </div>
         }
         c2={<Posts />}
-        c3={<Followers />}
-        c4={<Posts />}
+        c3={<Followers followersArr={data?.getProfile.profile.followers} />}
+        c4={<Following followingArr={data?.getProfile.profile.following} />}
         c5={
           <ProfileSettings
             profile={data?.getProfile.profile}

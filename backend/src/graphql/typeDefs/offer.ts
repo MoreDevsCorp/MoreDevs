@@ -26,7 +26,7 @@ const typeDefs = gql`
       skillIds: [String]
       companyId: String
     ): CreateOfferReturnType
-    deleteOffer: CreateOfferReturnType
+    deleteOffer(offerId: String!): CreateOfferReturnType
 
     apply(offerId: String!): ApplyReturnType
   }

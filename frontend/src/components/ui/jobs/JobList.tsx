@@ -1,8 +1,12 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
 import offer from "../../../graphql/operations/offer";
 import { selectUser } from "../../../state/userSlice/userSlice";
-import { GetOffersData } from "../../../types";
+import {
+  CreateOfferData,
+  GetApplicantsVariables,
+  GetOffersData,
+} from "../../../types";
 import Button from "../Button";
 import {
   Table,
@@ -15,18 +19,23 @@ import {
 } from "../table";
 
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 const JobList = () => {
   const user = useSelector(selectUser);
   const params = new URLSearchParams(window.location.search);
   const companyId = params.get("companyId");
 
-  const { data } = useQuery<GetOffersData>(offer.Queries.getOffers, {
+  const { data, refetch } = useQuery<GetOffersData>(offer.Queries.getOffers, {
     variables: {
       companyId: companyId || user.company.id,
     },
   });
+  const [deleteOfferMutation, { error }] = useMutation<
+    CreateOfferData,
+    GetApplicantsVariables
+  >(offer.Mutations.deleteOffer);
 
-  console.log(data?.getOffers.offers);
+  console.log(error);
 
   return (
     <Table className="w-full">
@@ -49,9 +58,25 @@ const JobList = () => {
               <TableCell>{offer.taken ? "Taken" : "Not Taken"}</TableCell>
               <TableCell>{offer.location}</TableCell>
               <TableCell className="space-x-2">
-                <Button size="text-xs">View</Button>
-                <Button size="text-xs">Edit</Button>
-                <Button size="text-xs">Delete</Button>
+                <Link to={`/jobs/${offer.id}`}>
+                  <Button size="text-xs">View</Button>
+                </Link>
+                <Button
+                  size="text-xs"
+                  onClick={() => {
+                    deleteOfferMutation({
+                      variables: {
+                        offerId: offer.id,
+                      },
+                      onCompleted: () => {
+                        toast.success("Job Offer Deleted!");
+                        refetch();
+                      },
+                    });
+                  }}
+                >
+                  Delete
+                </Button>
 
                 <Link to={`/job/applicants?offerId=${offer.id}`}>
                   <Button size="text-xs">Applicants</Button>

@@ -5,28 +5,24 @@ import { useQuery } from "@apollo/client";
 import offer from "../../../graphql/operations/offer";
 import {
   Applicant,
+  Follow,
   GetApplicantsData,
   GetApplicantsVariables,
 } from "../../../types";
 
-const Following = () => {
+interface FollowingProps {
+  followingArr: Follow[] | undefined;
+}
+
+const Following = ({ followingArr }: FollowingProps) => {
   const params = new URLSearchParams(window.location.search);
-  const offerId = params.get("offerId");
-  const { data } = useQuery<GetApplicantsData, GetApplicantsVariables>(
-    offer.Queries.getApplicants,
-    {
-      variables: {
-        offerId: offerId || "",
-      },
-    }
-  );
 
   return (
     <div className="w-full">
       <h1 className="font-semibold text-2xl text-black-900">Following</h1>
 
       <div className="max-w-[800px] space-y-5">
-        {data?.getApplicants.applicants.map((fl) => {
+        {followingArr?.map((fl) => {
           return <FollowingCard key={fl.id} applicant={fl} />;
         })}
       </div>
@@ -34,11 +30,7 @@ const Following = () => {
   );
 };
 
-interface FollowingCardProps {
-  applicant: Applicant;
-}
-
-const FollowingCard = ({ applicant }: FollowingCardProps) => {
+const FollowingCard = ({ applicant }: any) => {
   return (
     <div className="py-4 px-2 border-b-2 border-gray-100">
       <div className="flex space-x-2 items-center">
@@ -55,9 +47,6 @@ const FollowingCard = ({ applicant }: FollowingCardProps) => {
         <div className="w-full space-y-8 flex-col items-start md:flex-row flex md:items-center justify-between md:space-x-28 py-4 px-2">
           <div>
             <h1 className="text-lg font-semibold">{applicant.name}</h1>
-            <div className="space-x-2">
-              <span className="font-medium text-md">{applicant.job_title}</span>
-            </div>
           </div>
           <div>
             <Button>

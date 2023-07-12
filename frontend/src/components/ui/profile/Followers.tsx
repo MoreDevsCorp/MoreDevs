@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import pp from "../../../assets/profile.jpg";
 import Button from "../Button";
-import { useQuery } from "@apollo/client";
-import offer from "../../../graphql/operations/offer";
 
-import follow from "../../../graphql/operations/follow";
+import { Follow } from "../../../types";
 
-const Followers = () => {
+interface FollowersProps {
+  followersArr: Follow[] | undefined;
+}
+
+const Followers = ({ followersArr }: FollowersProps) => {
   const params = new URLSearchParams(window.location.search);
 
   // const { data } = useQuery<getFollowersData>(follow.Queries.getFollowers);
@@ -16,11 +18,11 @@ const Followers = () => {
     <div className="w-full">
       <h1 className="font-semibold text-2xl text-black-900">Followers</h1>
 
-      {/* <div className="max-w-[800px] space-y-5">
-        {data?.getApplicants.applicants.map((fl) => {
+      <div className="max-w-[800px] space-y-5">
+        {followersArr?.map((fl) => {
           return <FollowerCard key={fl.id} applicant={fl} />;
         })}
-      </div> */}
+      </div>
     </div>
   );
 };

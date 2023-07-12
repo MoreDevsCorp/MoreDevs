@@ -38,7 +38,7 @@ export default function Experience({ experiences }: ExperienceProps) {
             </h3>
           )
         ) : (
-          experiences?.map((exp) => {
+          experiences?.slice(0, 4).map((exp) => {
             return <ExperienceRow key={exp.id} experience={exp} />;
           })
         )}

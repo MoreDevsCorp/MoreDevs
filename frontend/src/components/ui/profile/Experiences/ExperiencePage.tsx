@@ -25,44 +25,12 @@ const ExperiencePage = () => {
   const [isOpenEdit, setIsOpenEdit] = useState(false);
 
   const [experienceInputs, setExperienceInputs] = useState("");
-  const [data, setData] = useState<Experience[]>([
-    {
-      id: "1",
-      title: "Ecole Fraincaise D'enseignement Technique",
-      startDate: "2020",
-      endDate: "",
-      present: true,
-      description: "Additional English classes and UX profile courses.",
-      location: "Agadir",
-      company: {
-        id: "ss",
-        name: "FikraLabs",
-        location: "Agadir",
-        avatar: "null",
-      },
-    },
-    {
-      id: "2",
-      title: "Ecole Fraincaise D'enseignement Technique",
-      startDate: "2020",
-      endDate: "",
-      present: true,
-      description: "Additional English classes and UX profile courses.",
-      location: "Agadir",
-      company: {
-        id: "ss",
-        name: "FikraLabs",
-        location: "Agadir",
-        avatar: "null",
-      },
-    },
-  ]);
 
-  const { data: experiencesData } = useQuery<GetExperiencesData>(
+  const { data: experiencesData, error } = useQuery<GetExperiencesData>(
     experienceOperations.Queries.getExperiences
   );
 
-  console.log(experiencesData);
+  console.log(experiencesData, error);
 
   return (
     <>
@@ -79,61 +47,63 @@ const ExperiencePage = () => {
           />
         </div>
 
-        {experiencesData?.getExperiences?.experiences.map((experience) => {
-          return <ExperienceRow experience={experience} />;
-        })}
+        {experiencesData?.getExperiences?.experiences.length == 0
+          ? "You have no experiences yet"
+          : experiencesData?.getExperiences?.experiences.map((db) => {
+              const nsDate = new Date(db?.startDate.replace(" ", "T"));
+              const neDate = new Date(db.endDate.replace(" ", "T"));
+
+              return (
+                <div key={db.id}>
+                  <div className="flex items-start justify-between w-full pb-2">
+                    <div className="flex space-x-6 w-full">
+                      <div>
+                        <MdOutlineWorkOutline
+                          size={40}
+                          className="text-black-900"
+                        />
+                      </div>
+
+                      <div className="flex flex-col space-y-3">
+                        <h2 className="text-xl font-semibold text-black-900">
+                          {db.title}
+                        </h2>
+
+                        <h6 className="text-md font-light text-black-900">
+                          {nsDate.getFullYear() + "-" + nsDate.getMonth()} |{" "}
+                          {db.present
+                            ? "Present"
+                            : neDate.getFullYear() + "-" + neDate.getMonth()}
+                        </h6>
+
+                        <h6 className="text-md text-black-900">
+                          {db.description}
+                        </h6>
+                      </div>
+                    </div>
+                    <div className="flex space-x-1">
+                      {/* <PencilIcon
+                        onClick={() => {
+                          setIsOpenEdit(true);
+                        }}
+                        className="hover:opacity-50 cursor-pointer h-5 w-5"
+                      /> */}
+                      <TrashIcon
+                        onClick={() => {}}
+                        className="hover:opacity-50 cursor-pointer h-5 w-5"
+                      />
+                    </div>
+                  </div>
+                  <hr />
+                </div>
+              );
+            })}
         {/* 
         <div className="flex flex-col space-y-10 bg-white  py-6 ">
           <ExperienceRow experience={data[0]} />
           <hr />
           <ExperienceRow experience={data[1]} />
         </div> */}
-        {data.map((db) => {
-          return (
-            <div key={db.id}>
-              <div className="flex items-start justify-between w-full pb-2">
-                <div className="flex space-x-6 w-full">
-                  <div>
-                    <MdOutlineWorkOutline
-                      size={40}
-                      className="text-black-900"
-                    />
-                  </div>
-
-                  <div className="flex flex-col space-y-3">
-                    <h2 className="text-xl font-semibold text-black-900">
-                      {db.title}
-                    </h2>
-
-                    {/* <h6 className="text-md font-medium text-black-900">
-                      {db.diploma}
-                    </h6> */}
-
-                    <h6 className="text-md font-light text-black-900">
-                      {db.startDate} - {db.endDate && db.endDate}{" "}
-                      {db.present && "Present"}
-                    </h6>
-
-                    <h6 className="text-md text-black-900">{db.description}</h6>
-                  </div>
-                </div>
-                <div className="flex space-x-1">
-                  <PencilIcon
-                    onClick={() => {
-                      setIsOpenEdit(true);
-                    }}
-                    className="hover:opacity-50 cursor-pointer h-5 w-5"
-                  />
-                  <TrashIcon
-                    onClick={() => {}}
-                    className="hover:opacity-50 cursor-pointer h-5 w-5"
-                  />
-                </div>
-              </div>
-              <hr />
-            </div>
-          );
-        })}
 
         <Dialog
           open={isOpen || isOpenEdit}

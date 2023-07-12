@@ -10,7 +10,11 @@ import postOperations from "../../../graphql/operations/post";
 import { CreatePostData, CreatePostVariables } from "../../../types";
 import { useState } from "react";
 
-const CreatePost = () => {
+interface CreatePostProps {
+  refetch: () => void;
+}
+
+const CreatePost = ({ refetch }: CreatePostProps) => {
   const [createPostMutation, {}] = useMutation<
     CreatePostData,
     CreatePostVariables
@@ -52,6 +56,10 @@ const CreatePost = () => {
             createPostMutation({
               variables: {
                 content: text,
+              },
+              onCompleted: () => {
+                refetch();
+                setText("");
               },
             });
           }}

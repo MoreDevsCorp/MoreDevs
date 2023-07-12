@@ -12,9 +12,15 @@ const Jobs: React.FC = () => {
   return (
     <div className=" w-full p-2 ">
       <div className="max-w-[800px] space-y-5">
-        {data?.getOffers.offers.map((offer) => {
-          return <JobCard key={offer.id} offer={offer} />;
-        })}
+        {data?.getOffers.offers.length == 0 ? (
+          <h1 className="italic text-gray-800 w-full text-center">
+            Currently No Jobs Come Back Later.
+          </h1>
+        ) : (
+          data?.getOffers.offers.map((offer) => {
+            return <JobCard key={offer.id} offer={offer} />;
+          })
+        )}
       </div>
     </div>
   );

@@ -13,12 +13,7 @@ export default {
             endDate
             location
             present
-            company {
-              id
-              name
-              location
-              avatar
-            }
+            company
           }
         }
       }
