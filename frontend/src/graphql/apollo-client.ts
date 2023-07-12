@@ -9,12 +9,11 @@ import {
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { createClient } from "graphql-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
-import { setContext } from "@apollo/client/link/context";
 
 const user = localStorage.getItem("MOREDEVS_USER") || "";
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: process.env.VITE_GRAPHQL_BACKEND_URL,
   credentials: "omit",
 });
 

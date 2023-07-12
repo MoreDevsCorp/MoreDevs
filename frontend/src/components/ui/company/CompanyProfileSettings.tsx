@@ -72,7 +72,7 @@ export default function CompanyProfileSettings({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const [updateCompany, { data, loading, error }] = useMutation<
+  const [updateCompany, { data }] = useMutation<
     UpdateCompanyData,
     UpdateCompanyVariables
   >(companyOperations.Mutations.updateCompany);
