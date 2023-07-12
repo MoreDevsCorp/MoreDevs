@@ -146,7 +146,7 @@ async function main() {
   app.use(
     "/graphql",
     cors<cors.CorsRequest>({
-      origin: ["http://localhost:5173/"],
+      origin: [process.env.CLIENT_ORIGIN as string],
       credentials: true,
     }),
     json(),
