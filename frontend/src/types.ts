@@ -138,6 +138,12 @@ export interface GetExperiencesData {
   };
 }
 
+export interface GetEducationsData {
+  getEducations: {
+    educations: Education[];
+  };
+}
+
 /**
  * Experience related types
  */
@@ -147,6 +153,18 @@ export interface DeleteExperienceVariables {
 }
 export interface DeleteExperienceData {
   deleteExperience: {
+    success: boolean;
+  };
+}
+
+/*
+ *education
+ */
+export interface DeleteEducationVariables {
+  educationId: string;
+}
+export interface DeleteEducationData {
+  deleteEducation: {
     success: boolean;
   };
 }
@@ -170,6 +188,19 @@ export interface CreatePostData {
 }
 export interface CreateExperienceData {
   addExperience: { success: boolean };
+}
+
+export interface CreateEducationData {
+  addEducation: { success: boolean };
+}
+
+export interface CreateEducationVariables {
+  title: string;
+  description: string;
+  level: string;
+  startedAt?: string | null;
+  endedAt?: string | null;
+  present: boolean;
 }
 
 export interface CreateExperienceVariables {
@@ -270,7 +301,10 @@ export interface Experience {
 
 export interface Education {
   id: string;
-  location: string;
+  level: string;
+  title: string;
+  description: string;
+  present: boolean;
   startedAt: string;
   endedAt: string;
 }

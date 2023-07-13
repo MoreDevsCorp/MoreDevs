@@ -67,12 +67,15 @@ model Follows {
 }
 
 model Education {
-  id        String   @id @default(cuid())
-  startedAt DateTime
-  endedAt   DateTime
-  location  String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  level       String
+  startedAt   DateTime
+  endedAt     DateTime?
+  present     Boolean
 }
 
 model PostLike {

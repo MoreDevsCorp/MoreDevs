@@ -196,9 +196,12 @@ export const profilePopulated = Prisma.validator<Prisma.UserInclude>()({
   educations: {
     select: {
       id: true,
-      location: true,
+      level: true,
       startedAt: true,
       endedAt: true,
+      title: true,
+      description: true,
+      present: true,
     },
   },
 

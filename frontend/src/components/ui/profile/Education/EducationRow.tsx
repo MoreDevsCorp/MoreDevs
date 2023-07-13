@@ -1,6 +1,26 @@
 import { FaUniversity } from "react-icons/fa";
+import { Education } from "../../../../types";
+import { useEffect, useState } from "react";
 
-export default function EducationRow() {
+interface EducationRowProps {
+  education: Education;
+}
+
+export default function EducationRow({ education }: EducationRowProps) {
+  const [dates, setDates] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+  });
+
+  console.log(education);
+
+  useEffect(() => {
+    setDates({
+      startDate: new Date(education?.startedAt?.replace(" ", "T")),
+      endDate: new Date(education?.endedAt?.replace(" ", "T")),
+    });
+  }, [education]);
+
   return (
     <div className="flex space-x-6 w-full">
       <div>
@@ -9,18 +29,21 @@ export default function EducationRow() {
 
       <div className="flex flex-col space-y-3">
         <h2 className="text-xl font-semibold text-black-900">
-          Ecole Fraincaise D'enseignement Technique
+          {education.title}
         </h2>
 
         <h6 className="text-md font-medium text-black-900">
-          Technicien Specialisee
+          {education.level}
         </h6>
 
-        <h6 className="text-md font-light text-black-900">2020 - Present</h6>
-
-        <h6 className="text-md text-black-900">
-          Additional English classes and UX profile courses.
+        <h6 className="text-md font-light text-black-900">
+          {dates.startDate.getFullYear() + "-" + dates.startDate.getMonth()} |{" "}
+          {education?.present
+            ? "Present"
+            : dates.endDate.getFullYear() + "-" + dates.endDate.getMonth()}
         </h6>
+
+        <h6 className="text-md text-black-900">{education.description}</h6>
       </div>
     </div>
   );
