@@ -4,24 +4,24 @@ const typeDefs = gql`
   scalar Date
 
   type Query {
-    getComments: GetCommentsReturnType
+    getComments(postId: String!): GetCommentsReturnType
   }
 
   type Mutation {
-    createComment(postId: String, content: String): CommentReturnType
+    createComment(postId: String!, content: String!): CommentReturnType
     deleteComment(commentId: String): CommentReturnType
   }
 
   type Comment {
+    id: String
     content: String
-    author: User
+    author: CommentAuthor
     createdAt: Date
   }
 
-  type User {
+  type CommentAuthor {
     id: String
     name: String
-    image: String
   }
 
   type GetCommentsReturnType {
