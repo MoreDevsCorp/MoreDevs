@@ -39,7 +39,7 @@ export default function Education({ educations }: EducationProps) {
           )
         ) : (
           educations?.slice(0, 4).map((edc) => {
-            return <EducationRow key={edc.id} />;
+            return <EducationRow key={edc.id} education={edc} />;
           })
         )}
         {}

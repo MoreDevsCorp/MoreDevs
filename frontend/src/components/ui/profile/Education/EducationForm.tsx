@@ -1,11 +1,23 @@
 import { Field, Form, Formik } from "formik";
 import Button from "../../Button";
+import { useMutation } from "@apollo/client";
+import education from "../../../../graphql/operations/education";
+import {
+  CreateEducationData,
+  CreateEducationVariables,
+} from "../../../../types";
+import { toast } from "react-hot-toast";
 
 interface EducationFormProps {
   setIsOpen: (value: boolean) => void;
+  refetch: () => void;
 }
 
-const EducationForm = ({ setIsOpen }: EducationFormProps) => {
+const EducationForm = ({ setIsOpen, refetch }: EducationFormProps) => {
+  const [addExperienceMutation, {}] = useMutation<
+    CreateEducationData,
+    CreateEducationVariables
+  >(education.Mutations.addEducation);
   return (
     <div>
       <Formik
@@ -14,12 +26,29 @@ const EducationForm = ({ setIsOpen }: EducationFormProps) => {
           diploma: "",
           startDate: "",
           endDate: "",
-          present: "",
+          present: false,
           body: "",
         }}
         onSubmit={(values) => {
-          console.log(values);
-          setIsOpen(false);
+          addExperienceMutation({
+            variables: {
+              description: values.body,
+              level: values.diploma,
+              present: values.present,
+              title: values.title,
+              startedAt: new Date(values.startDate).toISOString(),
+              endedAt: values.endDate
+                ? new Date(values.endDate).toISOString()
+                : null,
+            },
+            onCompleted: (data) => {
+              if (data.addEducation.success) {
+                toast.success("Education Added !");
+                refetch();
+              }
+              setIsOpen(false);
+            },
+          });
         }}
       >
         {({ errors, touched, values }) => (

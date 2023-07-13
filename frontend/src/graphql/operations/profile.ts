@@ -13,10 +13,12 @@ const profileOperations = {
             bio
             isFollowed
             educations {
-              endDate
+              endedAt
+              startedAt
               id
-              location
-              startDate
+              level
+              description
+              title
             }
             experiences {
               id

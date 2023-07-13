@@ -43,9 +43,11 @@ const typeDefs = gql`
 
   type Education {
     id: String
-    startDate: Date
-    endDate: Date
-    location: String
+    startedAt: Date
+    endedAt: Date
+    level: String
+    description: String
+    title: String
   }
 
   type SetupProfileReturnType {
