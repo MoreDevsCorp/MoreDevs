@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { Menu } from "@headlessui/react";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { FavoriteBorder } from "@mui/icons-material";
@@ -14,8 +14,12 @@ import postOperations from "../../../graphql/operations/post";
 import { getDifferenceInDays } from "../../../lib/utils";
 import { selectUser } from "../../../state/userSlice/userSlice";
 import {
+  CreateCommentData,
+  CreateCommentVariables,
   CreatePostData,
   DeletePostVariables,
+  GetCommentsData,
+  GetCommentsVariables,
   LikeData,
   LikeVariables,
   Post as PostType,
@@ -23,6 +27,10 @@ import {
 } from "../../../types";
 import Button from "../Button";
 import { Link } from "react-router-dom";
+
+import Comments from "./Comments";
+
+import commentOperations from "../../../graphql/operations/comment";
 
 interface PostProps {
   post: PostType;
@@ -95,6 +103,8 @@ export function DropDown({ SetIsPostEdit, postId, refetch }: DropDownProps) {
 
 export default function Post({ post, refetch }: PostProps) {
   const user = useSelector(selectUser);
+  const [showComments, setShowComments] = useState(false);
+  const [commentValue, setCommentValue] = useState("");
 
   const [isPostEdit, SetIsPostEdit] = useState(false);
   const [textContent, setTextContent] = useState(post.content);
@@ -109,6 +119,16 @@ export default function Post({ post, refetch }: PostProps) {
   const [dislike] = useMutation<LikeData, LikeVariables>(
     postOperations.Mutations.dislike
   );
+
+  const [createComment] = useMutation<
+    CreateCommentData,
+    CreateCommentVariables
+  >(commentOperations.Mutations.createComment);
+
+  const [getComments, { data: commentsData, refetch: commentsRefetch }] =
+    useLazyQuery<GetCommentsData, GetCommentsVariables>(
+      commentOperations.Queries.getComments
+    );
 
   const daysPassed = post && getDifferenceInDays(post.createdAt);
 
@@ -248,23 +268,69 @@ export default function Post({ post, refetch }: PostProps) {
       </div>
 
       {/* add comment for the person logged in */}
-      <div className="flex items-center space-x-4 mt-2">
-        <img
-          src={"/images/img_avatar.jpeg"}
-          alt="profile image"
-          width={40}
-          height={40}
-          className="rounded-full"
-        />
-        <TextareaAutosize
-          maxRows={5}
-          className="w-[100%] outline-none resize-none min-h-1 max-h-20 bg-gray-50 h-auto rounded placeholder-zinc-400 py-2 px-4 text-sm"
-          aria-label="maximum height"
-          placeholder="What's on your mind?"
-        />
-      </div>
 
-      {/* <Comment /> */}
+      {showComments ? (
+        <div className=" flex flex-col gap-4">
+          <p
+            className="opacity-70 mt-4 cursor-pointer"
+            onClick={() => setShowComments(false)}
+          >
+            {" "}
+            ⬆️ Hide comments{" "}
+          </p>
+          <div className="flex items-center space-x-4 mt-2">
+            <img
+              src={"/images/img_avatar.jpeg"}
+              alt="profile image"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+            <TextareaAutosize
+              value={commentValue}
+              onChange={(e) => setCommentValue(e.target.value)}
+              maxRows={5}
+              className="w-[100%] outline-none resize-none min-h-1 max-h-20 bg-gray-50 h-auto rounded placeholder-zinc-400 py-2 px-4 text-sm"
+              aria-label="maximum height"
+              placeholder="What's on your mind?"
+            />
+            <Button
+              onClick={() => {
+                if (commentValue.length > 0) {
+                  createComment({
+                    variables: {
+                      postId: post.id,
+                      content: commentValue,
+                    },
+                    onCompleted: (data) => {
+                      if (data.createComment.success) {
+                        commentsRefetch();
+                        setCommentValue("");
+                      }
+                    },
+                  });
+                }
+              }}
+            >
+              Comment
+            </Button>
+          </div>
+          <div className="h-[2px] w-full bg-gray-100 rounded" />
+          <Comments
+            postId={post.id}
+            getComments={getComments}
+            comments={commentsData?.getComments.comments}
+          />
+        </div>
+      ) : (
+        <p
+          className="opacity-70 mt-4 cursor-pointer"
+          onClick={() => setShowComments(true)}
+        >
+          {" "}
+          ⬇️ Show comments{" "}
+        </p>
+      )}
     </div>
   );
 }

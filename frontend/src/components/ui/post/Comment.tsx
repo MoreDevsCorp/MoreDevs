@@ -1,16 +1,22 @@
-import { FavoriteBorder } from "@mui/icons-material";
-import Favorite from "@mui/icons-material/Favorite";
-import { Checkbox } from "@mui/material";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { FaRegCommentAlt } from "react-icons/fa";
-import user from "../../../assets/user.jpg";
 
-export default function Comment() {
+import { Comment as CommentType } from "../../../types";
+import { getDifferenceInDays } from "../../../lib/utils";
+
+interface CommentProps {
+  comment: CommentType | undefined;
+}
+
+export default function Comment({ comment }: CommentProps) {
+  console.log(comment?.createdAt);
+
+  const daysPassed = comment && getDifferenceInDays(comment.createdAt);
+
   return (
     <div className="my-3 mt-4">
       <div className="pplc">
         <img
-          src={user}
+          src={"/images/img_avatar.jpeg"}
           alt="profile image"
           width={40}
           height={40}
@@ -18,17 +24,17 @@ export default function Comment() {
         />
 
         <div className="flex items-center space-x-1  ">
-          <h2 className="text-md font-semibold">John Doe </h2>
+          <h2 className="text-md font-semibold">{comment?.author.name} </h2>
           <p className="flex items-center space-x-1 text-sm text-gray-500">
             <AiOutlineClockCircle size={"12"} />
-            <span>12 minutes ago</span>
+            <span>{daysPassed}</span>
           </p>
         </div>
 
-        <p className="col-start-2">You know the deal my G.</p>
+        <p className="col-start-2">{comment?.content}</p>
 
         <div className="flex items-center space-x-4 col-start-2">
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <Checkbox
               className="-ml-2"
               size="small"
@@ -36,12 +42,12 @@ export default function Comment() {
               checkedIcon={<Favorite sx={{ color: "red" }} />}
             />
             <h5 className="text-sm">12</h5>
-          </div>
+          </div> */}
 
-          <div className="flex items-center space-x-2 cursor-pointer">
+          {/* <div className="flex items-center space-x-2 cursor-pointer">
             <FaRegCommentAlt size={"14"} />
             <h5 className="text-sm">Reply</h5>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
