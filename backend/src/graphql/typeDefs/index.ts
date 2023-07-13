@@ -10,6 +10,7 @@ import profile from "./profile";
 import company from "./company";
 import experience from "./experience";
 import feed from "./feed";
+import education from "./education";
 
 export default [
   userTypeDefs,
@@ -23,5 +24,6 @@ export default [
   profile,
   company,
   experience,
+  education,
   feed,
 ];
