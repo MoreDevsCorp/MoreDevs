@@ -14,10 +14,33 @@ export default {
       }
 
       try {
-        const comments = await prisma.comment.findMany({ where: { postId } });
+        const comments = await prisma.comment.findMany({
+          where: { postId },
+          include: {
+            author: {
+              select: {
+                name: true,
+
+                id: true,
+              },
+            },
+          },
+        });
+
+        const newComments = comments.map((comment) => {
+          return {
+            id: comment.id,
+            content: comment.content,
+            createdAt: comment.createdAt,
+            author: {
+              id: comment.author.id,
+              name: comment.author.name,
+            },
+          };
+        });
 
         return {
-          comments,
+          comments: newComments,
         };
       } catch (error: any) {
         console.log("Error getting comments :", error.message);

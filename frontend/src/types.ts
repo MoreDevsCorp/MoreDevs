@@ -385,3 +385,38 @@ export interface getSearchData {
 export interface getSearchVariables {
   searchQuery: string;
 }
+
+/**
+ * Comment Related Types
+ *  */
+
+export interface Comment {
+  id: string;
+  content: string;
+  createdAt: string;
+  author: {
+    id: string;
+    name: string;
+  };
+}
+
+export interface GetCommentsVariables {
+  postId: string;
+}
+
+export interface GetCommentsData {
+  getComments: {
+    comments: Comment[];
+  };
+}
+
+export interface CreateCommentVariables {
+  content: string;
+  postId: string;
+}
+
+export interface CreateCommentData {
+  createComment: {
+    success: boolean;
+  };
+}

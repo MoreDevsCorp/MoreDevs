@@ -27,6 +27,7 @@ const JobPage: FC = () => {
       },
     }
   );
+
   const daysPassed = data && getDifferenceInDays(data.getOffer.offer.createdAt);
 
   const [apply, {}] = useMutation(offerOperations.Mutations.apply);

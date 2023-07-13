@@ -13,7 +13,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 const user = localStorage.getItem("MOREDEVS_USER") || "";
 
 const httpLink = new HttpLink({
-  uri: process.env.VITE_GRAPHQL_BACKEND_URL,
+  uri: import.meta.env.VITE_GRAPHQL_BACKEND_URL,
   credentials: "omit",
 });
 
