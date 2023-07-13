@@ -29,16 +29,14 @@ const JobPage: FC = () => {
   );
   const daysPassed = data && getDifferenceInDays(data.getOffer.offer.createdAt);
 
-  const [apply, { data: applyData }] = useMutation(
-    offerOperations.Mutations.apply
-  );
+  const [apply, {}] = useMutation(offerOperations.Mutations.apply);
 
   const handleApply = async () => {
     apply({
       variables: {
         offerId: id,
       },
-      onCompleted: (data) => {
+      onCompleted: () => {
         toast.success("You have successfully applied to this offer 👍");
       },
     });

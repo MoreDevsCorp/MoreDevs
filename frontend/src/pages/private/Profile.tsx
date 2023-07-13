@@ -24,6 +24,7 @@ import {
 } from "../../types";
 import Posts from "./Posts";
 import followOperations from "../../graphql/operations/follow";
+
 import { toast } from "react-hot-toast";
 import Followers from "../../components/ui/profile/Followers";
 import Following from "../../components/ui/profile/Following";
@@ -50,15 +51,13 @@ const Profile = ({ profile, getProfile, refetch }: ProfileProps) => {
   //   }
   // );
 
-  const [follow, { data: followData }] = useMutation<
-    FollowData,
-    FollowVariables
-  >(followOperations.Mutation.follow);
+  const [follow, {}] = useMutation<FollowData, FollowVariables>(
+    followOperations.Mutation.follow
+  );
 
-  const [deleteFollow, { data: deleteFollowData }] = useMutation<
-    DeleteFollowData,
-    FollowVariables
-  >(followOperations.Mutation.deletFollow);
+  const [deleteFollow, {}] = useMutation<DeleteFollowData, FollowVariables>(
+    followOperations.Mutation.deletFollow
+  );
 
   useEffect(() => {
     getProfile({

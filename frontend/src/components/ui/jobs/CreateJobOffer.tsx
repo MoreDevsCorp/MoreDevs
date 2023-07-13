@@ -22,9 +22,7 @@ const CreateJobOffer = () => {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
 
-  const { data, loading, error } = useQuery<GetSkillsData>(
-    skillOperations.Queries.getSkills
-  );
+  const { data } = useQuery<GetSkillsData>(skillOperations.Queries.getSkills);
 
   // skillOperations.Queries.getSkills
   const [createOfferMutation, {}] = useMutation<

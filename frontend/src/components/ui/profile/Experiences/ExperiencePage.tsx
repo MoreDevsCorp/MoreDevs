@@ -36,6 +36,7 @@ const ExperiencePage = ({ refetchProfile }: ExperiencePageProps) => {
 
   // const [experienceInputs, setExperienceInputs] = useState("");
 
+
   const {
     data: experiencesData,
     error,
@@ -46,6 +47,7 @@ const ExperiencePage = ({ refetchProfile }: ExperiencePageProps) => {
     DeleteExperienceData,
     DeleteExperienceVariables
   >(experienceOperations.Mutations.deleteExperience);
+
 
   console.log(experiencesData, error);
 

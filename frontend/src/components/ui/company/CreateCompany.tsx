@@ -15,7 +15,7 @@ interface CreateCompanyProps {
 
 const CreateCompany = ({ refetch }: CreateCompanyProps) => {
   const navigate = useNavigate();
-  const [createCompany, { data, error }] = useMutation<
+  const [createCompany, { error }] = useMutation<
     CreateCompanyData,
     CreateCompanyVariables
   >(companyOperations.Mutations.createCompany);

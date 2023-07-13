@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   ArrowLeftIcon,
@@ -30,7 +30,7 @@ const SkillsPage = ({ refetchProfile }: SkillsPageProps) => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
 
-  const { data, loading, error, refetch } = useQuery<GetSkillsData>(
+  const { data, refetch } = useQuery<GetSkillsData>(
     skillOperations.Queries.getSkills,
     {
       variables: {
@@ -38,6 +38,7 @@ const SkillsPage = ({ refetchProfile }: SkillsPageProps) => {
       },
     }
   );
+
 
   const [addSkill] = useMutation<AddSkillData, AddSkillVariables>(
     skillOperations.Mutation.addSkill
@@ -49,6 +50,7 @@ const SkillsPage = ({ refetchProfile }: SkillsPageProps) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [skill, setSkill] = useState("");
+
 
   return (
     <>
