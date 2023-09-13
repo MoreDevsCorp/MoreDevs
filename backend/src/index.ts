@@ -141,6 +141,10 @@ async function main() {
   };
   app.use(express.json());
 
+  app.get("/", (req: Request, res: Response) => {
+    res.json("Hello World");
+  });
+
   app.use("/auth", authRoutes);
 
   app.use(
