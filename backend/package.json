@@ -11,7 +11,7 @@
     "db:studio": "npx prisma db studio",
     "build": "tsc --build",
     "vercel-build":"echo hello",
-    "start": "npm run build && node dist/index.js"
+    "start": "npm run build && ts-node dist/index.js"
   },
   "keywords": [],
   "author": "",

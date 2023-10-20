@@ -27,7 +27,7 @@ export default {
           },
         });
 
-        const newComments = comments.map((comment) => {
+        const newComments = comments.map((comment: any) => {
           return {
             id: comment.id,
             content: comment.content,
