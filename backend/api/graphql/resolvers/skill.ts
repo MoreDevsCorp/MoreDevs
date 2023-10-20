@@ -31,7 +31,7 @@ export default {
             },
           });
 
-          skills = skills.map((skill) => ({
+          skills = skills.map((skill: any) => ({
             id: skill.skill?.id,
             name: skill.skill?.name,
           }));

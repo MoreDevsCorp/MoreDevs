@@ -97,8 +97,8 @@ export default {
 
         let customApplicants: any[] = [];
 
-        applicants.forEach((app) => {
-          app.applications.forEach((app2) => {
+        applicants.forEach((app: any) => {
+          app.applications.forEach((app2: any) => {
             customApplicants.push({
               id: app2.applicant.id,
               name: app2.applicant.name,

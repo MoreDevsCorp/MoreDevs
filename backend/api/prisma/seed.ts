@@ -120,7 +120,8 @@ async function main() {
   webHashTags.forEach(async (element) => {
     await prisma.interestHashTag.create({
       data: {
-        hashTagId: hashtags.find((ht) => ht.name === element.name)?.id || "",
+        hashTagId:
+          hashtags.find((ht: any) => ht.name === element.name)?.id || "",
         interestId: webinterests?.id || "",
       },
     });
@@ -129,7 +130,8 @@ async function main() {
   mobileHashTags.forEach(async (element) => {
     await prisma.interestHashTag.create({
       data: {
-        hashTagId: hashtags.find((ht) => ht.name === element.name)?.id || "",
+        hashTagId:
+          hashtags.find((ht: any) => ht.name === element.name)?.id || "",
         interestId: mobileinterests?.id || "",
       },
     });

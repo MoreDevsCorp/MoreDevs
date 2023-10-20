@@ -26,7 +26,7 @@ export default {
           });
         }
 
-        const skills = profile.skills.map((skill) => ({
+        const skills = profile.skills.map((skill: any) => ({
           id: skill.skill?.id,
           name: skill.skill?.name,
         }));
@@ -96,14 +96,14 @@ export default {
           },
         });
 
-        const followersArr = followers.map((item) => {
+        const followersArr = followers.map((item: any) => {
           return {
             id: item.follower.id,
             name: item.follower.name,
           };
         });
 
-        const followingArr = following.map((item) => {
+        const followingArr = following.map((item: any) => {
           return {
             id: item.following.id,
             name: item.following.name,
