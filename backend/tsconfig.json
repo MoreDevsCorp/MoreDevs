@@ -1,5 +1,11 @@
 {
-  "include": ["./api/*.ts", "./*.js", "src/**/*.ts", "test/**/*.ts"],
+  "include": [
+    "./api/*.ts",
+    "./src/*.ts",
+    "./*.js",
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
