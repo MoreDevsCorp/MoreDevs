@@ -27,13 +27,13 @@ import { GraphQLError } from "graphql";
 
 import prisma from "./lib/prisma";
 
-const app = express();
-
 async function main() {
   const schema = makeExecutableSchema({
     typeDefs,
     resolvers,
   });
+
+  const app = express();
 
   const httpServer = http.createServer(app);
 
@@ -167,4 +167,4 @@ main().then(() => {
   console.log(`🚀 Server ready at http://localhost:4000/graphql`);
 });
 
-export default app;
+export default main;
