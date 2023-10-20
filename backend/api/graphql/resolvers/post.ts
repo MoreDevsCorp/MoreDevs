@@ -198,7 +198,7 @@ export default {
   },
 };
 
-export const postPopulated = Prisma.validator<Prisma.PostSelect>()({
+export const postPopulated = Prisma?.validator<Prisma.PostSelect>()({
   id: true,
   author: {
     select: {
