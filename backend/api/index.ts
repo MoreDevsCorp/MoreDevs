@@ -142,6 +142,9 @@ async function main() {
   app.use(express.json());
 
   app.use("/auth", authRoutes);
+  app.use("/", (req: Request, res: Response) => {
+    res.send("Hello world");
+  });
 
   app.use(
     "/graphql",
