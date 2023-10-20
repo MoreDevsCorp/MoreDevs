@@ -10,7 +10,7 @@
     "db:seed": "npx prisma db seed",
     "db:studio": "npx prisma db studio",
     "build": "tsc --build",
-    "vercel-build":"echo hello",
+   
     "start": "npm run build && ts-node dist/index.js"
   },
   "keywords": [],

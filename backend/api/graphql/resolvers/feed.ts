@@ -19,8 +19,8 @@ export default {
           orderBy: { createdAt: "desc" },
         });
 
-        const newPosts = feed.map((post) => {
-          if (post.likes.some((l) => l.userId === session.user?.id)) {
+        const newPosts = feed.map((post: any) => {
+          if (post.likes.some((l: any) => l.userId === session.user?.id)) {
             return { ...post, isLiked: true };
           }
           return { ...post, isLiked: false };

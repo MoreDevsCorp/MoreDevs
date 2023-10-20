@@ -32,8 +32,8 @@ export default {
           orderBy: { createdAt: "desc" },
         });
 
-        const newPosts = posts.map((post) => {
-          if (post.likes.some((l) => l.userId === session.user?.id)) {
+        const newPosts = posts.map((post: any) => {
+          if (post.likes.some((l: any) => l.userId === session.user?.id)) {
             return { ...post, isLiked: true };
           }
           return { ...post, isLiked: false };
