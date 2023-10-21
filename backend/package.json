@@ -18,6 +18,7 @@
     "db:seed": "npx prisma db seed",
     "db:studio": "npx prisma db studio",
     "build": "prisma generate && rimraf dist && tsc --build",
+    "vercel-build":"prisma generate",
     "start": "npm run build && node dist/index.js"
   },
   "keywords": [],
