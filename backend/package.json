@@ -4,13 +4,13 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
+    "postinstall": "prisma generate",
     "dev": "nodemon src/index.ts",
     "db:push": "npx prisma db push",
     "db:generate": "npx prisma generate",
     "db:seed": "npx prisma db seed",
     "db:studio": "npx prisma db studio",
-    "build": "tsc --build",
-    "vercel-build": "echo hello",
+    "build": "prisma generate && tsc --build",
     "start": "npm run build && node dist/index.js"
   },
   "keywords": [],
