@@ -29,3 +29,6 @@ dist-ssr
 
 .vscode
 .eslintrc.cjs
+
+
+*package-lock.json
