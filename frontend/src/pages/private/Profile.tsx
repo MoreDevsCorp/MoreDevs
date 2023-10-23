@@ -106,7 +106,7 @@ const Profile = ({ profile, getProfile, refetch }: ProfileProps) => {
       <div className="rounded  w-full  border border-gray-100">
         <div className="w-full h-[200px]">
           {bgImage ? (
-            <img src={bgImage} alt="bg image" />
+            <img src={bgImage} alt="bg-image" />
           ) : (
             <div className="w-full rounded-t  h-full bg-gradient-to-tr from-yellow-200 to-pink-200">
               {" "}
